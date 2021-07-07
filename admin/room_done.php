@@ -54,10 +54,17 @@ if (!empty($_POST['send-edit'])) {
         echo '<pre>';
         var_dump($room_edit_done);
         echo '</pre>';
-        $room_id = $room['id'];
-        $sql_room_detail_edit_done = 'UPDATE room
+        $room_id = $room_edit_done['id'];
+        //roomテーブルに部屋名を上書き保存
+        $sql_room_edit_done = 'UPDATE room
+                                SET name = ?
+                                WHERE id = ? ';
+        $stmt = $model->dbh->prepare($sql_room_edit_done);
+        $stmt->execute([$name, $room_id]);
+        //詳細に部屋情報を上書き保存
+        $sql_room_detail_edit_done = 'UPDATE room_detail
                                     SET capacity = ? price = ? remarks = ?
-                                    WHERE id = ? ';
+                                    WHERE room_id = ? ';
         $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
         $stmt->execute([$capacity, $price, $remarks, $room_id]);
         $isSended = 1;
