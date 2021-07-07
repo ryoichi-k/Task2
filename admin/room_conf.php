@@ -9,7 +9,7 @@ $capacity   = null;
 $price = null;
 $remarks   = '';
 $isEdited = false;
-if (!empty($_POST)) {
+if (!empty($_POST['add-new-room-detail'])) {
     $name       = $_POST['name'];
     $capacity   = $_POST['capacity'];
     $price      = $_POST['price'];
