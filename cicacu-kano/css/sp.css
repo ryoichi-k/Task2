@@ -1,0 +1,300 @@
+﻿/*★スマホ用CSS*/
+
+@media screen and (max-width:767px){
+  /*メディアクエリー。スマホで見れるように768以下を入れる*/
+
+*{
+  box-sizing: border-box;
+  text-decoration: none;
+  border-style:none;
+  margin: 0;
+}
+    
+body{
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0 auto;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+/*ハンバーガーメニュー*/
+
+.menu_pc{
+  display: none;
+}
+    
+.drawer-nav{
+  padding: 10% 0 0 10%;
+}
+
+.drawer-nav li{
+  font-size: 120%; 
+  list-style: none;
+}
+
+.drawer-nav img{
+  line-height: 300%;
+}
+
+.drawer-nav a{
+  color: #000000;
+  line-height: 300%;
+}
+
+.drawer-nav a:hover{
+  color:#0095d9;
+}
+/*ハンバーガーメニュー*/
+
+header{
+  width: 100%;
+  margin: 0;
+  height: 400px;
+  background-image: url("../img/header-sp.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#header-textbox {
+  width:66%;
+  height:100%;
+  color: #FFFFFF;
+  background-color: rgb(0,0,0,0.5);
+  margin-left:14%;
+}
+
+#top-title h1{
+  font-size: 290%;;
+  padding: 20% 0 0 8%;
+}
+
+#top-text p{
+  padding: 10% 0 0 8%;
+  line-height: 200%;
+  font-size: 80%;
+}
+
+main{
+  width: 100%;
+}
+
+#about{
+  width: 100%;
+  height: 400px;
+  margin: 15% 0;
+  font-size: 70%;
+  background-image:  url("../img/kanumakumiko-sp.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#about-title h2,
+#history-title h2,
+#lodging-title h2,
+#gallery-title h2{
+  width: 100%;
+  padding: 10% 15%;
+}
+
+#about-text p,
+#history-text p{
+  padding: 0 0 0 15%;
+  line-height: 200%;
+  white-space:nowrap;
+}
+
+#history{
+  width: 100%;
+  height: 400px;
+  margin: 15% 0;
+  font-size: 70%;
+  background-image:  url("../img/yado-sp.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#name{
+  width: 100%;
+  height: 178px;
+  margin: 15% 0;
+  background-image:  url("../img/nameback.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 70%;
+}
+
+#name-text{
+  padding: 65% 7% 0% 7%;
+}
+
+#name-text p{
+  line-height: 200%;
+  text-align: left;
+}
+
+#lodging{
+  width: 100%;
+  margin: 90% 0 0 0;
+  font-size: 70%;
+  text-align: center;
+}
+
+#lodging-text01 p,
+#lodging-text02 p{
+  margin:0 auto;
+  line-height: 200%;
+}
+
+.roomA,
+.roomB,
+.dormitory{
+  width: 100%;
+  padding: 5% 0;
+  text-align: center;
+}
+
+.roomA img,
+.roomB img,
+.dormitory img{
+  width: 80%;
+}
+
+.roomA-text,
+.roomB-text,
+.dormitory-text{
+  width: 100%;
+  margin:0 auto;
+}
+
+.roomA-text h3,
+.roomB-text h3,
+.dormitory-text h3{
+  text-align: center;
+  width: 100%;
+  padding: 3% 0 0 0;
+  margin:0 auto;
+}
+
+.roomA-text p,
+.roomB-text p,
+.dormitory-text p{
+  width: 100%;
+  padding: 3% 0;
+  color: #FFFFFF;
+  background-color: #696969;
+  text-align: center;
+  line-height: 200%;
+}
+
+#reservation{
+  width: 100%;
+  height: 300px;
+  margin: 25% 0;
+  background-image:  url("../img/kumiko.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  font-size: 70%;
+}
+
+#reservation-title{
+  padding: 7% 0;
+}
+
+#reservation-text p{
+  padding: 3% 0;
+}
+
+#reservation-mail img{
+  width: 35%;
+}
+
+#gallery{
+  width: 100%;
+  text-align: center;
+  font-size: 70%;
+}
+    
+#gallery-text p{
+  width: 90%;
+  margin: 0 auto;
+  line-height: 200%;
+}
+
+#flexslider ul,flexslider li{
+  width: 100%;
+  height: 300px;
+}
+
+#access{
+  margin: 30% 0 0 0;
+  text-align: center;
+  font-size: 70%;
+}
+    
+#access-title h2{
+  padding: 0% 15%;
+}
+    
+#access-text01 p,
+#access-text02 p{
+  padding: 10% 0;
+  line-height: 200%;
+}
+
+#g_map{
+  position: relative;
+  z-index: 1;
+  width:100%;
+  height:530px;
+  margin:0 auto;
+}
+
+footer {
+  width: 100%;
+  padding: 3% 0 3% 0;
+  text-align: center;
+}
+
+footer img{
+  padding: 3% 0 3% 0;
+}
+    
+footer p{
+  padding: 0 0 20% 0;
+}
+
+/*TOPに戻るボタン*/
+#pageTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3;
+}
+
+#pageTop i {
+  font-size:20px;
+}
+
+#pageTop a {
+  padding-top: 5px;
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#pageTop a:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+/*TOPに戻るボタン*/
+
+}

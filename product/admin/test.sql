@@ -1,0 +1,10 @@
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('1', '101号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('2', '102号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('3', '103号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('4', '104号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('5', '105号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('6', '106号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('7', '107号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('8', '108号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('9', '109号室', NULL, current_timestamp(), NULL, '0');
+INSERT INTO `room` (`id`, `name`, `img`, `created_at`, `updated_at`, `delete_flg`) VALUES ('10', '110号室', NULL, current_timestamp(), NULL, '0');

@@ -1,0 +1,331 @@
+﻿/*パソコン・パッド用CSS*/
+
+@media screen and (min-width:768px){
+  /*メディアクエリー。スマホで見れるように768以下を入れる*/
+
+*{
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+  border-style:none;
+}
+
+body{
+  overflow-x: hidden;
+}
+
+aside{
+  width: 15%;
+  height: 100%;
+  position: fixed;
+  left: 20;
+  top: 0;
+  margin:0;
+  background-color: #FFFFFF;
+  float: left;
+}
+
+.menu_sp{
+	display:none;
+}
+
+.menu_pc{
+  width: 100%;
+  z-index: 999;
+}
+
+.menutext{
+  width: 100%;
+  padding: 15% 0 0 10%;
+}
+
+.menutext li{
+  width: 100%;
+  list-style: none;
+}
+
+.menutext a{
+  color: #000000;
+  line-height:300%;
+}
+
+.menutext a:hover{
+  color:#0095d9;
+}
+
+header{
+  width: 87%;
+  height: 700px;
+  background-image: url("../img/header.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  float: right;
+}
+
+#header-textbox {
+  width:40%;
+  height: 100%;
+  background-color: rgb(0,0,0,0.5);
+  margin-left: 9%;
+  color: #FFFFFF;
+}
+
+#top-title h1{
+  width: 100%;
+  font-size: 60px;
+  padding:10% 0 0 20%;
+}
+
+#top-text p{
+  width: 100%;
+  padding:5% 0 0 20%;
+  line-height: 300%;
+}
+
+main{
+  width: 87%;
+  margin:0;
+  z-index: auto;
+  border: 0;
+  padding: 0;
+  float: right;
+}
+
+#about{
+  width: 100%;
+  height: 800px;
+  margin: 5% 0;
+  background-image: url("../img/kanumakumiko.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#about-title h2{
+  width: 100%;
+  padding:5% 0 0 5%;
+}
+
+#about-text p{
+  width: 100%;
+  padding: 5% 0 0 5%;
+  line-height: 300%;
+}
+
+#history{
+  width: 100%;
+  height: 800px;
+  margin: 5% 0;
+  background-image: url("../img/yado.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#history-title h2{
+  width: 100%;
+  padding:5% 0 0 5%;
+}
+
+#history-text p{
+  width: 100%;
+  padding: 5% 0 0 5%;
+  line-height: 300%;
+}
+
+#name{
+  width: 100%;
+  height: 600px;
+  margin: 5% 0;
+  background-image:  url("../img/nameback.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#name-text{
+  width: 45%;
+  padding:5% 0 0 2%;
+}
+
+#name-text p{
+  width: 100%;
+  padding: 0 0 0 5%;
+  line-height: 300%;
+  vertical-align: top;
+  color: #FFFFFF;
+  text-shadow: 0 0 8px #000000;
+}
+
+#lodging{
+  width: 100%;
+  margin: 30% 0;
+  text-align: center;
+}
+
+#lodging-title h2{
+  width: 100%;
+  margin: 5% 0;
+}
+
+#lodging-text01 p,
+#lodging-text02 p{
+  width: 100%;
+  line-height: 200%;
+}
+
+.roomA,
+.roomB,
+.dormitory{
+  width: 100%;
+  overflow: hidden;
+}
+
+.roomA img,
+.roomB img,
+.dormitory img{
+  width: 45%;
+  margin: 5%;
+  float: left;
+}
+
+.roomA-text,
+.roomB-text,
+.dormitory-text{
+  width: 45%;
+  float: right;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.roomA-text h3,
+.roomB-text h3,
+.dormitory-text h3{
+  margin: 5% 0;
+  text-align: left;
+}
+
+.roomA-text p,
+.roomB-text p,
+.dormitory-text p{
+  width: 80%;
+  padding: 2%;
+  line-height: 300%;
+  text-align: left;
+  color: #FFFFFF;
+  background-color: #696969;
+}
+
+#reservation{
+  width: 100%;
+  height: 650px;
+  margin: 10% 0;
+  padding: 1% 0 1% 0;
+  background-image:  url("../img/kumiko.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+#reservation h2{
+  width: 100%;
+  margin: 5% 0;
+}
+
+#reservation p{
+  width: 100%;
+  line-height: 200%;
+}
+
+#reservation a img{
+  padding: 1% 0 1% 0;
+}
+
+#gallery{
+  width: 100%;
+  margin: 10% 0;
+  text-align: center;
+}
+
+#gallery-title h2{
+  width: 100%;
+  margin: 5% 0;
+}
+
+#gallery-text p{
+  width: 100%;
+  line-height:30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#access{
+  width: 100%;
+  margin: 10% 0;
+  text-align: center;
+}
+
+#access-title h2{
+  width: 100%;
+  margin: 5% 0;
+}
+
+#access-text01 p,
+#access-text02 p{
+  width: 100%;
+  line-height: 200%;
+  margin: 5% 0;
+}
+
+#g_map{
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+footer {
+  width: 87%;
+  float: right;
+  text-align: center;
+  margin: 0 auto;
+}
+
+footer img{
+  width: 10%;
+}
+    
+footer p{
+  padding: 0 0 5% 0;
+}
+
+/*TOPに戻るボタン*/
+#pageTop {
+  position: fixed;
+  bottom: 2%;
+  right: 2%;
+}
+
+#pageTop i {
+  font-size:20px;
+}
+
+#pageTop a {
+  padding:7px 0;
+  display: block;
+  z-index: 999;
+  width: 50px;
+  height: 50px;
+  background-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#pageTop a:hover {
+  text-decoration: none;
+  opacity: 0.7;
+  filter:alpha(opacity=70);
+    -ms-filter: alpha(opacity=70);
+}
+/*TOPに戻るボタン*/
+
+}

@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+/*-------------------------
+    初期値
+-------------------------*/
+body {
+    background-color: #eee;
+}
+
+/*-------------------------
+    グローバル
+-------------------------*/
+.wrapper {
+    max-width: 960px;
+    height: 500px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+/*-------------------------
+    ヘッダー
+-------------------------*/
+.gl-nav ul {
+    padding-left: 0;
+}
+
+.gl-nav li {
+    width: 130px;
+    display: table-cell;
+    text-align: center;
+    border: 1px solid #fff;
+    background-color: black;
+}
+
+.gl-nav li:hover {
+    background-color: #000033;
+    border-bottom: solid red;
+
+}
+
+.gl-nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    padding: 3px 5px;
+    display: block;
+}
+
+.logout-link {
+    margin-left: 460px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+}
+
+.top-p {
+    margin-bottom: 0px;
+}
+
+/*-------------------------
+    フッター
+-------------------------*/
+.gl-footer {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+
+}
+
+/*-------------------------
+    ログイン
+-------------------------*/
+.login-container {
+    width: 55%;
+    height: 200px;
+    margin: auto;
+    background-color: #eee;
+    transform: translate(0px, 100px);
+}
+
+.login-table {
+    position: absolute;
+    top: 60px;
+    bottom: 100px;
+    left: 70px;
+    right: 100px;
+}
+
+input[type=text],
+input[type=password] {
+    width: 150%;
+}
+
+.login-h1 {
+    text-align: center;
+    transform: translate(0px, 100px);
+}
+
+.login-button {
+    position: absolute;
+    top: 150px;
+    bottom: 120px;
+    left: 230px;
+    right: 100px;
+    width: 60px;
+    height: 30px;
+}
+
+/*-------------------------
+    roomリスト
+-------------------------*/
+.room_list-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.roomlist-table th {
+    height: 60px;
+    border: 0.5px solid black;
+    font-weight: lighter;
+}
+
+.roomlist-table td {
+    height: 38px;
+    border: 0.5px solid black;
+}
+/*-------------------------
+    roomedit
+-------------------------*/
+.room_edit-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.room_edit-table th {
+    height: 60px;
+    border: 0.5px solid black;
+}
+
+.room_edit-table td {
+    height: 38px;
+    border: 0.5px solid black;
+}
