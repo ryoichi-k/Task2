@@ -97,9 +97,6 @@ if (!empty($_POST['cancel-edit'])) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e -> getMessage());
     }
-    echo '<pre>';
-    var_dump($result);
-    echo '</pre>';
 }
 
 ?>

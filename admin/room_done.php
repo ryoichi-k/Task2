@@ -5,6 +5,7 @@ require_once ('getPage.php');
 require_once ('util.php');
 require_once ('util.inc.php');
 $isSended = null;
+//新規登録
 if (!empty($_POST['send'])) {
     $name       = $_POST['name'];
     $capacity   = $_POST['capacity'];
@@ -17,7 +18,7 @@ if (!empty($_POST['send'])) {
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
-        $room = $stmt->fetch();//id,name,cre,up,
+        $room = $stmt->fetch(PDO::FETCH_ASSOC);//id,name,cre,up,
         //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
         echo '<pre>';
         var_dump($room);
@@ -45,19 +46,20 @@ if (!empty($_POST['send-edit'])) {
     try {
         $model = new Model();
         $model->connect();
-        //入力されたnameからroomテーブルのidをなんとか取得する
+        //入力されたnameからroomテーブルのidを取得する
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
-        $room = $stmt->fetch();//id,name,cre,up,
-        //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
+        $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
         echo '<pre>';
-        var_dump($room);
+        var_dump($room_edit_done);
         echo '</pre>';
         $room_id = $room['id'];
-        $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
-        $stmt = $model->dbh->prepare($sql_room_detail);
-        $stmt->execute([$room_id, $capacity, $remarks, $price]);
+        $sql_room_detail_edit_done = 'UPDATE room
+                                    SET capacity = ? price = ? remarks = ?
+                                    WHERE id = ? ';
+        $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
+        $stmt->execute([$capacity, $price, $remarks, $room_id]);
         $isSended = 1;
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
@@ -68,87 +70,6 @@ if (!empty($_POST['send-edit'])) {
         exit($e->getMessage());
     }
 }
-// if (isset($_SESSION['new_registration']) && $_SESSION['edit_room'] == false) {
-//     $new_registration = $_SESSION['new_registration'];
-//     $name        = $new_registration['name'];
-//     $capacity    = $new_registration['capacity'];
-//     $price       = $new_registration['price'];
-//     $remarks     = $new_registration['remarks'];
-//     $token       = $new_registration['token'];
-//     try {
-//         $model = new Model();
-//         $model->connect();
-//         //入力されたnameからroomテーブルのidをなんとか取得する
-//         $sql_room = 'SELECT * FROM room WHERE name = ? ';
-//         $stmt = $model->dbh->prepare($sql_room);
-//         $stmt->execute([$name]);
-//         $room = $stmt->fetch();//id,name,cre,up,
-//         //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
-//         echo '<pre>';
-//         var_dump($room);
-//         echo '</pre>';
-//         $room_id = $room['id'];
-//         $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
-//         $stmt = $model->dbh->prepare($sql_room_detail);
-//         $stmt->execute([$room_id, $capacity, $remarks, $price]);
-//         $isSended = 1;
-//         unset($_SESSION['admin']);
-//         header('Location: login.php');
-//         exit;
-//         //test
-//         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
-//         $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
-//         $rooms_test = $stmt->fetchAll(PDO::FETCH_ASSOC); //$resultにユーザー情報全員分が格納されているORDER BY id DESC
-//     } catch (PDOException $e) {
-//         header('Content-Type: text/plain; charset=UTF-8', true, 500);
-//         exit($e->getMessage());
-//     }
-
-//     if ($token !== getToken()) {
-//         header('Location: login.php');
-//         exit;
-//     }
-// } else { //urlの直打ちで（セッションなしで）訪れたときは編集画面にに飛ばされる
-//     header('Location: login.php');
-//     exit;
-// }
-// //編集（更新）処理
-// if (isset($_SESSION['edit_room']) && $_SESSION['new_registration'] == false) {
-//     $edit_room = $_SESSION['edit_room'];
-//     $name        = $edit_room['name'];
-//     $capacity    = $edit_room['capacity'];
-//     $price       = $edit_room['price'];
-//     $remarks     = $edit_room['remarks'];
-//     $token       = $edit_room['token'];
-//     try {
-//         //入力されたnameからroomテーブルのidをなんとか取得する
-//         $model = new Model();
-//         $model->connect();
-//         $sql_room_edit = 'SELECT * FROM room WHERE name = ? ';
-//         $stmt = $model->dbh->prepare($sql_room_edit);
-//         $stmt->execute([$name]);
-//         $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
-//         $room_id_edit = $room_edit['id'];
-//         $sql_room_detail_edit = 'UPDATE room_detail
-//                                 SET capacity = ? remarks = ? price = ?
-//                                 WHERE id = ?';
-//         $stmt = $model->dbh->prepare($sql_room_detail_edit);
-//         $stmt->execute([$capacity, $remarks, $price, $room_id_edit]);
-//         $room = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//         $isSended = 1;
-//     } catch (PDOException $e) {
-//         header('Content-Type: text/plain; charset=UTF-8', true, 500);
-//         exit($e->getMessage());
-//     }
-
-//     if ($token !== getToken()) {
-//         header('Location: login.php');
-//         exit;
-//     }
-// } else { //urlの直打ちで（セッションなしで）訪れたときは編集画面にに飛ばされる
-//     header('Location: login.php');
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">

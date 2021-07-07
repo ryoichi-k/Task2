@@ -24,24 +24,6 @@ if (!empty($_POST['edit-room-detail'])) {
     $token      = $_POST['token'];
     $isEdited = true;
 }
-
-// if ($_GET['type'] == 'edit' && !empty($_POST['edit-room-detail'])) {
-//     $isEdited = true;
-//     $name       = $_POST['name'];
-//     $capacity   = $_POST['capacity'];
-//     $price      = $_POST['price'];
-//     $remarks    = $_POST['remarks'];
-//     $token      = $_POST['token'];
-//     // $edit_room = array(
-//     //     'name'        => $name,
-//     //     'capacity'    => $capacity,
-//     //     'price'       => $price,
-//     //     'remarks'     => $remarks,
-//     //     'token'       => $token
-//     // );
-//     header('Location: room_conf.php?type=edit');
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
