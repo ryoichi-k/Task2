@@ -15,37 +15,23 @@ if (!empty($_POST['add-new-room-detail'])) {
     $price      = $_POST['price'];
     $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
-
-    $new_registration = array(
-        'name'        => $name,
-        'capacity'    => $capacity,
-        'price'       => $price,
-        'remarks'     => $remarks,
-        'token'       => $token
-    );
-    $_SESSION['new_registration'] = $new_registration;
-    header('Location: room_conf.php');
-    exit;
 }
-if (isset($_SESSION['new_registration'])) {
-    $new_registration = $_SESSION['new_registration'];
-    $name        = $new_registration['name'];
-    $capacity    = $new_registration['capacity'];
-    $price       = $new_registration['price'];
-    $remarks     = $new_registration['remarks'];
-    $token       = $new_registration['token'];
 
-    if ($token !== getToken()) {
-        header('Location: room_edit.php');
-        exit;
-    }
-} else {
-    header('Location: room_edit.php');
-    exit;
-}
-// if (!empty($_POST['send'])) {
-//     unset($_SESSION['new_registration']);
-//     header('Location: room_done.php');
+// if ($_GET['type'] == 'edit' && !empty($_POST['edit-room-detail'])) {
+//     $isEdited = true;
+//     $name       = $_POST['name'];
+//     $capacity   = $_POST['capacity'];
+//     $price      = $_POST['price'];
+//     $remarks    = $_POST['remarks'];
+//     $token      = $_POST['token'];
+//     // $edit_room = array(
+//     //     'name'        => $name,
+//     //     'capacity'    => $capacity,
+//     //     'price'       => $price,
+//     //     'remarks'     => $remarks,
+//     //     'token'       => $token
+//     // );
+//     header('Location: room_conf.php?type=edit');
 //     exit;
 // }
 ?>
@@ -98,9 +84,20 @@ if (isset($_SESSION['new_registration'])) {
                 </tr>
             </table>
             <form action="" method="post">
+                <input type="hidden" name="name" value="<?=($name)?>">
+                <input type="hidden" name="capacity" value="<?=($capacity)?>">
+                <input type="hidden" name="price" value="<?=$price?>">
+                <input type="hidden" name="remarks" value="<?=$remarks?>">
                 <p><input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
-                <button type="submit" class="conf-cancel" formaction="room_edit.php">修正</button>
             </form>
+                <form action="" method="post">
+                    <input type="hidden" name="name" value="<?=$name?>">
+                    <input type="hidden" name="capacity" value="<?=$capacity?>">
+                    <input type="hidden" name="price" value="<?=$price?>">
+                    <input type="hidden" name="remarks" value="<?=$remarks?>">
+                    <input type="hidden" name="token" value="<?=getToken()?>">
+                    <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel"></p>
+                </form>
         </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>
