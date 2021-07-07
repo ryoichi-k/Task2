@@ -9,7 +9,7 @@ try {
     $model->connect();
     $sql = 'SELECT * FROM room ORDER BY created_at DESC';
     $stmt = $model->dbh->query($sql); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
-    $rooms = $stmt->fetchAll(); //$resultにユーザー情報一人分が格納されている
+    $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC); //$resultにユーザー情報一人分が格納されている
 
     // if (isset($_POST['delete'])) {
     //     $sql = 'DELETE FROM room WHERE id = ?';
@@ -66,7 +66,7 @@ try {
                     <th>画像</th>
                     <th>登録日時</th>
                     <th>更新日時</th>
-                    <th><button onclick="location.href='./room_edit.php'">新規登録</button></th>
+                    <th><button onclick="location.href='./room_edit.php?type=new'">新規登録</button></th>
                 </tr>
                 <?php foreach ($rooms as $room):?>
                     <tr>
