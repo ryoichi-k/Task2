@@ -16,6 +16,14 @@ if (!empty($_POST['add-new-room-detail'])) {
     $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
 }
+if (!empty($_POST['edit-room-detail'])) {
+    $name       = $_POST['name'];
+    $capacity   = $_POST['capacity'];
+    $price      = $_POST['price'];
+    $remarks    = $_POST['remarks'];
+    $token      = $_POST['token'];
+    $isEdited = true;
+}
 
 // if ($_GET['type'] == 'edit' && !empty($_POST['edit-room-detail'])) {
 //     $isEdited = true;
@@ -83,13 +91,33 @@ if (!empty($_POST['add-new-room-detail'])) {
                     <td><?=h($remarks)?></td>
                 </tr>
             </table>
+            <?php if($isEdited == true):?>
+                <form action="" method="post">
+                <input type="hidden" name="name" value="<?=h($name)?>">
+                <input type="hidden" name="capacity" value="<?=h($capacity)?>">
+                <input type="hidden" name="price" value="<?=$price?>">
+                <input type="hidden" name="remarks" value="<?=$remarks?>">
+                <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
+            </form>
+            <?php else:?>
             <form action="" method="post">
-                <input type="hidden" name="name" value="<?=($name)?>">
-                <input type="hidden" name="capacity" value="<?=($capacity)?>">
+                <input type="hidden" name="name" value="<?=h($name)?>">
+                <input type="hidden" name="capacity" value="<?=h($capacity)?>">
                 <input type="hidden" name="price" value="<?=$price?>">
                 <input type="hidden" name="remarks" value="<?=$remarks?>">
                 <p><input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
             </form>
+            <?php endif;?>
+            <?php if($isEdited == true):?>
+                <form action="" method="post">
+                    <input type="hidden" name="name" value="<?=$name?>">
+                    <input type="hidden" name="capacity" value="<?=$capacity?>">
+                    <input type="hidden" name="price" value="<?=$price?>">
+                    <input type="hidden" name="remarks" value="<?=$remarks?>">
+                    <input type="hidden" name="token" value="<?=getToken()?>">
+                    <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel-edit"></p>
+                </form>
+            <?php else:?>
                 <form action="" method="post">
                     <input type="hidden" name="name" value="<?=$name?>">
                     <input type="hidden" name="capacity" value="<?=$capacity?>">
@@ -98,6 +126,7 @@ if (!empty($_POST['add-new-room-detail'])) {
                     <input type="hidden" name="token" value="<?=getToken()?>">
                     <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel"></p>
                 </form>
+            <?php endif;?>
         </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>

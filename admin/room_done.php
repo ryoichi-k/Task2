@@ -36,6 +36,38 @@ if (!empty($_POST['send'])) {
         exit($e->getMessage());
     }
 }
+//編集
+if (!empty($_POST['send-edit'])) {
+    $name       = $_POST['name'];
+    $capacity   = $_POST['capacity'];
+    $price      = $_POST['price'];
+    $remarks    = $_POST['remarks'];
+    try {
+        $model = new Model();
+        $model->connect();
+        //入力されたnameからroomテーブルのidをなんとか取得する
+        $sql_room = 'SELECT * FROM room WHERE name = ? ';
+        $stmt = $model->dbh->prepare($sql_room);
+        $stmt->execute([$name]);
+        $room = $stmt->fetch();//id,name,cre,up,
+        //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
+        echo '<pre>';
+        var_dump($room);
+        echo '</pre>';
+        $room_id = $room['id'];
+        $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
+        $stmt = $model->dbh->prepare($sql_room_detail);
+        $stmt->execute([$room_id, $capacity, $remarks, $price]);
+        $isSended = 1;
+        //test
+        $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
+        $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
+        $rooms_test = $stmt->fetchAll(PDO::FETCH_ASSOC); //$resultにユーザー情報全員分が格納されているORDER BY id DESC
+    } catch (PDOException $e) {
+        header('Content-Type: text/plain; charset=UTF-8', true, 500);
+        exit($e->getMessage());
+    }
+}
 // if (isset($_SESSION['new_registration']) && $_SESSION['edit_room'] == false) {
 //     $new_registration = $_SESSION['new_registration'];
 //     $name        = $new_registration['name'];

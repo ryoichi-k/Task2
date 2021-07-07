@@ -72,6 +72,35 @@ if (!empty($_POST['cancel'])) {
     $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
 }
+if (!empty($_POST['cancel-edit'])) {
+    $name       = $_POST['name'];
+    $capacity   = $_POST['capacity'];
+    $price      = $_POST['price'];
+    $remarks    = $_POST['remarks'];
+    $token      = $_POST['token'];
+    try {
+        //room
+        $model = new Model();
+        $model->connect();
+        $sql_edit = 'SELECT * FROM room WHERE id = ?';
+        $stmt = $model->dbh->prepare($sql_edit);
+        $stmt->execute([$edit_id]);
+        $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
+        //room_detail
+        $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ?';
+        $stmt = $model->dbh->prepare($sql_edit_detail);
+        $stmt->execute([$edit_id]);
+        //testで１行取得にしている後でfetchAllにする
+        $room_edit_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = array_merge($room_edit_details, $_POST);
+    } catch (PDOException $e) {
+        header('Content-Type: text/plain; charset=UTF-8', true, 500);
+        exit($e -> getMessage());
+    }
+    echo '<pre>';
+    var_dump($result);
+    echo '</pre>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -141,7 +170,11 @@ if (!empty($_POST['cancel'])) {
                     </tr>
                 </table>
                 <p>
+                <?php if($isEdited == true):?>
+                    <input type="submit" name="edit-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php?type=edit">
+                <?php else:?>
                     <input type="submit" name="add-new-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php">
+                <?php endif;?>
                     <input type="submit" value="キャンセル" formaction="room_list.php" class="cancel-btn">
                 </p>
             </form>
