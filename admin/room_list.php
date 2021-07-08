@@ -10,9 +10,6 @@ try {
     $sql = 'SELECT * FROM room ORDER BY created_at DESC';
     $stmt = $model->dbh->query($sql); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo '<pre>';
-    var_dump($rooms);
-    echo '</pre>';
 } catch (PDOException $e) {
     header('Content-Type: text/plain; charset=UTF-8', true, 500);
     exit($e->getMessage());

@@ -3,6 +3,8 @@ session_start();
 require_once ('../Model/Model.php');
 require_once ('../getPage.php');
 require_once ('../util.php');
+// require_once ('sort.php');
+
 const IMAGE_PATH = '../images/';
 try {
     $model = new Model();
@@ -63,9 +65,6 @@ if (!empty($_POST['name-desc'])) {
         SORT_NUMERIC,
         $rooms,
         );
-    echo '<pre>';
-    var_dump($rooms);
-    echo '</pre>';
 }
 //name sort asc
 if (!empty($_POST['name-asc'])) {
@@ -84,31 +83,44 @@ if (!empty($_POST['name-asc'])) {
         SORT_NUMERIC,
         $rooms,
         );
-    echo '<pre>';
-    var_dump($rooms);
-    echo '</pre>';
 }
-//updatetime sort desc
-if (!empty($_POST['updatetime-desc'])) {
+//updated_at sort desc
+if (!empty($_POST['updated_at-desc'])) {
     $id_array = array();
-    $updatetime_array = array();
+    $updated_at_array = array();
     foreach($rooms as $value) {
         $id_array[] = $value['id'];
-        $name_array[] = $value['name'];
+        $updated_at_array[] = $value['updated_at'];
     }
     array_multisort(
-        $name_array,
+        $updated_at_array,
         SORT_DESC,
-        SORT_STRING,
+        SORT_NUMERIC,
         $id_array,
         SORT_DESC,
         SORT_NUMERIC,
         $rooms,
         );
-    echo '<pre>';
-    var_dump($rooms);
-    echo '</pre>';
 }
+//updated_at sort asc
+if (!empty($_POST['updated_at-asc'])) {
+    $id_array = array();
+    $updated_at_array = array();
+    foreach($rooms as $value) {
+        $id_array[] = $value['id'];
+        $updated_at_array[] = $value['updated_at'];
+    }
+    array_multisort(
+        $updated_at_array,
+        SORT_ASC,
+        SORT_NUMERIC,
+        $id_array,
+        SORT_DESC,
+        SORT_NUMERIC,
+        $rooms,
+        );
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -159,9 +171,9 @@ if (!empty($_POST['updatetime-desc'])) {
                     <th>登録日時</th>
                     <th>
                         <form action="" method="post">
-                            <input type="submit" name="updatetime-asc" value="▲"><br>
+                            <input type="submit" name="updated_at-asc" value="▲"><br>
                             更新日時<br>
-                            <input type="submit" name="updatetime-desc" value="▼">
+                            <input type="submit" name="updated_at-desc" value="▼">
                         </form>
                     </th>
                     <th><button onclick="location.href='./room_edit.php'">新規登録</button></th>

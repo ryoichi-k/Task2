@@ -79,6 +79,7 @@ if (!empty($_POST['edit-room-detail'])) {
                 <input type="hidden" name="capacity" value="<?=h($capacity)?>">
                 <input type="hidden" name="price" value="<?=$price?>">
                 <input type="hidden" name="remarks" value="<?=$remarks?>">
+                <input type="hidden" name="updated_at" value="<?=h($updated_at)?>">
                 <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
             </form>
             <?php else:?>

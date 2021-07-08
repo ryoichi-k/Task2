@@ -43,6 +43,11 @@ if (!empty($_POST['send-edit'])) {
     $capacity   = $_POST['capacity'];
     $price      = $_POST['price'];
     $remarks    = $_POST['remarks'];
+    $updated_at    = $_POST['updated_at'];
+    $date = new DateTime();
+    $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
+    $today = $date->format('Y-m-d H:i:s');
+    $updated_at = $today;
     try {
         $model = new Model();
         $model->connect();
@@ -57,14 +62,17 @@ if (!empty($_POST['send-edit'])) {
         $room_id = $room_edit_done['id'];
         //roomテーブルに部屋名を上書き保存
         $sql_room_edit_done = 'UPDATE room
-                                SET name = ?
+                                SET name = ?,
+                                updated_at = ?
                                 WHERE id = ? ';
         $stmt = $model->dbh->prepare($sql_room_edit_done);
-        $stmt->execute([$name, $room_id]);
-        //詳細に部屋情報を上書き保存ここでエラーでてる
+        $stmt->execute([$name, $updated_at, $room_id]);
+        //詳細に部屋情報を上書き保存ここでエラーでてる→SETに,が足りなかった。
         $sql_room_detail_edit_done = 'UPDATE room_detail
-                                    SET capacity = ? price = ? remarks = ?
-                                    WHERE room_id = ? ';
+                                        SET capacity = ?,
+                                        price = ?,
+                                        remarks = ?
+                                        WHERE room_id = ? ';
         $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
         $stmt->execute([$capacity, $price, $remarks, $room_id]);
         $isSended = 1;
