@@ -61,7 +61,7 @@ if (!empty($_POST['send-edit'])) {
                                 WHERE id = ? ';
         $stmt = $model->dbh->prepare($sql_room_edit_done);
         $stmt->execute([$name, $room_id]);
-        //詳細に部屋情報を上書き保存
+        //詳細に部屋情報を上書き保存ここでエラーでてる
         $sql_room_detail_edit_done = 'UPDATE room_detail
                                     SET capacity = ? price = ? remarks = ?
                                     WHERE room_id = ? ';

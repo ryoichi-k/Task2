@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once ('Model/Model.php');
-require_once ('getPage.php');
-require_once ('util.php');
+require_once ('../Model/Model.php');
+require_once ('../getPage.php');
+require_once ('../util.php');
 const IMAGE_PATH = '../images/';
 try {
     $model = new Model();
@@ -10,12 +10,104 @@ try {
     $sql = 'SELECT * FROM room ORDER BY created_at DESC';
     $stmt = $model->dbh->query($sql); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo '<pre>';
-    var_dump($rooms);
-    echo '</pre>';
 } catch (PDOException $e) {
     header('Content-Type: text/plain; charset=UTF-8', true, 500);
     exit($e->getMessage());
+}
+//id sort desc
+if (!empty($_POST['id-desc'])) {
+    $id_array = array();
+    foreach( $rooms as $value) {
+        $id_array[] = $value['id'];
+    }
+        array_multisort(
+                $id_array,
+                SORT_DESC,
+                SORT_NUMERIC,
+                $rooms,
+                );
+    echo '<pre>';
+    var_dump($rooms);
+    echo '</pre>';
+}
+//id sort asc
+if (!empty($_POST['id-asc'])) {
+    $id_array = array();
+    foreach( $rooms as $value) {
+        $id_array[] = $value['id'];
+    }
+        array_multisort(
+                $id_array,
+                SORT_ASC,
+                SORT_NUMERIC,
+                $rooms,
+                );
+    echo '<pre>';
+    var_dump($rooms);
+    echo '</pre>';
+}
+//name sort desc
+if (!empty($_POST['name-desc'])) {
+    $id_array = array();
+    $name_array = array();
+    foreach($rooms as $value) {
+        $id_array[] = $value['id'];
+        $name_array[] = $value['name'];
+    }
+    array_multisort(
+        $name_array,
+        SORT_DESC,
+        SORT_STRING,
+        $id_array,
+        SORT_DESC,
+        SORT_NUMERIC,
+        $rooms,
+        );
+    echo '<pre>';
+    var_dump($rooms);
+    echo '</pre>';
+}
+//name sort asc
+if (!empty($_POST['name-asc'])) {
+    $id_array = array();
+    $name_array = array();
+    foreach($rooms as $value) {
+        $id_array[] = $value['id'];
+        $name_array[] = $value['name'];
+    }
+    array_multisort(
+        $name_array,
+        SORT_ASC,
+        SORT_STRING,
+        $id_array,
+        SORT_DESC,
+        SORT_NUMERIC,
+        $rooms,
+        );
+    echo '<pre>';
+    var_dump($rooms);
+    echo '</pre>';
+}
+//updatetime sort desc
+if (!empty($_POST['updatetime-desc'])) {
+    $id_array = array();
+    $updatetime_array = array();
+    foreach($rooms as $value) {
+        $id_array[] = $value['id'];
+        $name_array[] = $value['name'];
+    }
+    array_multisort(
+        $name_array,
+        SORT_DESC,
+        SORT_STRING,
+        $id_array,
+        SORT_DESC,
+        SORT_NUMERIC,
+        $rooms,
+        );
+    echo '<pre>';
+    var_dump($rooms);
+    echo '</pre>';
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +118,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CICACU | リスト 管理</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="wrapper">
@@ -51,15 +143,27 @@ try {
                 <tr>
                     <th>
                         <form action="" method="post">
-                            <input type="submit" name="asc" value="▲"><br>
+                            <input type="submit" name="id-asc" value="▲"><br>
                                 ID<br>
-                            <input type="submit" name="desc" value="▼">
+                            <input type="submit" name="id-desc" value="▼">
                         </form>
                     </th>
-                    <th>部屋名</th>
+                    <th>
+                        <form action="" method="post">
+                            <input type="submit" name="name-asc" value="▲"><br>
+                                部屋名<br>
+                            <input type="submit" name="name-desc" value="▼">
+                        </form>
+                    </th>
                     <th>画像</th>
                     <th>登録日時</th>
-                    <th>更新日時</th>
+                    <th>
+                        <form action="" method="post">
+                            <input type="submit" name="updatetime-asc" value="▲"><br>
+                            更新日時<br>
+                            <input type="submit" name="updatetime-desc" value="▼">
+                        </form>
+                    </th>
                     <th><button onclick="location.href='./room_edit.php'">新規登録</button></th>
                 </tr>
                 <?php foreach ($rooms as $room):?>
