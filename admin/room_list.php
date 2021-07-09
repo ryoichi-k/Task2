@@ -87,7 +87,7 @@ if (!empty($_POST['updated_at-desc'])) {
     array_multisort(
         $updated_at_array,
         SORT_DESC,
-        SORT_NUMERIC,
+        SORT_STRING,
         $id_array,
         SORT_DESC,
         SORT_NUMERIC,
@@ -105,7 +105,7 @@ if (!empty($_POST['updated_at-asc'])) {
     array_multisort(
         $updated_at_array,
         SORT_ASC,
-        SORT_NUMERIC,
+        SORT_STRING,
         $id_array,
         SORT_DESC,
         SORT_NUMERIC,
@@ -144,7 +144,7 @@ if (!empty($_POST['delete'])) {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="list-wrapper">
         <header class="gl-header">
             <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']);?>]さん、ご機嫌いかがですか？</p>
             <div class="logout-link"><a href="logout.php">ログアウトする</a></div>
@@ -161,6 +161,7 @@ if (!empty($_POST['delete'])) {
             </nav>
         </header>
         <main>
+        <div class="room_list-container">
         <div class="getPage"><?php getPage(); ?></div>
             <table class="room_list-table" border="1">
                 <tr>
@@ -214,6 +215,7 @@ if (!empty($_POST['delete'])) {
                     </tr>
                 <?php endforeach;?>
             </table>
+        </div>
         </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>

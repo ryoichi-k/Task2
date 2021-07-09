@@ -5,6 +5,7 @@ require_once ('getPage.php');
 require_once ('util.php');
 require_once ('util.inc.php');
 $isSended = null;
+$isEdited = false;
 //新規登録
 if (!empty($_POST['send'])) {
     $name       = $_POST['name'];
@@ -70,6 +71,7 @@ if (!empty($_POST['send-edit'])) {
         $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
         $stmt->execute([$capacity, $price, $remarks, $room_id]);
         $isSended = 1;
+        $isEdited = true;
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
         $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
@@ -109,7 +111,10 @@ if (!empty($_POST['send-edit'])) {
         <main>
         <div class="getPage"><?php getPage(); ?></div>
         <?php if(isset($isSended)):?>
-            <h3 class="done-message">登録完了しました。</h3>
+                <h3 class="done-message">登録完了しました。</h3>
+            <?php if(isset($isEdited)):?>
+                <h3 class="done-message">編集完了しました。</h3>
+            <?php endif;?>
             <table class="room_list-table test-table" border="1">
                 <tr>
                     <th>ID</th>

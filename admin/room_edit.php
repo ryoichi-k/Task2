@@ -111,7 +111,7 @@ if (!empty($_POST['cancel-edit'])) {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="edit-wrapper">
         <header class="gl-header">
             <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']);?>]さん、ご機嫌いかがですか？</p>
             <div class="logout-link"><a href="logout.php">ログアウトする</a></div>

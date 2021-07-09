@@ -53,6 +53,7 @@ if (!empty($_POST['edit-room-detail'])) {
             </nav>
         </header>
         <main>
+        <div class="room_conf-container">
             <h2>確認画面</h2>
             <div class="getPage"><?php getPage(); ?></div>
             <table class="room_edit-table">
@@ -110,6 +111,7 @@ if (!empty($_POST['edit-room-detail'])) {
                     <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel"></p>
                 </form>
             <?php endif;?>
+        </div>
         </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>

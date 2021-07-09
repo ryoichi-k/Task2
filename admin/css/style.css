@@ -121,6 +121,18 @@ body {
 /*-------------------------
     roomリスト
 -------------------------*/
+.list-wrapper {
+    max-width: 960px;
+    min-height: 370px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+}
+.room_list-container {
+    margin-top: 30px;
+    margin-left: 45px;
+    margin-right: 45px;
+}
 .room_list-table {
     width: 100%;
     border-collapse: collapse;
@@ -128,7 +140,7 @@ body {
 }
 
 .room_list-table th {
-    height: 60px;
+    height: 50px;
     border: 0.5px solid black;
     font-weight: lighter;
 }
@@ -178,6 +190,13 @@ a:hover {
 /*-------------------------
     roomedit
 -------------------------*/
+.edit-wrapper {
+    max-width: 960px;
+    min-height: 370px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+}
 .room_edit-table {
     width: 100%;
     border-collapse: collapse;
@@ -246,6 +265,14 @@ input.room_edit-input-price {
 }
 .room_edit-img-table th {
     text-align: center;
+}
+/*-------------------------
+    conf
+-------------------------*/
+.room_conf-container {
+    margin-top: 30px;
+    margin-left: 45px;
+    margin-right: 45px;
 }
 /*-------------------------
     done
