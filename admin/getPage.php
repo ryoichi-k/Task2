@@ -1,6 +1,6 @@
 <?php
 function getPage(){
-    $btnName = 'テスト初期値';
+    $btnName = '初期値';
     $itemName = '';
     $operation = '';
     $confOrDone = '';
