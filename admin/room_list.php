@@ -161,10 +161,10 @@ if (!empty($_POST['delete'])) {
             </nav>
         </header>
         <main>
-        <?php getPage();?>
+            <?php getPage();?>
             <table class="room_list-table" border="1">
                 <tr>
-                <th>
+                    <th>
                         <form action="" method="post">
                             <input class="sort" type="submit" name="id-asc" value="▲"><br>
                                 ID<br>
@@ -201,16 +201,20 @@ if (!empty($_POST['delete'])) {
                         <td><?=h($room['created_at'])?></td>
                         <td><?=h($room['updated_at'])?></td>
                         <td>
-                            <a href="room_edit.php?id=<?=h($room['id'])?>&type=edit">編集</a>
-                            <form action="" method="post">
-                                <input type="hidden" name="id" value="<?=h($room['id'])?>">
-                                <input type="submit" name="delete" class="delete-btn" value="削除">
-                            </form>
+                            <div class="flex-room_list">
+                                <div class="flex-room_list_div"><a class="btn-style-link" href="room_edit.php?id=<?=h($room['id'])?>&type=edit">編集</a></div>
+                                <div class="flex-room_list_div">
+                                    <form action="" method="post">
+                                        <input type="hidden" name="id" value="<?=h($room['id'])?>">
+                                        <input type="submit" name="delete" class="delete-btn" value="削除">
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach;?>
             </table>
-         </main>
+        </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>
         </footer>
