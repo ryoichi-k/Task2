@@ -107,7 +107,7 @@ if (!empty($_POST['send-edit'])) {
                 </nav>
         </header>
         <main>
-        <?php getPage();?>
+        <div class="getPage"><?php getPage(); ?></div>
         <?php if(isset($isSended)):?>
             <h3 class="done-message">登録完了しました。</h3>
             <table class="room_list-table test-table" border="1">

@@ -54,7 +54,7 @@ if (!empty($_POST['edit-room-detail'])) {
         </header>
         <main>
             <h2>確認画面</h2>
-            <?php getPage();?>
+            <div class="getPage"><?php getPage(); ?></div>
             <table class="room_edit-table">
                 <tr>
                     <th>客室名<span>（必須）</span></th>

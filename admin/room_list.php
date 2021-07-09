@@ -161,7 +161,7 @@ if (!empty($_POST['delete'])) {
             </nav>
         </header>
         <main>
-            <?php getPage();?>
+        <div class="getPage"><?php getPage(); ?></div>
             <table class="room_list-table" border="1">
                 <tr>
                     <th>
