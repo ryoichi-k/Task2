@@ -20,9 +20,6 @@ if (!empty($_POST['send'])) {
         $stmt->execute([$name]);
         $room = $stmt->fetch(PDO::FETCH_ASSOC);//id,name,cre,up,
         //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
-        echo '<pre>';
-        var_dump($room);
-        echo '</pre>';
         $room_id = $room['id'];
         $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
         $stmt = $model->dbh->prepare($sql_room_detail);
@@ -56,9 +53,6 @@ if (!empty($_POST['send-edit'])) {
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
         $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<pre>';
-        var_dump($room_edit_done);
-        echo '</pre>';
         $room_id = $room_edit_done['id'];
         //roomテーブルに部屋名を上書き保存
         $sql_room_edit_done = 'UPDATE room

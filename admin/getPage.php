@@ -1,28 +1,29 @@
 <?php
 function getPage(){
     $btnName = 'テスト初期値';
+    $itemName = '';
+    $operation = '';
+    $confOrDone = '';
     $curUrl = $_SERVER['REQUEST_URI'];//現在のページのURL取得
-    //echo($curUrl);
-    // echo gettype($curUrl)→string;
-    if (mb_ereg_match(".*(room_list\.php)$", $curUrl)) {
-        $btnName = "客室管理リスト";
-        $button = "<button onclick=\"location.href='#'\">" . $btnName . "</button>";
-        echo $button;
-    }elseif(mb_ereg_match(".*(room_edit\.php)$", $curUrl)){
-        $btnName = "客室管理登録";
-        $button = "<button onclick=\"location.href='#'\">" . $btnName . "</button>";
-        echo $button;
-    }elseif(mb_ereg_match(".*(type=edit)$", $curUrl)){
-        $btnName = "客室管理編集";
-        $button = "<button onclick=\"location.href='#'\">" . $btnName . "</button>";
-        echo $button;
-    }elseif(mb_ereg_match(".*(room_conf\.php)$", $curUrl)){
-        $btnName = "客室管理登録確認";
-        $button = "<button onclick=\"location.href='#'\">" . $btnName . "</button>";
-        echo $button;
-    }elseif(mb_ereg_match(".*(room_done\.php)$", $curUrl)){
-        $btnName = "客室管理登録完了";
-        $button = "<button onclick=\"location.href='#'\">" . $btnName . "</button>";
-        echo $button;
+    // echo $curUrl;
+    //$itemName
+    if (mb_ereg_match(".*(room)+\.*", $curUrl)) {
+        $itemName = "客室管理";
     }
+    //$operation
+    if (mb_ereg_match(".*(_list)+\.*", $curUrl)) {
+        $operation = "リスト";
+    }elseif(mb_ereg_match(".*(type=edit)", $curUrl)){
+        $operation = "編集";
+    }else{
+        $operation = "登録";
+    }
+    //$confOrDone
+    if (mb_ereg_match(".*(conf).*", $curUrl)) {
+        $confOrDone = "確認";
+    }elseif(mb_ereg_match(".*(done)+\.*", $curUrl)){
+        $confOrDone = "完了";
+    }
+    $button = "<button onclick=\"location.href='#'\">" . $itemName . $operation . $confOrDone . "</button>";
+    echo ($button);
 }

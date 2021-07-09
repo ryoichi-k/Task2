@@ -197,7 +197,7 @@ if (!empty($_POST['cancel-edit'])) {
                     </tr>
                 </table>
                 <p>半角英数字のファイルのみアップロード可能です。</p>
-                <input type="submit" name="up-img-btn" value="アップロード">
+                <input type="submit" name="up-img-btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
                 </form>
                 <?php endif;?>
         </div>

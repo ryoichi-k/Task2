@@ -206,7 +206,7 @@ if (!empty($_POST['delete'])) {
                                 <div class="flex-room_list_div">
                                     <form action="" method="post">
                                         <input type="hidden" name="id" value="<?=h($room['id'])?>">
-                                        <input type="submit" name="delete" class="delete-btn" value="削除">
+                                        <input type="submit" name="delete" class="delete-btn" value="削除" onclick="return confirm('本当に削除しますか？')">
                                     </form>
                                 </div>
                             </div>
@@ -219,12 +219,5 @@ if (!empty($_POST['delete'])) {
             <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>
-    <script>
-        const btn = document.querySelector('.delete-btn');
-        function deleteMessage() {
-            let con = confirm('本当に削除しますか？');
-        };
-        btn.addEventListener('click', deleteMessage);
-    </script>
 </body>
 </html>
