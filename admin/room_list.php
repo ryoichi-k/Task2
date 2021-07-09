@@ -7,7 +7,7 @@ const IMAGE_PATH = '../images/';
 try {
     $model = new Model();
     $model->connect();
-    $sql = 'SELECT * FROM room ORDER BY created_at DESC';
+    $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY created_at DESC';
     $stmt = $model->dbh->query($sql); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -112,6 +112,25 @@ if (!empty($_POST['updated_at-asc'])) {
         $rooms,
         );
 }
+//論理削除処理
+$delete_id = 0;
+if (!empty($_POST['delete'])) {
+    $delete_id = $_POST['id'];
+    try {
+        $model = new Model();
+        $model->connect();
+        $sql_room_delete_flg = 'UPDATE room
+                                SET delete_flg = 1
+                                WHERE id = ? ';
+        $stmt = $model->dbh->prepare($sql_room_delete_flg);
+        $stmt->execute([$delete_id]);
+        header('Location: room_list.php');
+        exit;
+    } catch (PDOException $e) {
+        header('Content-Type: text/plain; charset=UTF-8', true, 500);
+        exit($e -> getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -121,6 +140,7 @@ if (!empty($_POST['updated_at-asc'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CICACU | リスト 管理</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -146,25 +166,25 @@ if (!empty($_POST['updated_at-asc'])) {
                 <tr>
                 <th>
                         <form action="" method="post">
-                            <input type="submit" name="id-asc" value="▲"><br>
+                            <input class="sort" type="submit" name="id-asc" value="▲"><br>
                                 ID<br>
-                            <input type="submit" name="id-desc" value="▼">
+                            <input class="sort" type="submit" name="id-desc" value="▼">
                         </form>
                     </th>
                     <th>
                         <form action="" method="post">
-                            <input type="submit" name="name-asc" value="▲"><br>
+                            <input class="sort" type="submit" name="name-asc" value="▲"><br>
                                 部屋名<br>
-                            <input type="submit" name="name-desc" value="▼">
+                            <input class="sort" type="submit" name="name-desc" value="▼">
                         </form>
                     </th>
                     <th>画像</th>
                     <th>登録日時</th>
                     <th>
                         <form action="" method="post">
-                            <input type="submit" name="updated_at-asc" value="▲"><br>
+                            <input class="sort" type="submit" name="updated_at-asc" value="▲"><br>
                             更新日時<br>
-                            <input type="submit" name="updated_at-desc" value="▼">
+                            <input class="sort" type="submit" name="updated_at-desc" value="▼">
                         </form>
                     </th>
                     <th><button onclick="location.href='./room_edit.php'">新規登録</button></th>
@@ -173,7 +193,7 @@ if (!empty($_POST['updated_at-asc'])) {
                     <tr>
                         <td><?=h($room['id'])?></td>
                         <td><?=h($room['name'])?></td>
-                        <?php if ($room['img']) : ?>
+                        <?php if ($room['img']):?>
                         <td><img src="<?= h(IMAGE_PATH . $room['img']) ?>" width="64" height="64" alt=""></td>
                         <?php else : ?>
                         <td><img src="../images/01.jpg" width="64" height="64" alt=""></td>
@@ -184,7 +204,7 @@ if (!empty($_POST['updated_at-asc'])) {
                             <a href="room_edit.php?id=<?=h($room['id'])?>&type=edit">編集</a>
                             <form action="" method="post">
                                 <input type="hidden" name="id" value="<?=h($room['id'])?>">
-                                <input type="submit" name="delete" id="delete-btn" value="削除">
+                                <input type="submit" name="delete" class="delete-btn" value="削除">
                             </form>
                         </td>
                     </tr>
@@ -196,14 +216,9 @@ if (!empty($_POST['updated_at-asc'])) {
         </footer>
     </div>
     <script>
-        const btn = document.querySelector('#delete-btn');
+        const btn = document.querySelector('.delete-btn');
         function deleteMessage() {
             let con = confirm('本当に削除しますか？');
-            if (con) {
-
-            }else{
-
-            }
         };
         btn.addEventListener('click', deleteMessage);
     </script>

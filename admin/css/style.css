@@ -25,7 +25,6 @@ body {
 .getPage {
     margin-bottom: 15px;
 }
-
 /*-------------------------
     ヘッダー
 -------------------------*/
@@ -137,6 +136,11 @@ body {
 .room_list-table td {
     height: 38px;
     border: 0.5px solid black;
+}
+.sort {
+    border-style: none;
+    background:rgba(255,0,0,0);
+    color: blue;
 }
 /*-------------------------
     roomedit
