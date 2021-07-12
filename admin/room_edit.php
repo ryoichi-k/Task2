@@ -15,6 +15,15 @@ $img   = '';
 $isEdited = false;
 $imgError = '';
 $edit_id = null;
+$detail_box = array(
+    array('capacity' => null, 'remarks' => '', 'price' => null)
+);
+$c = 0;//box追加ボタンを押した回数→最初は0回
+echo '<pre>';
+var_dump($detail_box);
+echo '</pre>';
+echo $c;//box追加ボタンを押した回数
+
 if (isset($_GET['type'])) {
     $edit_id   = $_GET['id'];
     $isEdited = true;
@@ -98,7 +107,31 @@ if (!empty($_POST['cancel-edit'])) {
         exit($e -> getMessage());
     }
 }
-
+//box追加処理
+if(isset($_POST['c'])){
+    $c = $_POST['c'];
+    // $detail_box[] = array('capacity' => null, 'remarks' => '', 'price' => null);
+}
+if(isset($_POST['add-box'])){
+    $c++;
+    for ($i = 0; $i < $c; $i++) {
+        $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
+    }
+    $count = count($detail_box);
+    echo '<pre>';
+    var_dump($detail_box);
+    echo '</pre>';
+    echo $c;//box追加ボタンを押した回数
+    echo $count;
+}
+// if (!empty($_POST['add-box'])) {
+//     $detail_box[] = array('capacity' => null, 'remarks' => '', 'price' => null);
+//     $c = count($detail_box);
+//     echo '<pre>';
+//     var_dump($detail_box);
+//     echo '</pre>';
+//     echo $c;
+// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -146,23 +179,38 @@ if (!empty($_POST['cancel-edit'])) {
                     <th rowspan="3">宿泊人数と価格</th>
                     <tr>
                         <?php if($isEdited == true):?>
-                        <div class="box">
-                            <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($room_edit_details['capacity'])?>">人</td>
-                            <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($room_edit_details['remarks'])?>"></td>
-                            <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($room_edit_details['price'])?>">円（税込）</td>
-                        </div>
+                            <div class="box">
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($room_edit_details['capacity'])?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($room_edit_details['remarks'])?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($room_edit_details['price'])?>">円（税込）</td>
+                            </div>
                         <?php else:?>
                             <div class="box">
-                            <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($capacity)?>">人</td>
-                            <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($remarks)?>"></td>
-                            <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($price)?>">円（税込）</td>
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($remarks)?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($price)?>">円（税込）</td>
+                            </div>
+                            <?php for ($i = 0; $i < $c; $i++):?>
+                            <div class="box">
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($remarks)?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($price)?>">円（税込）</td>
+                            </div>
+                            <?php endfor;?>
                         </div>
                         <?php endif;?>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
-                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                            <input type="hidden" name="c" value="<?=$c?>">
+                            <?php if ($c == 0):?>
+                                <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                            <?php elseif($c >= 1 && $c <=3):?>
+                                <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                                <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                            <?php elseif($c >= 4):?>
+                                <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                            <?php endif;?>
                         </td>
                     </tr>
                 </table>

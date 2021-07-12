@@ -9,6 +9,9 @@ $capacity   = null;
 $price = null;
 $remarks   = '';
 $isEdited = false;
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
 if (!empty($_POST['add-new-room-detail'])) {
     $name       = $_POST['name'];
     $capacity   = $_POST['capacity'];
