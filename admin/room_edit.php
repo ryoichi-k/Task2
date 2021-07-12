@@ -124,14 +124,6 @@ if(isset($_POST['add-box'])){
     echo $c;//box追加ボタンを押した回数
     echo $count;
 }
-// if (!empty($_POST['add-box'])) {
-//     $detail_box[] = array('capacity' => null, 'remarks' => '', 'price' => null);
-//     $c = count($detail_box);
-//     echo '<pre>';
-//     var_dump($detail_box);
-//     echo '</pre>';
-//     echo $c;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
