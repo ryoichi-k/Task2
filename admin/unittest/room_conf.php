@@ -1,33 +1,33 @@
 <?php
 session_start();
-require_once ('util.inc.php');
-require_once ('Model/Model.php');
-require_once ('getPage.php');
-require_once ('util.php');
+require_once ('../util.inc.php');
+require_once ('../Model/Model.php');
+require_once ('../getPage.php');
+require_once ('../util.php');
 $name  = '';
 $capacity   = null;
 $price = null;
 $remarks   = '';
 $isEdited = false;
 if (!empty($_POST['add-new-room-detail'])) {
-    $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $token      = $_POST['token'];
+    $name          = $_POST['name'];
+    $capacity      = $_POST['capacity'];
+    $price         = $_POST['price'];
+    $remarks       = $_POST['remarks'];
+    $token         = $_POST['token'];
     // array_merge($_POST, $)
     echo '<pre>';
-    print_r($_POST);
+    print_r($_POST[room]);
     echo '</pre>';
 }
-if (!empty($_POST['edit-room-detail'])) {
-    $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $token      = $_POST['token'];
-    $isEdited = true;
-}
+// if (!empty($_POST['edit-room-detail'])) {
+//     $name       = $_POST['name'];
+//     $capacity   = $_POST['capacity'];
+//     $price      = $_POST['price'];
+//     $remarks    = $_POST['remarks'];
+//     $token      = $_POST['token'];
+//     $isEdited = true;
+// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -37,7 +37,7 @@ if (!empty($_POST['edit-room-detail'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CICACU | 確認 管理</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="wrapper">

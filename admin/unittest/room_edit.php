@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once ('util.inc.php');
-require_once ('Model/Model.php');
-require_once ('getPage.php');
-require_once ('util.php');
+require_once ('../util.inc.php');
+require_once ('../Model/Model.php');
+require_once ('../getPage.php');
+require_once ('../util.php');
 
-const IMAGE_PATH = '../images/';
+const IMAGE_PATH = '../../images/';
 
 $name  = '';
 $capacity   = null;
@@ -19,93 +19,45 @@ $detail_box = array(
     array('capacity' => null, 'remarks' => '', 'price' => null)
 );
 $c = 0;//box追加ボタンを押した回数→最初は0回
-$dc = 0;//box削除ボタンを押した回数→最初は0回
-
+echo '<pre>';
+var_dump($detail_box);
+echo '</pre>';
 echo $c;//box追加ボタンを押した回数
 
-if (isset($_GET['type'])) {
-    $edit_id   = $_GET['id'];
-    $isEdited = true;
-    try {
-        //room
-        $model = new Model();
-        $model->connect();
-        $sql_edit = 'SELECT * FROM room WHERE id = ?';
-        $stmt = $model->dbh->prepare($sql_edit);
-        $stmt->execute([$edit_id]);
-        $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
-        //room_detail
-        $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ?';
-        $stmt = $model->dbh->prepare($sql_edit_detail);
-        $stmt->execute([$edit_id]);
-        //testで１行取得にしている後でfetchAllにする
-        $room_edit_details = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e -> getMessage());
-    }
-}
-//imgアップロード
-if (!empty($_POST['up-img-btn'])) {
-    if ($_FILES['upfile']['error'] == UPLOAD_ERR_OK) {
-        $img = mb_convert_encoding($_FILES['upfile']['name'], 'cp932', 'utf8');
-        if (!move_uploaded_file($_FILES['upfile']['tmp_name'], IMAGE_PATH . $img)){
-            $imgError = 'アップロードに失敗しました';
-        }
-    } elseif ($_FILES['upfile']['error'] == UPLOAD_ERR_NO_FILE) {
-        //no message
-    } else {
-        $imgError = 'アップロードに失敗しました';
-    }
-    $id = $_GET['id'];
-    try {
-        $model = new Model();
-        $model->connect();
-        chmod("../images", 0777);
-        $sql_img = 'UPDATE room
-                    SET img = ?
-                    WHERE id = ?';
-        $stmt = $model->dbh->prepare($sql_img);
-        $stmt->execute([$img, $id]);
-        chmod("../images", 0755);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e -> getMessage());
-    }
-}
-if (!empty($_POST['cancel'])) {
-    $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $token      = $_POST['token'];
-}
-if (!empty($_POST['cancel-edit'])) {
-    $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $token      = $_POST['token'];
-    try {
-        //room
-        $model = new Model();
-        $model->connect();
-        $sql_edit = 'SELECT * FROM room WHERE id = ?';
-        $stmt = $model->dbh->prepare($sql_edit);
-        $stmt->execute([$edit_id]);
-        $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
-        //room_detail
-        $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ?';
-        $stmt = $model->dbh->prepare($sql_edit_detail);
-        $stmt->execute([$edit_id]);
-        //testで１行取得にしている後でfetchAllにする
-        $room_edit_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $result = array_merge($room_edit_details, $_POST);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e -> getMessage());
-    }
-}
+
+// if (!empty($_POST['cancel'])) {
+//     $name       = $_POST['name'];
+//     $capacity   = $_POST['capacity'];
+//     $price      = $_POST['price'];
+//     $remarks    = $_POST['remarks'];
+//     $token      = $_POST['token'];
+// }
+// if (!empty($_POST['cancel-edit'])) {
+//     $name       = $_POST['name'];
+//     $capacity   = $_POST['capacity'];
+//     $price      = $_POST['price'];
+//     $remarks    = $_POST['remarks'];
+//     $token      = $_POST['token'];
+//     try {
+//         //room
+//         $model = new Model();
+//         $model->connect();
+//         $sql_edit = 'SELECT * FROM room WHERE id = ?';
+//         $stmt = $model->dbh->prepare($sql_edit);
+//         $stmt->execute([$edit_id]);
+//         $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
+//         //room_detail
+//         $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ?';
+//         $stmt = $model->dbh->prepare($sql_edit_detail);
+//         $stmt->execute([$edit_id]);
+//         //testで１行取得にしている後でfetchAllにする
+//         $room_edit_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//         $result = array_merge($room_edit_details, $_POST);
+//     } catch (PDOException $e) {
+//         header('Content-Type: text/plain; charset=UTF-8', true, 500);
+//         exit($e -> getMessage());
+//     }
+// }
 //box追加処理
 if(isset($_POST['c'])){
     $c = $_POST['c'];
@@ -113,37 +65,19 @@ if(isset($_POST['c'])){
 }
 if(isset($_POST['add-box'])){
     $c++;
+
     for ($i = 0; $i < $c; $i++) {
         $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
     }
-    // echo '<pre>';
-    // var_dump($detail_box);
-    // echo '</pre>';
     // $count = count($detail_box);
-    // $array = ['room' => $detail_box];
+    $array = ['room' => $detail_box];
     // $array2 = array_merge($fruit1, $fruit2);
-    // echo "box追加ボタンを押した回数" . $c;//box追加ボタンを押した回数
+    echo $c;//box追加ボタンを押した回数
     // echo $count;
+    echo '<pre>';
+    var_dump($_POST);
+    echo '</pre>';
 }
-//box削除処理
-if(isset($_POST['dc'])){
-    $dc = $_POST['dc'];
-}
-if(isset($_POST['delete-box'])){
-    $dc++;
-    $last = end($detail_box);
-    unset($last);
-    $c--;
-    // echo '<pre>';
-    // var_dump($detail_box);
-    // echo '</pre>';
-    // echo "box追加ボタンを押した回数" . $dc;//box削除ボタンを押した回数
-}
-echo "box追加ボタンを押した回数" . $c . "回";//box追加ボタンを押した回数
-echo "、box追加ボタンを押した回数" . $dc . "回";//box削除ボタンを押した回数
-// echo '<pre>';
-// var_dump($detail_box);
-// echo '</pre>';
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -153,7 +87,7 @@ echo "、box追加ボタンを押した回数" . $dc . "回";//box削除ボタ�
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CICACU | 編集 管理</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="edit-wrapper">
@@ -197,11 +131,16 @@ echo "、box追加ボタンを押した回数" . $dc . "回";//box削除ボタ�
                                 <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($room_edit_details['price'])?>">円（税込）</td>
                             </div>
                         <?php else:?>
+                            <div class="box">
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="room[0][capacity]" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="room[0][remarks]" value="<?=h($remarks)?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="room[0][price]" value="<?=h($price)?>">円（税込）</td>
+                            </div>
                             <?php for ($i = 0; $i < $c; $i++):?>
                             <div class="box">
-                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($capacity)?>">人</td>
-                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($remarks)?>"></td>
-                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($price)?>">円（税込）</td>
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="room[$i][capacity]" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="room[$i][remarks]" value="<?=h($remarks)?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="room[$i][price]" value="<?=h($price)?>">円（税込）</td>
                             </div>
                             <?php endfor;?>
                         </div>
@@ -210,7 +149,6 @@ echo "、box追加ボタンを押した回数" . $dc . "回";//box削除ボタ�
                     <tr>
                         <td colspan="3">
                             <input type="hidden" name="c" value="<?=$c?>">
-                            <input type="hidden" name="dc" value="<?=$dc?>">
                             <?php if ($c == 0):?>
                                 <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
                             <?php elseif($c >= 1 && $c <=3):?>
