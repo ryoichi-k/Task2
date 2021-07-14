@@ -15,48 +15,17 @@ $img   = '';
 $isEdited = false;
 $imgError = '';
 $edit_id = null;
+$detail_box = array(
+    array('capacity' => null, 'remarks' => '', 'price' => null)
+);
 $c = 0;//box追加ボタンを押した回数→最初は0回
 $dc = 0;//box削除ボタンを押した回数→最初は0回
-$detail_box = [];
-//box追加処理
-if(isset($_POST['add-box'])){
-    $c = $_POST['c'];
-    echo $c;
-    if ($c == 0) {
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-    }elseif ($c == 1) {
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-    }elseif ($c == 2) {
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-    }elseif ($c == 3) {
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-    }elseif ($c == 4) {
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-        array_push($detail_box, array('capacity' => null, 'remarks' => '', 'price' => null));
-    }
-    $c++;
 
-$array = ['detail' => $detail_box];
-$merged_array = array_merge($_POST, $array);
-
+echo $c;//box追加ボタンを押した回数
+$pushed = 0;
 echo '<pre>';
-print_r($merged_array);
+var_dump($_POST);
 echo '</pre>';
-}
-//box削除処理
-if(isset($_POST['delete-box'])){
-    array_pop($merged_array[detail]);
-}
-
 if (isset($_GET['type'])) {
     $edit_id   = $_GET['id'];
     $isEdited = true;
@@ -140,12 +109,87 @@ if (!empty($_POST['cancel-edit'])) {
         exit($e -> getMessage());
     }
 }
-
-
-
-// echo "box追加ボタンを押した回数" . $c . "回";//box追加ボタンを押した回数
-// echo "、box削除ボタンを押した回数" . $dc . "回";//box削除ボタンを押した回数
-
+//box追加処理
+if(isset($_POST['add-box'])){
+    $c = $_POST['c'];
+    $c++;
+    for ($i = 0; $i < $c; $i++) {
+        $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
+    }
+}
+echo '<li>追加された状態の配列<pre>';
+print_r($detail_box);
+echo '</pre></li>';
+//box削除処理
+if(isset($_POST['dc'])){
+    $dc = $_POST['dc'];
+}
+if(isset($_POST['delete-box'])){
+    echo '<li>取り除く前の配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
+    $dc++;
+    $val = array_pop($detail_box);
+    $c--;
+    echo '<li>取り除いたあとの配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
+    echo '<li>取り除いた値<pre>';
+    print_r($val);
+    echo '</pre></li>';
+}
+// if(isset($_POST['add-box'])){
+//     $c = $_POST['c'];
+//     echo '<li>追加前の配列<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+//     $c++;
+//     for ($i = 0; $i < $c; $i++) {
+//         $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
+//     }
+//     echo '<li>追加後の配列<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+//     $pushed = 1;
+// }
+// echo '<li>追加された状態の配列<pre>';
+// print_r($detail_box);
+// echo '</pre></li>';
+// //box削除処理
+// if(isset($_POST['dc'])){
+//     $dc = $_POST['dc'];
+// }
+// if(isset($_POST['delete-box'])){
+//     echo '<li>取り除く前の配列<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+//     $dc++;
+//     $val = array_pop($detail_box);
+//     $c--;
+//     echo '<li>取り除いたあとの配列<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+//     echo '<li>取り除いた値<pre>';
+//     print_r($val);
+//     echo '</pre></li>';
+// }
+// if($pushed = 1 && isset($_POST['delete-box'])){
+//     echo "かつ条件に入っています";
+//     echo $c;
+//     echo $dc;
+//     $diff = $c - $dc;
+//     for ($i = 0; $i < $diff; $i++) {
+//         $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
+//     }
+//     echo '<li>最終的な配列の状態<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+// }
+echo "box追加ボタンを押した回数" . $c . "回";//box追加ボタンを押した回数
+echo "、box削除ボタンを押した回数" . $dc . "回";//box削除ボタンを押した回数
+echo '<li>最終的な配列の状態<pre>';
+print_r($detail_box);
+echo '</pre></li>';
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -201,9 +245,9 @@ if (!empty($_POST['cancel-edit'])) {
                         <?php else:?>
                             <?php for ($i = 0; $i < $c; $i++):?>
                             <div class="box">
-                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=h($capacity)?>">人</td>
-                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=h($remarks)?>"></td>
-                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=h($price)?>">円（税込）</td>
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($remarks)?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($price)?>">円（税込）</td>
                             </div>
                             <?php endfor;?>
                         </div>
@@ -215,10 +259,10 @@ if (!empty($_POST['cancel-edit'])) {
                             <input type="hidden" name="dc" value="<?=$dc?>">
                             <?php if ($c == 0):?>
                                 <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
-                            <?php elseif($c >= 1 && $c <=4):?>
+                            <?php elseif($c >= 1 && $c <=3):?>
                                 <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
                                 <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
-                            <?php elseif($c == 5):?>
+                            <?php elseif($c >= 4):?>
                                 <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
                             <?php endif;?>
                         </td>

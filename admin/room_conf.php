@@ -10,12 +10,13 @@ $price = null;
 $remarks   = '';
 $isEdited = false;
 if (!empty($_POST['add-new-room-detail'])) {
-    $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $token      = $_POST['token'];
-    // array_merge($_POST, $)
+    $c      = $_POST['c'];
+    // $name       = $_POST['name'];
+    // $capacity   = $_POST['detail']['capacity'];
+    // $price      = $_POST['detail']['price'];
+    // $remarks    = $_POST['detail']['remarks'];
+    // $token      = $_POST['token'];
+
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
@@ -63,7 +64,7 @@ if (!empty($_POST['edit-room-detail'])) {
             <table class="room_edit-table">
                 <tr>
                     <th>客室名<span>（必須）</span></th>
-                    <td><?=h($name)?></td>
+                    <td><?=h($_POST['name'])?></td>
                 </tr>
                 <tr>
                     <th>人数</th>

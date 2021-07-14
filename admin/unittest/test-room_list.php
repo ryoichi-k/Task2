@@ -3,7 +3,7 @@
 $array = array();
 $id_array = array();
 $age_array = array();
-
+$array2 = [];
 $array = array(
     array(
         'id' => 1,
@@ -37,24 +37,27 @@ $array = array(
     )
 );
 // ソートの基準となる「id」と「age」を配列に入れる
-foreach( $array as $value) {
-    $id_array[] = $value['id'];
-    $age_array[] = $value['age'];
-}
-echo '<pre>';
-var_dump($array);
-echo '</pre>';
+// foreach( $array as $value) {
+//     $id_array[] = $value['id'];
+//     $age_array[] = $value['age'];
+// }
 // array_multisort( $age_array,
 //     SORT_ASC, SORT_NUMERIC,
 //     $id_array, SORT_DESC,
 //     SORT_NUMERIC, $array);
-$val = array_pop($array);
-echo '<li>取り除いたあとの配列<pre>';
+// $val = array_pop($array);
+// echo '<li>取り除いたあとの配列<pre>';
+//     print_r($array);
+//     echo '</pre></li>';
+    echo '<li>最初の配列<pre>';
     print_r($array);
     echo '</pre></li>';
-    echo '<li>取り除いた値<pre>';
-    print_r($val);
+if (!empty($_POST['add-array'])) {
+    $array2 = ['detail' => $array];
+    echo '<li>最終的な配列<pre>';
+    print_r($array2);
     echo '</pre></li>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -67,6 +70,8 @@ echo '<li>取り除いたあとの配列<pre>';
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+    <form action="" method="post">
+        <input type="submit" name="add-array" value="配列追加" formaction="test-room_list.php">
+    </form>
 </body>
 </html>
