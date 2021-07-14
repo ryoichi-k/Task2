@@ -5,7 +5,6 @@ function getPage(){
     $operation = '';
     $confOrDone = '';
     $curUrl = $_SERVER['REQUEST_URI'];//現在のページのURL取得
-    // echo $curUrl;
     //$itemName
     if (mb_ereg_match(".*(room)+\.*", $curUrl)) {
         $itemName = "客室管理";

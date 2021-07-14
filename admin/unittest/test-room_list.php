@@ -44,13 +44,17 @@ foreach( $array as $value) {
 echo '<pre>';
 var_dump($array);
 echo '</pre>';
-array_multisort( $age_array,
-    SORT_ASC, SORT_NUMERIC,
-    $id_array, SORT_DESC,
-    SORT_NUMERIC, $array);
-echo '<pre>';
-var_dump($array);
-echo '</pre>';
+// array_multisort( $age_array,
+//     SORT_ASC, SORT_NUMERIC,
+//     $id_array, SORT_DESC,
+//     SORT_NUMERIC, $array);
+$val = array_pop($array);
+echo '<li>取り除いたあとの配列<pre>';
+    print_r($array);
+    echo '</pre></li>';
+    echo '<li>取り除いた値<pre>';
+    print_r($val);
+    echo '</pre></li>';
 ?>
 <!DOCTYPE html>
 <html lang="ja">

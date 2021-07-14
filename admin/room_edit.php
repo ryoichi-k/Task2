@@ -22,7 +22,7 @@ $c = 0;//box追加ボタンを押した回数→最初は0回
 $dc = 0;//box削除ボタンを押した回数→最初は0回
 
 echo $c;//box追加ボタンを押した回数
-
+$pushed = 0;
 if (isset($_GET['type'])) {
     $edit_id   = $_GET['id'];
     $isEdited = true;
@@ -109,41 +109,60 @@ if (!empty($_POST['cancel-edit'])) {
 //box追加処理
 if(isset($_POST['c'])){
     $c = $_POST['c'];
-    // $detail_box[] = array('capacity' => null, 'remarks' => '', 'price' => null);
 }
-if(isset($_POST['add-box'])){
+if(!empty($_POST['add-box'])){
+    echo '<li>追加前の配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
     $c++;
     for ($i = 0; $i < $c; $i++) {
         $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
     }
-    // echo '<pre>';
-    // var_dump($detail_box);
-    // echo '</pre>';
-    // $count = count($detail_box);
-    // $array = ['room' => $detail_box];
-    // $array2 = array_merge($fruit1, $fruit2);
-    // echo "box追加ボタンを押した回数" . $c;//box追加ボタンを押した回数
-    // echo $count;
+    echo '<li>追加後の配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
+    $pushed = 1;
 }
+echo '<li>追加された状態の配列<pre>';
+print_r($detail_box);
+echo '</pre></li>';
 //box削除処理
 if(isset($_POST['dc'])){
     $dc = $_POST['dc'];
 }
 if(isset($_POST['delete-box'])){
+    echo '<li>取り除く前の配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
     $dc++;
-    $last = end($detail_box);
-    unset($last);
+    for ($i = 0; $i < $dc; $i++) {
+        $val = array_pop($detail_box);
+    }
     $c--;
-    // echo '<pre>';
-    // var_dump($detail_box);
-    // echo '</pre>';
-    // echo "box追加ボタンを押した回数" . $dc;//box削除ボタンを押した回数
+    echo '<li>取り除いたあとの配列<pre>';
+    print_r($detail_box);
+    echo '</pre></li>';
+    echo '<li>取り除いた値<pre>';
+    print_r($val);
+    echo '</pre></li>';
 }
+// if($pushed = 1 && isset($_POST['delete-box'])){
+//     echo "かつ条件に入っています";
+//     echo $c;
+//     echo $dc;
+//     $diff = $c - $dc;
+//     for ($i = 0; $i < $diff; $i++) {
+//         $detail_box[$i] = array('capacity' => null, 'remarks' => '', 'price' => null);
+//     }
+//     echo '<li>最終的な配列の状態<pre>';
+//     print_r($detail_box);
+//     echo '</pre></li>';
+// }
 echo "box追加ボタンを押した回数" . $c . "回";//box追加ボタンを押した回数
 echo "、box追加ボタンを押した回数" . $dc . "回";//box削除ボタンを押した回数
-// echo '<pre>';
-// var_dump($detail_box);
-// echo '</pre>';
+echo '<li>最終的な配列の状態<pre>';
+print_r($detail_box);
+echo '</pre></li>';
 ?>
 <!DOCTYPE html>
 <html lang="ja">
