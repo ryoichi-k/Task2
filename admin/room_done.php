@@ -12,6 +12,9 @@ if (!empty($_POST['send'])) {
     $capacity   = $_POST['capacity'];
     $price      = $_POST['price'];
     $remarks    = $_POST['remarks'];
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
     try {
         $model = new Model();
         $model->connect();

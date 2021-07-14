@@ -60,23 +60,23 @@ if (!empty($_POST['edit-room-detail'])) {
         <main>
         <div class="room_conf-container">
             <h2>確認画面</h2>
-            <div class="getPage"><?php getPage(); ?></div>
+            <div class="getPage"><?php getPage();?></div>
             <table class="room_edit-table">
                 <tr>
                     <th>客室名<span>（必須）</span></th>
                     <td><?=h($_POST['name'])?></td>
                 </tr>
                 <tr>
-                    <th>人数</th>
-                    <td><?=h($capacity)?>人</td>
-                </tr>
-                <tr>
-                    <th>価格</th>
-                    <td><?=h($price)?>円（税込み）</td>
-                </tr>
-                <tr>
-                    <th>追記</th>
-                    <td><?=h($remarks)?></td>
+                    <th>詳細</th>
+                    <td>
+                <?php for ($i = 0; $i < $c; $i++):?>
+                    <p>
+                        人数：<?=h($_POST['detail'][$i]['capacity'])?>人
+                        価格：<?=h($_POST['detail'][$i]['price'])?>円（税込み）
+                        追記：<?=h($_POST['detail'][$i]['remarks'])?>
+                    </p>
+                <?php endfor;?>
+                </td>
                 </tr>
             </table>
             <?php if($isEdited == true):?>
