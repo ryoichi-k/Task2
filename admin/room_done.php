@@ -9,15 +9,19 @@ $isEdited = null;
 //新規登録
 if (!empty($_POST['send'])) {
     $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
+    // $capacity   = $_POST['capacity'];
+    // $price      = $_POST['price'];
+    // $remarks    = $_POST['remarks'];
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
     try {
         $model = new Model();
         $model->connect();
+        //insert into room where name = $name
+        $sql_room = 'INSERT INTO room(name, created_at) VALUES(?, ?)';
+        $stmt = $model->dbh->prepare($sql_room);
+        $stmt->execute([$name]);
         //入力されたnameからroomテーブルのidをなんとか取得する
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
@@ -25,9 +29,13 @@ if (!empty($_POST['send'])) {
         $room = $stmt->fetch(PDO::FETCH_ASSOC);//id,name,cre,up,
         //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
         $room_id = $room['id'];
-        $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
-        $stmt = $model->dbh->prepare($sql_room_detail);
-        $stmt->execute([$room_id, $capacity, $remarks, $price]);
+        foreach ($_POST as $key => $value) {
+            $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
+            $stmt = $model->dbh->prepare($sql_room_detail);
+            $stmt->execute([$room_id, $_POST[]['capacity'], $_POST[]['remarks'], $_POST[]['price']]);
+            // $stmt->execute([$room_id, $capacity, $remarks, $price]);
+        }
+
         $isSended = 1;
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';

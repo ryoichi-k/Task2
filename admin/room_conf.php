@@ -90,10 +90,12 @@ if (!empty($_POST['edit-room-detail'])) {
             </form>
             <?php else:?>
             <form action="" method="post">
-                <input type="hidden" name="name" value="<?=h($name)?>">
-                <input type="hidden" name="capacity" value="<?=h($capacity)?>">
-                <input type="hidden" name="price" value="<?=$price?>">
-                <input type="hidden" name="remarks" value="<?=$remarks?>">
+                <?php for ($i = 0; $i < $c; $i++):?>
+                    <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
+                <?php endfor;?>
                 <p><input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
             </form>
             <?php endif;?>
