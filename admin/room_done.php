@@ -9,33 +9,34 @@ $isEdited = null;
 //新規登録
 if (!empty($_POST['send'])) {
     $name       = $_POST['name'];
-    // $capacity   = $_POST['capacity'];
-    // $price      = $_POST['price'];
-    // $remarks    = $_POST['remarks'];
     echo '<pre>';
     print_r($_POST);
+    echo '</pre>';
+    echo '<pre>';
+    print_r($_POST['detail']);
     echo '</pre>';
     try {
         $model = new Model();
         $model->connect();
+        $date = new DateTime();
+        $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
+        $time = $date->format('Y-m-d H:i:s');
         //insert into room where name = $name
         $sql_room = 'INSERT INTO room(name, created_at) VALUES(?, ?)';
         $stmt = $model->dbh->prepare($sql_room);
-        $stmt->execute([$name]);
-        //入力されたnameからroomテーブルのidをなんとか取得する
+        $stmt->execute([$name, $time]);
+        //入力されたnameからroomテーブルのidを取得
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
         $room = $stmt->fetch(PDO::FETCH_ASSOC);//id,name,cre,up,
         //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
         $room_id = $room['id'];
-        foreach ($_POST as $key => $value) {
+        foreach ($_POST['detail'] as $value) {
             $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
             $stmt = $model->dbh->prepare($sql_room_detail);
-            $stmt->execute([$room_id, $_POST[]['capacity'], $_POST[]['remarks'], $_POST[]['price']]);
-            // $stmt->execute([$room_id, $capacity, $remarks, $price]);
+            $stmt->execute([$room_id, $value['capacity'], $value['remarks'], $value['price']]);
         }
-
         $isSended = 1;
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
@@ -49,14 +50,20 @@ if (!empty($_POST['send'])) {
 //編集
 if (!empty($_POST['send-edit'])) {
     $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
-    $updated_at    = $_POST['updated_at'];
+    // $capacity   = $_POST['capacity'];
+    // $price      = $_POST['price'];
+    // $remarks    = $_POST['remarks'];
+    // $updated_at    = $_POST['updated_at'];
     $date = new DateTime();
     $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
     $today = $date->format('Y-m-d H:i:s');
     $updated_at = $today;
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
+    echo '<pre>';
+    print_r($_POST['detail']);
+    echo '</pre>';
     try {
         $model = new Model();
         $model->connect();
@@ -74,13 +81,15 @@ if (!empty($_POST['send-edit'])) {
         $stmt = $model->dbh->prepare($sql_room_edit_done);
         $stmt->execute([$name, $updated_at, $room_id]);
         //詳細に部屋情報を上書き保存ここでエラーでてる→SETに,が足りなかった。
+        foreach ($_POST['detail'] as $value) {
         $sql_room_detail_edit_done = 'UPDATE room_detail
                                         SET capacity = ?,
                                         price = ?,
                                         remarks = ?
                                         WHERE room_id = ? ';
         $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
-        $stmt->execute([$capacity, $price, $remarks, $room_id]);
+        $stmt->execute([$value['capacity'], $value['price'], $value['remarks'], $room_id]);
+        }
         $isEdited = true;
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';

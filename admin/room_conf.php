@@ -11,22 +11,21 @@ $remarks   = '';
 $isEdited = false;
 if (!empty($_POST['add-new-room-detail'])) {
     $c      = $_POST['c'];
-    // $name       = $_POST['name'];
-    // $capacity   = $_POST['detail']['capacity'];
-    // $price      = $_POST['detail']['price'];
-    // $remarks    = $_POST['detail']['remarks'];
-    // $token      = $_POST['token'];
-
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
 }
+//編集→確認
 if (!empty($_POST['edit-room-detail'])) {
     $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
+    $count_edited_box = count($_POST['detail']);
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
+    echo '<pre>';
+    print_r($_POST['detail']);
+    echo '</pre>';
     $isEdited = true;
 }
 ?>
@@ -69,23 +68,35 @@ if (!empty($_POST['edit-room-detail'])) {
                 <tr>
                     <th>詳細</th>
                     <td>
-                <?php for ($i = 0; $i < $c; $i++):?>
-                    <p>
-                        人数：<?=h($_POST['detail'][$i]['capacity'])?>人
-                        価格：<?=h($_POST['detail'][$i]['price'])?>円（税込み）
-                        追記：<?=h($_POST['detail'][$i]['remarks'])?>
-                    </p>
-                <?php endfor;?>
+                    <?php if($isEdited == true):?>
+                        <?php for ($i = 0; $i < $count_edited_box; $i++):?>
+                            <p>
+                                人数：<?=h($_POST['detail'][$i]['capacity'])?>人
+                                価格：<?=h($_POST['detail'][$i]['price'])?>円（税込み）
+                                追記：<?=h($_POST['detail'][$i]['remarks'])?>
+                            </p>
+                        <?php endfor;?>
+                    <?php else:?>
+                        <?php for ($i = 0; $i < $c; $i++):?>
+                            <p>
+                                人数：<?=h($_POST['detail'][$i]['capacity'])?>人
+                                価格：<?=h($_POST['detail'][$i]['price'])?>円（税込み）
+                            追記：<?=h($_POST['detail'][$i]['remarks'])?>
+                            </p>
+                        <?php endfor;?>
+                    <?php endif;?>
                 </td>
                 </tr>
             </table>
             <?php if($isEdited == true):?>
                 <form action="" method="post">
-                <input type="hidden" name="name" value="<?=h($name)?>">
-                <input type="hidden" name="capacity" value="<?=h($capacity)?>">
-                <input type="hidden" name="price" value="<?=$price?>">
-                <input type="hidden" name="remarks" value="<?=$remarks?>">
-                <input type="hidden" name="updated_at" value="<?=h($updated_at)?>">
+                <?php for ($i = 0; $i < $count_edited_box; $i++):?>
+                    <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
+                    
+                <?php endfor;?>
                 <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
             </form>
             <?php else:?>
@@ -101,19 +112,23 @@ if (!empty($_POST['edit-room-detail'])) {
             <?php endif;?>
             <?php if($isEdited == true):?>
                 <form action="" method="post">
-                    <input type="hidden" name="name" value="<?=$name?>">
-                    <input type="hidden" name="capacity" value="<?=$capacity?>">
-                    <input type="hidden" name="price" value="<?=$price?>">
-                    <input type="hidden" name="remarks" value="<?=$remarks?>">
+                    <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+                <?php for ($i = 0; $i < $count_edited_box; $i++):?>
+                    <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
                     <input type="hidden" name="token" value="<?=getToken()?>">
+                <?php endfor;?>
                     <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel-edit"></p>
                 </form>
             <?php else:?>
                 <form action="" method="post">
-                    <input type="hidden" name="name" value="<?=$name?>">
-                    <input type="hidden" name="capacity" value="<?=$capacity?>">
-                    <input type="hidden" name="price" value="<?=$price?>">
-                    <input type="hidden" name="remarks" value="<?=$remarks?>">
+                    <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+                    <?php for ($i = 0; $i < $c; $i++):?>
+                    <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
+                    <?php endfor;?>
                     <input type="hidden" name="token" value="<?=getToken()?>">
                     <p><input type="submit" value="修正" formaction="room_edit.php" name="cancel"></p>
                 </form>

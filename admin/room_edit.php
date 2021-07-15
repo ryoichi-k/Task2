@@ -56,7 +56,7 @@ echo '</pre>';
 if(isset($_POST['delete-box'])){
     array_pop($merged_array[detail]);
 }
-
+//編集ボタン押下時
 if (isset($_GET['type'])) {
     $edit_id   = $_GET['id'];
     $isEdited = true;
@@ -68,12 +68,17 @@ if (isset($_GET['type'])) {
         $stmt = $model->dbh->prepare($sql_edit);
         $stmt->execute([$edit_id]);
         $room_edit = $stmt->fetch(PDO::FETCH_ASSOC);
-        //room_detail
+        //room_detail foreach
         $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ?';
         $stmt = $model->dbh->prepare($sql_edit_detail);
         $stmt->execute([$edit_id]);
         //testで１行取得にしている後でfetchAllにする
-        $room_edit_details = $stmt->fetch(PDO::FETCH_ASSOC);
+        $room_edit_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count_room_edit_details = count($room_edit_details);
+        echo $count_room_edit_details;
+        echo '<pre>';
+        print_r($room_edit_details);
+        echo '</pre>';
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e -> getMessage());
@@ -193,11 +198,13 @@ if (!empty($_POST['cancel-edit'])) {
                     <th rowspan="3">宿泊人数と価格</th>
                     <tr>
                         <?php if($isEdited == true):?>
+                            <?php for ($i = 0; $i < $count_room_edit_details; $i++):?>
                             <div class="box">
-                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="capacity" value="<?=h($room_edit_details['capacity'])?>">人</td>
-                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="remarks" value="<?=h($room_edit_details['remarks'])?>"></td>
-                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="price" value="<?=h($room_edit_details['price'])?>">円（税込）</td>
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=h($room_edit_details[$i]['capacity'])?>">人</td>
+                                <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=h($room_edit_details[$i]['remarks'])?>"></td>
+                                <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=h($room_edit_details[$i]['price'])?>">円（税込）</td>
                             </div>
+                            <?php endfor;?>
                         <?php else:?>
                             <?php for ($i = 0; $i < $c; $i++):?>
                             <div class="box">
@@ -213,20 +220,31 @@ if (!empty($_POST['cancel-edit'])) {
                         <td colspan="3">
                             <input type="hidden" name="c" value="<?=$c?>">
                             <input type="hidden" name="dc" value="<?=$dc?>">
-                            <?php if ($c == 0):?>
-                                <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
-                            <?php elseif($c >= 1 && $c <=4):?>
-                                <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
-                                <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
-                            <?php elseif($c == 5):?>
-                                <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                            <?php if($isEdited == true):?>
+                                <?php if ($c == 0):?>
+                                    <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                                <?php elseif($c >= 1 && $c <=4):?>
+                                    <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                                    <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                                <?php elseif($c == 5):?>
+                                    <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                                <?php endif;?>
+                            <?php else:?>
+                                <?php if ($c == 0):?>
+                                    <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                                <?php elseif($c >= 1 && $c <=4):?>
+                                    <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php">
+                                    <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                                <?php elseif($c == 5):?>
+                                    <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php">
+                                <?php endif;?>
                             <?php endif;?>
                         </td>
                     </tr>
                 </table>
                 <p>
                 <?php if($isEdited == true):?>
-                    <input type="submit" name="edit-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php?type=edit">
+                    <input type="submit" name="edit-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php?id=<?=$room_edit['id']?>&type=edit">
                 <?php else:?>
                     <input type="submit" name="add-new-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php">
                 <?php endif;?>
