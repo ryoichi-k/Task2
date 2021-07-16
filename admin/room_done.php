@@ -38,6 +38,7 @@ if (!empty($_POST['send'])) {
             $stmt->execute([$room_id, $value['capacity'], $value['remarks'], $value['price']]);
         }
         $isSended = 1;
+        unset($value);
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
         $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
@@ -83,14 +84,16 @@ if (!empty($_POST['send-edit'])) {
         //詳細に部屋情報を上書き保存ここでエラーでてる→SETに,が足りなかった。
         foreach ($_POST['detail'] as $value) {
         $sql_room_detail_edit_done = 'UPDATE room_detail
-                                        SET capacity = ?,
+                                        SET
+                                        capacity = ?,
                                         price = ?,
                                         remarks = ?
-                                        WHERE room_id = ? ';
+                                        WHERE room_id = ? AND id = ?';
         $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
-        $stmt->execute([$value['capacity'], $value['price'], $value['remarks'], $room_id]);
+        $stmt->execute([$value['capacity'], $value['price'], $value['remarks'], $room_id, $value['id']]);
         }
         $isEdited = true;
+        // unset($value);
         //test
         $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
         $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない

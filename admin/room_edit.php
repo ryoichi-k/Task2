@@ -76,9 +76,10 @@ if (isset($_GET['type'])) {
         $room_edit_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $count_room_edit_details = count($room_edit_details);
         echo $count_room_edit_details;
-        echo '<pre>';
+        echo '<li>配列room_edit_detailsを表示<pre>';
         print_r($room_edit_details);
-        echo '</pre>';
+        echo '</pre></li>';
+        echo $room_edit_details[2]['id'];
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e -> getMessage());
@@ -200,6 +201,7 @@ if (!empty($_POST['cancel-edit'])) {
                         <?php if($isEdited == true):?>
                             <?php for ($i = 0; $i < $count_room_edit_details; $i++):?>
                             <div class="box">
+                                <input type="hidden" name="detail[<?=$i?>][id]" value="<?=$room_edit_details[$i]['id']?>">
                                 <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=h($room_edit_details[$i]['capacity'])?>">人</td>
                                 <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=h($room_edit_details[$i]['remarks'])?>"></td>
                                 <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=h($room_edit_details[$i]['price'])?>">円（税込）</td>

@@ -20,12 +20,12 @@ if (!empty($_POST['edit-room-detail'])) {
     $name       = $_POST['name'];
     $token      = $_POST['token'];
     $count_edited_box = count($_POST['detail']);
-    echo '<pre>';
+    echo '<li>editから送られてきた$_POST<pre>';
     print_r($_POST);
-    echo '</pre>';
-    echo '<pre>';
+    echo '</pre></li>';
+    echo '<li>配列$_POSTdetail<pre>';
     print_r($_POST['detail']);
-    echo '</pre>';
+    echo '</pre></li>';
     $isEdited = true;
 }
 ?>
@@ -91,11 +91,12 @@ if (!empty($_POST['edit-room-detail'])) {
             <?php if($isEdited == true):?>
                 <form action="" method="post">
                 <?php for ($i = 0; $i < $count_edited_box; $i++):?>
+                    <input type="hidden" name="detail[<?=$i?>][id]" value="<?=h($_POST['detail'][$i]['id'])?>">
                     <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
                     <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
                     <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
                     <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
-                    
+
                 <?php endfor;?>
                 <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
             </form>
