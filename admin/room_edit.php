@@ -114,17 +114,18 @@ if (!empty($_POST['up-img-btn'])) {
     }
 }
 if (!empty($_POST['cancel'])) {
+    echo '<li>confの修正ボタンで送られてきた$_POST<pre>';
+    print_r($_POST);
+    echo '</pre></li>';
     $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
+    // $capacity   = $_POST['capacity'];
+    // $price      = $_POST['price'];
+    // $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
+    $c = $_POST['c'];
 }
 if (!empty($_POST['cancel-edit'])) {
     $name       = $_POST['name'];
-    $capacity   = $_POST['capacity'];
-    $price      = $_POST['price'];
-    $remarks    = $_POST['remarks'];
     $token      = $_POST['token'];
     try {
         //room
