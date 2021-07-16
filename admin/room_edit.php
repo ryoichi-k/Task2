@@ -211,7 +211,7 @@ if (!empty($_POST['cancel-edit'])) {
                         <?php else:?>
                             <?php for ($i = 0; $i < $c; $i++):?>
                             <div class="box">
-                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=h($capacity)?>">人</td>
+                                <td id="room_edit-td-capacity"><div class="indent">人数：</div><br><input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">人</td>
                                 <td id="room_edit-td-remarks"><div class="indent">追記：</div><br><input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=h($remarks)?>"></td>
                                 <td id="room_edit-td-price"><div class="indent">価格：</div><br><input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=h($price)?>">円（税込）</td>
                             </div>
