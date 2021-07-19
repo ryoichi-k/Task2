@@ -216,15 +216,15 @@ a:hover {
     margin-left: 10px;
 }
 input.room_edit-input-capacity {
-    width: 40%;
+    width: 40px;
     margin-left: 10px;
 }
 input.room_edit-input-remarks {
-    width: 70%;
+    width: 50%;
     margin-left: 10px;
 }
 input.room_edit-input-price {
-    width: 40%;
+    width: 70px;
     margin-left: 10px;
 }
 .room_edit-container {
