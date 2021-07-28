@@ -1,45 +1,14 @@
 <?php
 session_start();
-require_once '../util.inc.php';
-require_once '../Model/Model.php';
-require_once 'getPage.php';
-require_once ('../htmlspecialchars.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/getPage.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
-if (isset($_SESSION['edit'])) {
-    $edit        = $_SESSION['edit'];
-    $name        = $edit['name'];
-    $capacity    = $edit['capacity'];
-    $price       = $edit['price'];
-    $remarks     = $edit['remarks'];
-    $token       = $edit['token'];
-    if ($token !== getToken()) { //両者にハッシュが帰ってくる
-        header('Location: room_edit.php');
-        exit;
-        // var_dump($contact);
-    }
-} else { //urlの直打ちで訪れたときはお問い合わせに飛ばされる
-    header('Location: room_edit.php');
-    exit;
-}
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    // unset($_SESSION['edit']);
-    header('Location: room_done.php');
-    exit;
-}
-/**
- * XSS対策の参照名省略
- *
- * @param string string
- * @return string
- *
- */
-function h(?string $string): string
-{
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+if (!empty($_POST)) {
+    $count_box = count($_POST['detail']);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -53,7 +22,7 @@ function h(?string $string): string
 <body>
     <div class="wrapper">
         <header class="gl-header">
-            <p class="top-p">ログイン名[<?= ($_SESSION['admin']['name']); ?>]さん、ご機嫌いかがですか？</p>
+            <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']);?>]さん、ご機嫌いかがですか？</p>
             <div class="logout-link"><a href="logout.php">ログアウトする</a></div>
             <h1>CICACU</h1>
             <nav class="gl-nav">
@@ -68,30 +37,44 @@ function h(?string $string): string
             </nav>
         </header>
         <main>
+        <div class="room_conf-container">
             <h2>確認画面</h2>
-            <?php getPage();?>
+            <div class="getPage"><?php getPage();?></div>
             <table class="room_edit-table">
                 <tr>
                     <th>客室名<span>（必須）</span></th>
-                    <td><?= h($name) ?></td>
+                    <td><?=h($_POST['name'])?></td>
                 </tr>
                 <tr>
-                    <th>人数</th>
-                    <td><?= h($capacity) ?>人</td>
-                </tr>
-                <tr>
-                    <th>価格</th>
-                    <td><?= h($price) ?>円（税込み）</td>
-                </tr>
-                <tr>
-                    <th>追記</th>
-                    <td><?= h($remarks) ?></td>
+                    <th>詳細</th>
+                    <td>
+                        <?php for ($i = 0; $i < $count_box; $i++):?>
+                            <p>
+                                人数：<?=h($_POST['detail'][$i]['capacity'])?>人
+                                価格：<?=h($_POST['detail'][$i]['price'])?>円（税込み）
+                                追記：<?=h($_POST['detail'][$i]['remarks'])?>
+                            </p>
+                        <?php endfor;?>
+                </td>
                 </tr>
             </table>
-            <form action="" method="post">
-                <p><input class="conf-submit" type="submit" value="登録完了"></p>
-                <button type="submit" class="conf-cancel" formaction="room_edit.php">修正</button>
-            </form>
+                <form action="" method="post">
+                <?php for ($i = 0; $i < $count_box; $i++):?>
+                    <input type="hidden" name="detail[<?=$i?>][id]" value="<?=h($_POST['detail'][$i]['id'])?>">
+                    <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                    <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
+                    <input type="hidden" name="token" value="<?=getToken()?>">
+                <?php endfor;?>
+                <?php if(isset($_GET['id'])):?>
+                    <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
+                <?php else:?>
+                    <p><input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
+                <?php endif;?>
+                    <p><input type="submit" value="修正" formaction="room_edit.php<?=isset($_GET['id']) ? '?id=' . $_GET['id'] : '' ?><?=isset($_GET['id']) ? '&type=edit' : ''?>" name="cancel-edit"></p>
+                </form>
+        </div>
         </main>
         <footer class="gl-footer">
             <p><small>2021 ebacorp.inc</small></p>

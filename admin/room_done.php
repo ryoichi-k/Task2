@@ -8,29 +8,20 @@ $isSended = null;
 $isEdited = null;
 //新規登録
 if (!empty($_POST['send'])) {
-    $name       = $_POST['name'];
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
-    echo '<pre>';
-    print_r($_POST['detail']);
-    echo '</pre>';
+    $name = $_POST['name'];
     try {
         $model = new Model();
         $model->connect();
         $date = new DateTime();
         $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
         $time = $date->format('Y-m-d H:i:s');
-        //insert into room where name = $name
         $sql_room = 'INSERT INTO room(name, created_at) VALUES(?, ?)';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name, $time]);
-        //入力されたnameからroomテーブルのidを取得
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
-        $room = $stmt->fetch(PDO::FETCH_ASSOC);//id,name,cre,up,
-        //id=room_idのため、取得したidをroom_idに代入してINSERTでroom_detailテーブルに挿入
+        $room = $stmt->fetch(PDO::FETCH_ASSOC);
         $room_id = $room['id'];
         foreach ($_POST['detail'] as $value) {
             $sql_room_detail = 'INSERT INTO room_detail(room_id, capacity, remarks, price) VALUES(?, ?, ?, ?)';
@@ -39,65 +30,43 @@ if (!empty($_POST['send'])) {
         }
         $isSended = 1;
         unset($value);
-        //test
-        $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
-        $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
-        $rooms_test = $stmt->fetchAll(PDO::FETCH_ASSOC); //$resultにユーザー情報全員分が格納されているORDER BY id DESC
-    } catch (PDOException $e) {
+        } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());
     }
 }
 //編集
 if (!empty($_POST['send-edit'])) {
-    $name       = $_POST['name'];
-    // $capacity   = $_POST['capacity'];
-    // $price      = $_POST['price'];
-    // $remarks    = $_POST['remarks'];
-    // $updated_at    = $_POST['updated_at'];
+    $name = $_POST['name'];
     $date = new DateTime();
     $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
     $today = $date->format('Y-m-d H:i:s');
     $updated_at = $today;
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
-    echo '<pre>';
-    print_r($_POST['detail']);
-    echo '</pre>';
     try {
         $model = new Model();
         $model->connect();
-        //入力されたnameからroomテーブルのidを取得する
         $sql_room = 'SELECT * FROM room WHERE name = ? ';
         $stmt = $model->dbh->prepare($sql_room);
         $stmt->execute([$name]);
         $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
         $room_id = $room_edit_done['id'];
-        //roomテーブルに部屋名を上書き保存
         $sql_room_edit_done = 'UPDATE room
-                                SET name = ?,
-                                updated_at = ?
-                                WHERE id = ? ';
+                                            SET name = ?,
+                                            updated_at = ?
+                                            WHERE id = ? ';
         $stmt = $model->dbh->prepare($sql_room_edit_done);
         $stmt->execute([$name, $updated_at, $room_id]);
-        //詳細に部屋情報を上書き保存ここでエラーでてる→SETに,が足りなかった。
+        $sql_room_detail_delete_flg_to_one = 'UPDATE room_detail
+                                                                SET delete_flg = 1
+                                                                WHERE room_id = ? ';
+        $stmt = $model->dbh->prepare($sql_room_detail_delete_flg_to_one);
+        $stmt->execute([$room_id]);
         foreach ($_POST['detail'] as $value) {
-        $sql_room_detail_edit_done = 'UPDATE room_detail
-                                        SET
-                                        capacity = ?,
-                                        price = ?,
-                                        remarks = ?
-                                        WHERE room_id = ? AND id = ?';
-        $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
-        $stmt->execute([$value['capacity'], $value['price'], $value['remarks'], $room_id, $value['id']]);
+            $sql_room_detail_edit_done ='INSERT INTO room_detail(room_id, capacity, price, remarks) VALUES (?, ?, ?, ?)';
+            $stmt = $model->dbh->prepare($sql_room_detail_edit_done);
+            $stmt->execute([$room_id, $value['capacity'], $value['price'], $value['remarks']]);
         }
         $isEdited = true;
-        // unset($value);
-        //test
-        $sql_test = 'SELECT * FROM room_detail JOIN room ON room_detail.room_id = room.id ORDER BY room_detail.id DESC';
-        $stmt = $model->dbh->query($sql_test); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
-        $rooms_test = $stmt->fetchAll(PDO::FETCH_ASSOC); //$resultにユーザー情報全員分が格納されているORDER BY id DESC
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());
@@ -137,26 +106,6 @@ if (!empty($_POST['send-edit'])) {
         <?php endif;?>
         <?php if(isset($isSended)):?>
                 <h3 class="done-message">登録完了しました。</h3>
-            <table class="room_list-table test-table" border="1">
-                <tr>
-                    <th>ID</th>
-                    <th>room_id</th>
-                    <th>人数</th>
-                    <th>追記</th>
-                    <th>価格</th>
-                    <th>部屋名</th>
-                </tr>
-                <?php foreach ($rooms_test as $test):?>
-                    <tr>
-                        <td><?=h($test['id'])?></td>
-                        <td><?=h($test['room_id'])?></td>
-                        <td><?=h($test['capacity'])?></td>
-                        <td><?=h($test['remarks'])?></td>
-                        <td><?=h($test['price'])?></td>
-                        <td><?=h($test['name'])?></td>
-                    </tr>
-                <?php endforeach;?>
-            </table>
         <?php else:?>
             <h2></h2>
         <?php endif;?>

@@ -8,7 +8,7 @@ try {
     $model = new Model();
     $model->connect();
     $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY created_at DESC';
-    $stmt = $model->dbh->query($sql); //dbhプロパティにpdoが格納されているので、dbhにアクセスしないとprepareメソッドは使えない
+    $stmt = $model->dbh->query($sql);
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     header('Content-Type: text/plain; charset=UTF-8', true, 500);
@@ -17,7 +17,7 @@ try {
 //id sort desc
 if (!empty($_POST['id-desc'])) {
     $id_array = array();
-    foreach( $rooms as $value) {
+    foreach($rooms as $value) {
         $id_array[] = $value['id'];
     }
         array_multisort(
@@ -30,7 +30,7 @@ if (!empty($_POST['id-desc'])) {
 //id sort asc
 if (!empty($_POST['id-asc'])) {
     $id_array = array();
-    foreach( $rooms as $value) {
+    foreach($rooms as $value) {
         $id_array[] = $value['id'];
     }
         array_multisort(
@@ -96,21 +96,17 @@ if (!empty($_POST['updated_at-desc'])) {
 }
 //updated_at sort asc
 if (!empty($_POST['updated_at-asc'])) {
-    $id_array = array();
-    $updated_at_array = array();
-    foreach($rooms as $value) {
-        $id_array[] = $value['id'];
-        $updated_at_array[] = $value['updated_at'];
+    try {
+        $model = new Model();
+        $model->connect();
+        $sqla = 'SELECT * FROM room WHERE delete_flg = 0
+        ORDER BY updated_at IS NULL ASC, updated_at ';
+        $stmt = $model->dbh->query($sqla);
+        $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        header('Content-Type: text/plain; charset=UTF-8', true, 500);
+        exit($e -> getMessage());
     }
-    array_multisort(
-        $updated_at_array,
-        SORT_ASC,
-        SORT_STRING,
-        $id_array,
-        SORT_DESC,
-        SORT_NUMERIC,
-        $rooms,
-        );
 }
 //論理削除処理
 $delete_id = 0;
@@ -197,7 +193,7 @@ if (!empty($_POST['delete'])) {
                         <?php if ($room['img']):?>
                         <td><img src="<?= h(IMAGE_PATH . $room['img']) ?>" width="64" height="64" alt=""></td>
                         <?php else : ?>
-                        <td><img src="../images/01.jpg" width="64" height="64" alt=""></td>
+                        <td><img src="../images/noimage.png" width="64" height="64" alt=""></td>
                         <?php endif; ?>
                         <td><?=h($room['created_at'])?></td>
                         <td><?=h($room['updated_at'])?></td>

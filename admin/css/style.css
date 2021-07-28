@@ -212,31 +212,33 @@ a:hover {
     height: 38px;
     border: 0.5px solid black;
 }
-#room_edit-room-name-input {
-    margin-left: 10px;
-}
-input.room_edit-input-capacity {
-    width: 40px;
-    margin-left: 10px;
-}
-input.room_edit-input-remarks {
-    width: 50%;
-    margin-left: 10px;
-}
-input.room_edit-input-price {
-    width: 70px;
-    margin-left: 10px;
-}
 .room_edit-container {
     margin-top: 30px;
     margin-left: 45px;
     margin-right: 45px;
 }
+#room_edit-room-name-input {
+    margin-left: 10px;
+}
+.room_edit-input-capacity {
+    width: 40px;
+}
+.room_edit-input-remarks {
+    width: 30%;
+}
+.room_edit-input-price {
+    width: 70px;
+}
+.p-box {
+    margin-top: 14px;
+    border-bottom: 1px solid;
+    padding-bottom: 12px;
+}
 .to-conf-btn {
-    transform: translate(350px, 100px);
+    margin-left: 380px;
 }
 .cancel-btn {
-    transform: translate(500px, 500px);
+    margin-left: 380px;
 }
 #room_edit-td-capacity {
     width: 106px;
@@ -254,6 +256,7 @@ input.room_edit-input-price {
     margin-left: 10px;
     margin-bottom: -20px;
 }
+
 /*-------------------------
     img
 -------------------------*/
@@ -265,6 +268,13 @@ input.room_edit-input-price {
 }
 .room_edit-img-table th {
     text-align: center;
+}
+.upload-message {
+    margin-left: 80px;
+    color:red;
+}
+.up-img-btn {
+    margin-left: 80px;
 }
 /*-------------------------
     conf
