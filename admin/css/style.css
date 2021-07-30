@@ -196,6 +196,15 @@ a:hover {
 /* .flex-room_list_div {
     width: 50px;
 } */
+.new-btn {
+    width: 100px;
+}
+.edit-btn {
+    width: 60px;
+}
+.delete-btn {
+    width: 60px;
+}
 /*-------------------------
     roomedit
 -------------------------*/

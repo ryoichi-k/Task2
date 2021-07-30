@@ -119,7 +119,7 @@ if (!empty($_POST['up-img-btn'])) {
                     <?php if($isEdited == true):?>
                     <tr>
                         <th>ID</th>
-                        <td colspan="3"><?=isset($united_array['id']) ? h($united_array['id']) : ''?></td>
+                        <td colspan="3">　<?=isset($united_array['id']) ? h($united_array['id']) : ''?></td>
                     </tr>
                     <?php endif;?>
                     <tr>

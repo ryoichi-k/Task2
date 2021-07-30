@@ -184,7 +184,7 @@ if (!empty($_POST['delete'])) {
                             <input class="sort" type="submit" name="updated_at-desc" value="▼">
                         </form>
                     </th>
-                    <th><input type="button" value="新規登録" onclick="location.href='./room_edit.php'"></th>
+                    <th><input type="button" value="新規登録" class="new-btn" onclick="location.href='./room_edit.php'"></th>
                 </tr>
                 <?php foreach ($rooms as $room):?>
                     <tr>
@@ -199,7 +199,7 @@ if (!empty($_POST['delete'])) {
                         <td><?=h((new Datetime($room['updated_at']))->format('Y年m月d日H時i分s秒'))?></td>
                         <td>
                             <div class="flex-room_list">
-                                <div class="flex-room_list_div"><input type="submit" value="編集" onclick="location.href='./room_edit.php?id=<?=h($room['id'])?>&type=edit'"></div>
+                                <div class="flex-room_list_div"><input type="submit" value="編集" class="edit-btn" onclick="location.href='./room_edit.php?id=<?=h($room['id'])?>&type=edit'"></div>
                                 <div class="flex-room_list_div">
                                     <form action="" method="post">
                                         <input type="hidden" name="id" value="<?=h($room['id'])?>">
