@@ -235,10 +235,12 @@ a:hover {
     padding-bottom: 12px;
 }
 .to-conf-btn {
-    margin-left: 380px;
+    margin-top: 10px;
+    margin-left: 350px;
 }
 .cancel-btn {
-    margin-left: 380px;
+    margin-top: 10px;
+    margin-left: 0px;
 }
 #room_edit-td-capacity {
     width: 106px;
@@ -283,6 +285,17 @@ a:hover {
     margin-top: 30px;
     margin-left: 45px;
     margin-right: 45px;
+}
+.conf-submit {
+    margin-top: 10px;
+    margin-left: 350px;
+}
+.conf-wrapper {
+    max-width: 960px;
+    min-height: 370px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
 }
 /*-------------------------
     done

@@ -254,7 +254,7 @@ topBtn.click(function(){
                   <?php foreach ($room_details as $k => $v):?>
                     <?php foreach ($v as $va):?>
                             <?php if ($value['id'] == $va['room_id']):?>
-                                <?=$va['capacity']?>名様：￥<?=$va['price']?><?=$va['remarks']?><br>
+                                <?=$va['capacity']?>名様<?=$va['remarks']?>：￥<?=$va['price']?><br>
                         <?php endif?>
                     <?php endforeach;?>
                   <?php endforeach;?>

@@ -184,7 +184,7 @@ if (!empty($_POST['delete'])) {
                             <input class="sort" type="submit" name="updated_at-desc" value="▼">
                         </form>
                     </th>
-                    <th><button onclick="location.href='./room_edit.php'">新規登録</button></th>
+                    <th><input type="button" value="新規登録" onclick="location.href='./room_edit.php'"></th>
                 </tr>
                 <?php foreach ($rooms as $room):?>
                     <tr>

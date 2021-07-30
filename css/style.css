@@ -181,7 +181,6 @@ main{
 .roomA img,
 .roomB img,
 .dormitory img{
-  width: 45%;
   margin: 5%;
   float: left;
 }
@@ -290,7 +289,7 @@ footer {
 footer img{
   width: 10%;
 }
-    
+
 footer p{
   padding: 0 0 5% 0;
 }

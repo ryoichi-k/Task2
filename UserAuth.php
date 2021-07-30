@@ -31,9 +31,4 @@ class UserAuth {
             }
         }return $error;
     }
-
-
-
-
-
 }

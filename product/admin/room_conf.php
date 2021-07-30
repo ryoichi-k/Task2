@@ -20,7 +20,7 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="conf-wrapper">
         <header class="gl-header">
             <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']);?>]さん、ご機嫌いかがですか？</p>
             <div class="logout-link"><a href="logout.php">ログアウトする</a></div>
@@ -68,11 +68,11 @@ if (!empty($_POST)) {
                     <input type="hidden" name="token" value="<?=getToken()?>">
                 <?php endfor;?>
                 <?php if(isset($_GET['id'])):?>
-                    <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
+                    <p><input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit">
                 <?php else:?>
-                    <p><input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
+                    <input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php">
                 <?php endif;?>
-                    <p><input type="submit" value="修正" formaction="room_edit.php<?=isset($_GET['id']) ? '?id=' . $_GET['id'] : '' ?><?=isset($_GET['id']) ? '&type=edit' : ''?>" name="cancel-edit"></p>
+                    <input type="submit" value="修正" formaction="room_edit.php<?=isset($_GET['id']) ? '?id=' . $_GET['id'] : '' ?><?=isset($_GET['id']) ? '&type=edit' : ''?>" name="cancel-edit"></p>
                 </form>
         </div>
         </main>
