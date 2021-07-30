@@ -123,7 +123,7 @@ if (!empty($_POST['up-img-btn'])) {
                     </tr>
                     <?php endif;?>
                     <tr>
-                        <th>部屋名<span>（必須）</span></th>
+                        <th>部屋名</th>
                         <td colspan="3"><input type="text" id="room_edit-room-name-input" name="name" value="<?=isset($united_array['name']) ? h($united_array['name']): '' ?>"></td>
                     </tr>
                     <th rowspan="3">宿泊人数と価格</th>
@@ -132,18 +132,18 @@ if (!empty($_POST['up-img-btn'])) {
                             <?php for ($i = 0; $i < $count; $i++):?>
                                 <input type="hidden" name="detail[<?=$i?>][id]" value="<?=isset($united_array['detail'][$i]['id']) ? h($united_array['detail'][$i]['id']) : ''?>">
                                     <p class="p-box">
-                                        人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['capacity']) : ''?>">人</div>
-                                        追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
-                                        価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
+                                        　人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['capacity']) : ''?>">人</div>
+                                        　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
+                                        　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
                                     </p>
                             <?php endfor;?>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3">
-                                <?php if ($united_array['detail'] == false):?>
+                                <?php if ($united_array['detail'] == false || count($united_array['detail']) == 1):?>
                                     <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
-                                <?php elseif(count($united_array['detail']) >= 1 && count($united_array['detail']) <=4):?>
+                                <?php elseif(count($united_array['detail']) > 1 && count($united_array['detail']) <=4):?>
                                     <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
                                     <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
                                 <?php elseif(count($united_array['detail']) == 5):?>
@@ -154,7 +154,6 @@ if (!empty($_POST['up-img-btn'])) {
                 </table>
                 <p>
                     <input type="submit" name="add-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] . '&type=edit' : ''?>">
-                    <input type="submit" value="キャンセル" formaction="room_list.php" class="cancel-btn">
                 </p>
             </form>
                 <?php if($isEdited == true):?>
@@ -172,8 +171,6 @@ if (!empty($_POST['up-img-btn'])) {
                         <?php if($room['img']):?>
                             <img src="<?= h(IMAGE_PATH . $room['img']) ?>" alt="">
                             <p><?=$room['img']?></p>
-                        <?php else:?>
-                            <img src="../images/noimage.png" alt="">
                         <?php endif;?>
                         </td>
                     </tr>

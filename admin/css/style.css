@@ -24,6 +24,7 @@ body {
 }
 .getPage {
     margin-bottom: 15px;
+    pointer-events: none;
 }
 /*-------------------------
     ヘッダー
@@ -69,6 +70,13 @@ body {
     フッター
 -------------------------*/
 .gl-footer {
+    text-align: right;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+
+}
+.top-footer {
     text-align: right;
     position: absolute;
     bottom: 0;
@@ -178,6 +186,7 @@ a:hover {
 .flex-room_list{
     display: flex;
     padding: 1px;
+    justify-content: center;
 }
 .flex-room_list div{
     justify-content: center;
@@ -231,15 +240,15 @@ a:hover {
 }
 .p-box {
     margin-top: 14px;
-    border-bottom: 1px solid;
     padding-bottom: 12px;
 }
 .to-conf-btn {
-    margin-top: 10px;
+    margin-top: 30px;
     margin-left: 350px;
+    width: 20%;
 }
 .cancel-btn {
-    margin-top: 10px;
+    margin-top: 30px;
     margin-left: 0px;
 }
 #room_edit-td-capacity {
@@ -258,7 +267,20 @@ a:hover {
     margin-left: 10px;
     margin-bottom: -20px;
 }
-
+.conf-cancel-btn {
+    color: white;
+    display: inline-block;
+    background-color: rgb(118, 118, 118);
+    border:1px solid #ccc;
+    padding:1px 6px;
+    border-color: black;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: outset;
+    border-image: initial;
+}
 /*-------------------------
     img
 -------------------------*/
@@ -276,7 +298,8 @@ a:hover {
     color:red;
 }
 .up-img-btn {
-    margin-left: 80px;
+    margin-left: 350px;
+    width: 20%;
 }
 /*-------------------------
     conf
@@ -287,8 +310,9 @@ a:hover {
     margin-right: 45px;
 }
 .conf-submit {
-    margin-top: 10px;
-    margin-left: 350px;
+    margin-top: 30px;
+    margin-left: 300px;
+    width: 20%;
 }
 .conf-wrapper {
     max-width: 960px;

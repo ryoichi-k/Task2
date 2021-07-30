@@ -193,13 +193,13 @@ if (!empty($_POST['delete'])) {
                         <?php if ($room['img']):?>
                         <td><img src="<?= h(IMAGE_PATH . $room['img']) ?>" width="64" height="64" alt=""></td>
                         <?php else : ?>
-                        <td><img src="../images/noimage.png" width="64" height="64" alt=""></td>
+                        <td></td>
                         <?php endif; ?>
-                        <td><?=h($room['created_at'])?></td>
-                        <td><?=h($room['updated_at'])?></td>
+                        <td><?=h((new Datetime($room['created_at']))->format('Y年m月d日H時i分s秒'))?></td>
+                        <td><?=h((new Datetime($room['updated_at']))->format('Y年m月d日H時i分s秒'))?></td>
                         <td>
                             <div class="flex-room_list">
-                                <div class="flex-room_list_div"><a class="btn-style-link" href="room_edit.php?id=<?=h($room['id'])?>&type=edit">編集</a></div>
+                                <div class="flex-room_list_div"><input type="submit" value="編集" onclick="location.href='./room_edit.php?id=<?=h($room['id'])?>&type=edit'"></div>
                                 <div class="flex-room_list_div">
                                     <form action="" method="post">
                                         <input type="hidden" name="id" value="<?=h($room['id'])?>">
