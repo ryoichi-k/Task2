@@ -67,11 +67,11 @@ if (!empty($_POST)) {
                     <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
                     <input type="hidden" name="token" value="<?=getToken()?>">
                 <?php endfor;?>
-                    <p><input type="submit" value="修正" formaction="room_edit.php<?=isset($_GET['id']) ? '?id=' . $_GET['id'] : '' ?><?=isset($_GET['id']) ? '&type=edit' : ''?>" name="cancel-edit" class="conf-cancel-btn">
+                    <p><input type="submit" value="修正" formaction="room_edit.php<?=isset($_GET['id']) ? '?id=' . $_GET['id'] : '' ?><?=isset($_GET['id']) ? '&type=edit' : '?type=new'?>" name="cancel-edit" class="conf-cancel-btn">
                 <?php if(isset($_GET['id'])):?>
                     <input class="conf-submit" name="send-edit" type="submit" value="編集完了" formaction="room_done.php?type=edit"></p>
                 <?php else:?>
-                    <input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php"></p>
+                    <input class="conf-submit" name="send" type="submit" value="登録完了" formaction="room_done.php?type=new"></p>
                 <?php endif;?>
                 </form>
         </div>

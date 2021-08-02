@@ -1,0 +1,68 @@
+<?php
+session_start();
+require_once ('UserModel.php');
+require_once ('User_UserAuth.php');
+require_once ('admin/util.php');
+if (empty($_SESSION['admin'])) {
+    header('Location: login.php');
+    exit;
+}
+try {
+    $model = new UserModel();
+    $model->connect();
+    $sql_room = 'SELECT * FROM room where delete_flg = 0';
+    $stmt = $model->dbh->query($sql_room);
+    $rooms= $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo '<pre>';
+    print_r($rooms);
+    echo '</pre>';
+    $sql_payment = 'SELECT * FROM m_payment';
+    $stmt = $model->dbh->query($sql_payment);
+    $payments= $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    header('Content-Type: text/plain; charset=UTF-8', true, 500);
+    exit($e -> getMessage());
+}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CICACU | 予約画面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+        <p class="top-p"><?=h($_SESSION['user']['name']);?>さん、ご機嫌いかがですか？</p>
+        <div class="logout-link"><a href="logout.php">ログアウトする</a></div>
+        <h1>予約画面</h1>
+        <form action="reservation_conf.php" method="post">
+        <h3>宿泊されるお部屋：</h3>
+            <select name="rooms">
+            <?php foreach ($rooms as $index => $value):?>
+                <option value="<?=$rooms[$index]['name']?>"><?=$rooms[$index]['name']?></option>
+            <?php endforeach;?>
+            </select>
+        <h3>ご宿泊期間：</h3>
+            <input type="date" name="date"></input>
+            <h3>人数：</h3>
+                <select name="number">
+                    <?php for ($i = 1; $i < 6; $i++):?>
+                    <option value="<?=$i?>"><?=$i?>名様</option>
+                    <?php endfor;?>
+                </select>
+        <h3>お支払い方法：</h3>
+            <select name="payment">
+                <?php for ($i = 0; $i < count($payments); $i++):?>
+                <option value="<?=$payments[$i]['name']?>"><?=$payments[$i]['name']?></option>
+                <?php endfor;?>
+            </select>
+            <p><input type="submit" value="送信"></p>
+        </form>
+    <footer>
+        <p><small>2021 ebacorp.inc</small></p>
+    </footer>
+</body>
+</html>

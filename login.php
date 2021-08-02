@@ -1,8 +1,19 @@
 <?php
-    session_start();
-    require_once ('UserModel.php');
-    require_once ('admin/util.php');
-
+session_start();
+require_once ('UserModel.php');
+require_once ('User_UserAuth.php');
+require_once ('admin/util.php');
+if (isset($_SESSION['user'])) {
+    unset($_SESSION['user']);
+}
+if (!empty($_POST['btn-auth'])) {
+    if ($_POST['id'] === '' || $_POST['pass'] === '') {
+        $error = 'IDかパスワードが入力されていません';
+    }else{
+        $user_userAuth = new User_UserAuth();
+        $error = $user_userAuth->auth($_POST['id'], $_POST['pass']);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

@@ -36,7 +36,7 @@ if (empty($_SESSION['admin'])) {
         </header>
         <main>
         </main>
-        <footer class="gl-footer">
+        <footer class="top-footer">
             <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>

@@ -153,6 +153,12 @@ topBtn.click(function(){
 				<li><a href="#reservation">ご予約</a></li>
 				<li><a href="#gallery">ギャラリー</a></li>
 				<li><a href="#access">アクセス</a></li>
+                <?php if (isset($_SESSION['user'])):?>
+                    <li>[<?=h($_SESSION['user']['name']);?>]さん</li>
+                    <li><a href="logout.php">ログアウト</a></li>
+                <?php else:?>
+                    <li><a href="login.php">ログイン</a></li>
+                <?php endif;?>
 			</ul>
     	</div>
 	</div>
@@ -171,7 +177,8 @@ topBtn.click(function(){
           ひっそりと閉館した<br>
           江戸時代創業の旅館を<br>
           鹿沼の魅力を伝えるため<br>
-          再生させたゲストハウスです。</p>
+          再生させたゲストハウスです。<br>
+          </p>
       </div>
     </div>
   </header>
