@@ -10,7 +10,7 @@ if (empty($_SESSION['admin'])) {
 try {
     $model = new UserModel();
     $model->connect();
-    $sql_room = 'SELECT * FROM room where delete_flg = 0';
+    $sql_room = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room.delete_flg = 0 AND room_detail.delete_flg = 0';
     $stmt = $model->dbh->query($sql_room);
     $rooms= $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo '<pre>';
@@ -19,6 +19,11 @@ try {
     $sql_payment = 'SELECT * FROM m_payment';
     $stmt = $model->dbh->query($sql_payment);
     $payments= $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo '<pre>';
+    print_r($payments);
+    echo '</pre>';
+
 } catch (PDOException $e) {
     header('Content-Type: text/plain; charset=UTF-8', true, 500);
     exit($e -> getMessage());
@@ -40,9 +45,9 @@ try {
         <h1>予約画面</h1>
         <form action="reservation_conf.php" method="post">
         <h3>宿泊されるお部屋：</h3>
-            <select name="rooms">
+            <select name="room_detail_id">
             <?php foreach ($rooms as $index => $value):?>
-                <option value="<?=$rooms[$index]['name']?>"><?=$rooms[$index]['name']?></option>
+                <option value="<?=$rooms[$index]['id']?>"><?=$rooms[$index]['name']?>(<?=$rooms[$index]['capacity']?>人部屋)</option>
             <?php endforeach;?>
             </select>
         <h3>ご宿泊期間：</h3>

@@ -251,9 +251,9 @@ topBtn.click(function(){
     <?php foreach ($rooms as $key => $value):?>
       <div class="roomA">
       <?php if($value['img']):?>
-        <img src="./images/<?=h($value['img'])?>" width="500" height="328">
+        <img src="./images/<?=h($value['img'])?>" width="563.750" height="369.812">
       <?php else:?>
-        <img src="./images/noimage.png" width="500" height="328" alt="">
+        <img src="./images/noimage.png" width="563.750" height="369.812" alt="">
       <?php endif;?>
         <div class="roomA-text">
               <h3><?=h($value['name'])?></h3>
@@ -261,7 +261,7 @@ topBtn.click(function(){
                   <?php foreach ($room_details as $k => $v):?>
                     <?php foreach ($v as $va):?>
                             <?php if ($value['id'] == $va['room_id']):?>
-                                <?=$va['capacity']?>名様<?=$va['remarks']?>：￥<?=$va['price']?><?=$va['capacity'] > 1 ? '(1名様' . floor($va['price']/$va['capacity']) . '円）': ''?><br>
+                                <?=$va['capacity']?>名様<?=$va['remarks']?>：￥<?=number_format($va['price'])?><?=$va['capacity'] > 1 ? '（1名様' . number_format(floor($va['price']/$va['capacity'])) . '円）': ''?><br>
                         <?php endif?>
                     <?php endforeach;?>
                   <?php endforeach;?>

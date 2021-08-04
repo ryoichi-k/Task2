@@ -38,6 +38,7 @@ if (!empty($_POST['send'])) {
 //編集
 if (!empty($_POST['send-edit'])) {
     $name = $_POST['name'];
+    $id = $_POST['detail'][0]['id'];
     $date = new DateTime();
     $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
     $today = $date->format('Y-m-d H:i:s');
@@ -45,11 +46,14 @@ if (!empty($_POST['send-edit'])) {
     try {
         $model = new Model();
         $model->connect();
-        $sql_room = 'SELECT * FROM room WHERE name = ? ';
+        // $sql_room = 'SELECT * FROM room WHERE name = ? ';
+        // $stmt = $model->dbh->prepare($sql_room);
+        // $stmt->execute([$name]);
+        $sql_room = 'SELECT * FROM room_detail WHERE id = ? ';
         $stmt = $model->dbh->prepare($sql_room);
-        $stmt->execute([$name]);
+        $stmt->execute([$id]);
         $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
-        $room_id = $room_edit_done['id'];
+        $room_id = $room_edit_done['room_id'];
         $sql_room_edit_done = 'UPDATE room
                                             SET name = ?,
                                             updated_at = ?

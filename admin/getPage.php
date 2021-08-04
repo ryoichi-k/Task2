@@ -1,28 +1,29 @@
 <?php
-function getPage(){
-    $btnName = '初期値';
-    $itemName = '';
-    $operation = '';
-    $confOrDone = '';
-    $curUrl = $_SERVER['REQUEST_URI'];//現在のページのURL取得
-    //$itemName
-    if (mb_ereg_match(".*(room)+\.*", $curUrl)) {
-        $itemName = "客室管理";
-    }
-    //$operation
-    if (mb_ereg_match(".*(_list)+\.*", $curUrl)) {
-        $operation = "リスト";
-    }elseif(mb_ereg_match(".*(type=edit)", $curUrl)){
-        $operation = "編集";
-    }else{
-        $operation = "登録";
-    }
-    //$confOrDone
-    if (mb_ereg_match(".*(conf).*", $curUrl)) {
-        $confOrDone = "確認";
-    }elseif(mb_ereg_match(".*(done)+\.*", $curUrl)){
-        $confOrDone = "完了";
-    }
-    $button = "<button onclick=\"location.href='#'\">" . $itemName . $operation . $confOrDone . "</button>";
-    echo ($button);
-}
+// function getPage()
+// {
+//     $itemarray = array(
+//         "room" => "客室管理"
+//     );
+//     $orerationarray = array(
+//         "new" => "登録",
+//         "edit" => "編集",
+//     );
+//     $pagearray = array(
+//         "list" => "リスト",
+//         "conf" => "確認",
+//         "done" => "完了",
+//         "edit" => "",
+//     );
+//     $curUrl = $_SERVER['REQUEST_URI'];//現在のページのURL取得
+//     $url = explode("/" , $curUrl);
+//     $str = str_replace('.php', '', $url[3]);
+//     $url2 = explode("_" , $str);
+//     $url3 = explode("?" , $url2[1]);
+
+//     if (isset($_GET['type'])) {
+//         $button = "<button>" . $itemarray[$url2[0]] . $orerationarray[$_GET['type']] . $pagearray[$url3[0]] . "</button>";
+//     } else {
+//         $button = "<button>" . $itemarray[$url2[0]] . $pagearray[$url3[0]] . "</button>";
+//     }
+//     echo ($button);
+// }

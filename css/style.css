@@ -181,6 +181,7 @@ main{
 .roomA img,
 .roomB img,
 .dormitory img{
+  width: 45%;
   margin: 5%;
   float: left;
 }

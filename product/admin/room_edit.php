@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
-require_once (dirname(__FILE__).'/../ExternalFiles/getPage.php');
 require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
 require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
