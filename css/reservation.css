@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/*-------------------------
+    初期値
+-------------------------*/
+body {
+    background-color: #eee;
+}
+
+/*-------------------------
+    グローバル
+-------------------------*/
+.wrapper {
+    max-width: 960px;
+    height: 500px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+.reservation-container {
+    width: 65%;
+    height: 200px;
+    margin: auto;
+    background-color: #eee;
+    transform: translate(0px, 50px);
+}
+.reservation-table {
+    top: 60px;
+    bottom: 100px;
+    left: 70px;
+    right: 100px;
+}
+.submit-button {
+    margin-left: 270px;
+    margin-top: 10px;
+}
+.logout-link {
+    margin-left: 460px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+}
+h1 {
+    text-align: center;
+}
+th {
+    text-align: right;
+}
+/*-------------------------
+    フッター
+-------------------------*/
+.reservation-footer {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+}

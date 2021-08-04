@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/*-------------------------
+    初期値
+-------------------------*/
+body {
+    background-color: #eee;
+}
+
+/*-------------------------
+    グローバル
+-------------------------*/
+.wrapper {
+    max-width: 960px;
+    height: 500px;
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+.login-container {
+    width: 55%;
+    height: 200px;
+    margin: auto;
+    background-color: #eee;
+    transform: translate(0px, 100px);
+}
+.login-table {
+    position: absolute;
+    top: 60px;
+    bottom: 100px;
+    left: 70px;
+    right: 100px;
+}
