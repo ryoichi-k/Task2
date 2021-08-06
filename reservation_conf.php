@@ -3,14 +3,19 @@ session_start();
 require_once ('UserModel.php');
 require_once ('User_UserAuth.php');
 require_once ('admin/util.php');
+require_once ('util.inc.php');
+
+// 二重送信防止用トークンの発行
+$token = uniqid('', true);
+
+//トークンをセッション変数にセット
+$_SESSION['token'] = $token;
+
 if (empty($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
 if (!empty($_POST['payment'])) {
-// echo '<pre>';
-// print_r($_POST);
-// echo '</pre>';
 
     //現在日時から3ヶ月後の日付を取得
     $date = new DateTime();
@@ -32,9 +37,6 @@ if (!empty($_POST['payment'])) {
         $stmt = $model->dbh->prepare($sql_select_reservation);
         $stmt->execute([$_POST['room_detail_id']]);
         $reservation= $stmt->fetch(PDO::FETCH_ASSOC);
-        // echo '<pre>';
-        // print_r($reservation);
-        // echo '</pre>';
 
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
@@ -45,8 +47,8 @@ if (!empty($_POST['payment'])) {
         $error = '客室の宿泊可能人数を超えています。別のお部屋をお選びください。';
     }
 
-    // //予約しようとしている客室が予約済みでないこと
-    if ($reservation['status'] == 1) {
+    //予約しようとしている客室が予約済みでないこと
+    if (isset($reservation['status']) && $reservation['status'] == 1) {
         $error = '満室です。別の部屋を選んでください。';
     }
 
@@ -100,6 +102,7 @@ if (!empty($_POST['payment'])) {
                 <th><h3>人数：</h3></th>
                 <td><h3><?=$_POST['number']?>名様</h3></td>
             </tr>
+            <input type="hidden" name="token" value="<?= $token ?>">
             <input type="hidden" name="reservation_room_detail_id" value="<?=h($_POST['room_detail_id'])?>">
             <input type="hidden" name="reservation_date" value="<?=h($_POST['date'])?>">
             <input type="hidden" name="reservation_number" value="<?=h($_POST['number'])?>">

@@ -1,6 +1,5 @@
 <?php
 require_once ('admin/Model/Model.php');
-require_once ('admin/getPage.php');
 require_once ('admin/util.php');
 const IMAGE_PATH = '../images/';
 try {

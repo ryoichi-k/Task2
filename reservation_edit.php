@@ -3,7 +3,7 @@ session_start();
 require_once('UserModel.php');
 require_once('User_UserAuth.php');
 require_once('admin/util.php');
-if (empty($_SESSION['admin'])) {
+if (empty($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
@@ -13,16 +13,10 @@ try {
     $sql_room = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room.delete_flg = 0 AND room_detail.delete_flg = 0';
     $stmt = $model->dbh->query($sql_room);
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // echo '<pre>';
-    // print_r($rooms);
-    // echo '</pre>';
+
     $sql_payment = 'SELECT * FROM m_payment';
     $stmt = $model->dbh->query($sql_payment);
     $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // echo '<pre>';
-    // print_r($payments);
-    // echo '</pre>';
 
 } catch (PDOException $e) {
     header('Content-Type: text/plain; charset=UTF-8', true, 500);
@@ -71,7 +65,7 @@ try {
                     </th>
                     <td>
                         <select name="number">
-                            <?php for ($i = 1; $i < 6; $i++) : ?>
+                            <?php for ($i = 1; $i < 5; $i++) : ?>
                                 <option value="<?= $i ?>"><?= $i ?>名様</option>
                             <?php endfor; ?>
                         </select>
