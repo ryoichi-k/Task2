@@ -19,20 +19,11 @@ function getPage()
         "edit" => "",
     );
     $cur_url_p = $_SERVER['REQUEST_URI'];//現在のページのURL取得
-    //echo ($cur_url_p);
+
     $url_p = explode("/" , $cur_url_p);
     $str = str_replace('.php', '', $url_p[4]);
     $url_p2 = explode("_" , $str);
     $url_p3 = explode("?" , $url_p2[1]);
-    // echo '<pre>';
-    // print_r($url_p);
-    // echo '</pre>';
-    // echo '<pre>';
-    // print_r($url_p2);
-    // echo '</pre>';
-    // echo '<pre>';
-    // print_r($url_p3);
-    // echo '</pre>';
 
     if (isset($_GET['type'])) {
         $button = "<button>" . $itemarray[$url_p2[0]] . $orerationarray[$_GET['type']] . $pagearray[$url_p3[0]] . "</button>";
