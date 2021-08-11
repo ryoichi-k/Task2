@@ -48,7 +48,7 @@ if (!empty($_POST['btn-auth'])) {
                 </form>
             </div>
         </main>
-        <footer class="gl-footer">
+        <footer class="login-footer">
             <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>

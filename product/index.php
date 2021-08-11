@@ -250,10 +250,10 @@ topBtn.click(function(){
         <div class="roomA-text">
               <h3><?=h($value['name'])?></h3>
               <p>
-                  <?php foreach ($room_details as $k => $v):?>
-                    <?php foreach ($v as $va):?>
-                            <?php if ($value['id'] == $va['room_id']):?>
-                                <?=$va['capacity']?>名様<?=$va['remarks']?>：￥<?=$va['price']?><?=$va['capacity'] > 1 ? '(1名様' . floor($va['price']/$va['capacity']) . '円）': ''?><br>
+                  <?php foreach ($room_details as $v):?>
+                    <?php foreach ($v as $v2):?>
+                            <?php if ($value['id'] == $v2['room_id']):?>
+                                <?=$v2['capacity']?>名様<?=$v2['remarks']?>：￥<?=$v2['price']?><?=$v2['capacity'] > 1 ? '(1名様' . floor($v2['price']/$v2['capacity']) . '円）': ''?><br>
                         <?php endif?>
                     <?php endforeach;?>
                   <?php endforeach;?>

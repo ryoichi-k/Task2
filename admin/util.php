@@ -5,29 +5,23 @@ function h(?string $string)
 }
 function getPage()
 {
-    $itemarray = array(
-        "room" => "客室管理"
+    $item_array = array(
+        'room' => '客室管理'
     );
-    $orerationarray = array(
-        "new" => "登録",
-        "edit" => "編集",
+    $oreration_array = array(
+        'new' => '登録',
+        'edit' => '編集',
     );
-    $pagearray = array(
-        "list" => "リスト",
-        "conf" => "確認",
-        "done" => "完了",
-        "edit" => "",
+    $page_array = array(
+        'list' => 'リスト',
+        'conf' => '確認',
+        'done' => '完了',
+        'edit' => '',
     );
-    $curUrl = $_SERVER['REQUEST_URI'];//現在のページのURL取得
-    $url = explode("/" , $curUrl);
-    $str = str_replace('.php', '', $url[3]);
-    $url2 = explode("_" , $str);
-    $url3 = explode("?" , $url2[1]);
+    $curUrl = $_SERVER['SCRIPT_NAME'];
+    $basename = basename($curUrl, ".php");
+    $removed_underbar = explode('_' , $basename);
 
-    if (isset($_GET['type'])) {
-        $button = "<button>" . $itemarray[$url2[0]] . $orerationarray[$_GET['type']] . $pagearray[$url3[0]] . "</button>";
-    } else {
-        $button = "<button>" . $itemarray[$url2[0]] . $pagearray[$url3[0]] . "</button>";
-    }
-    echo ($button);
+    echo "<button>" . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $oreration_array[$_GET['type']] : '' ). $page_array[$removed_underbar[1]] . "</button>";
+
 }

@@ -84,6 +84,13 @@ body {
     margin-right: 5px;
 
 }
+.login-footer {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+}
 
 /*-------------------------
     ログイン

@@ -114,9 +114,7 @@ if (!empty($_POST['delete'])) {
     try {
         $model = new Model();
         $model->connect();
-        $sql_room_delete_flg = 'UPDATE room
-                                SET delete_flg = 1
-                                WHERE id = ? ';
+        $sql_room_delete_flg = 'UPDATE room SET delete_flg = 1 WHERE id = ? ';
         $stmt = $model->dbh->prepare($sql_room_delete_flg);
         $stmt->execute([$delete_id]);
         header('Location: room_list.php');
