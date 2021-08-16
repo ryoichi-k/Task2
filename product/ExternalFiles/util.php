@@ -5,30 +5,22 @@ function h(?string $string)
 }
 function getPage()
 {
-    $itemarray = array(
-        "room" => "客室管理"
+    $item_array = array(
+        'room' => '客室管理'
     );
-    $orerationarray = array(
-        "new" => "登録",
-        "edit" => "編集",
+    $oreration_array = array(
+        'new' => '登録',
+        'edit' => '編集',
     );
-    $pagearray = array(
-        "list" => "リスト",
-        "conf" => "確認",
-        "done" => "完了",
-        "edit" => "",
+    $page_array = array(
+        'list' => 'リスト',
+        'conf' => '確認',
+        'done' => '完了',
+        'edit' => '',
     );
-    $cur_url_p = $_SERVER['REQUEST_URI'];//現在のページのURL取得
+    $curUrl = $_SERVER['SCRIPT_NAME'];
+    $basename = basename($curUrl, ".php");
+    $removed_underbar = explode('_' , $basename);
 
-    $url_p = explode("/" , $cur_url_p);
-    $str = str_replace('.php', '', $url_p[4]);
-    $url_p2 = explode("_" , $str);
-    $url_p3 = explode("?" , $url_p2[1]);
-
-    if (isset($_GET['type'])) {
-        $button = "<button>" . $itemarray[$url_p2[0]] . $orerationarray[$_GET['type']] . $pagearray[$url_p3[0]] . "</button>";
-    } else {
-        $button = "<button>" . $itemarray[$url_p2[0]] . $pagearray[$url_p3[0]] . "</button>";
-    }
-    echo ($button);
+    echo "<button>" . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $oreration_array[$_GET['type']] : '' ). $page_array[$removed_underbar[1]] . "</button>";
 }

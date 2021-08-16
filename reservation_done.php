@@ -1,9 +1,10 @@
 <?php
 session_start();
-require_once ('UserModel.php');
-require_once ('User_UserAuth.php');
-require_once ('admin/util.php');
-require_once ('util.inc.php');
+require_once('UserModel.php');
+require_once('User_UserAuth.php');
+require_once('admin/util.php');
+require_once('util.inc.php');
+
 if (empty($_SESSION['user'])) {
     header('Location: login.php');
     exit;
@@ -15,9 +16,9 @@ if (!empty($_POST['send'])) {
     unset($_SESSION["token"]);
 
     // POSTされたトークンとセッション変数のトークンの比較→二重送信防止
-    if($token == "" || $token != $session_token) {
-    header('Location: reservation_edit.php');
-    exit;
+    if ($token == "" || $token != $session_token) {
+        header('Location: reservation_edit.php');
+        exit;
     }
 
     try {
@@ -65,11 +66,11 @@ if (!empty($_POST['send'])) {
         $reservation_for_send_mail = $stmt->fetch(PDO::FETCH_ASSOC);
 
         //メール送信処理
-        mb_language( 'Japanese' );
-        mb_internal_encoding( 'UTF-8' );
+        mb_language('Japanese');
+        mb_internal_encoding('UTF-8');
         $email = "test@example.com";
         $to = 'kazyuapple99@gmail.com';
-        $subject = "送信テストcicacu予約完了"; // 題名
+        $subject = "送信テストcicacu予約完了";
         //本文ここから
         $body = "これはテストです。\n予約が完了しました！\r\n
                         ※このメールはシステムからの自動返信です\r\n
@@ -102,32 +103,27 @@ if (!empty($_POST['send'])) {
         //     $message = "送信失敗";
         // }
 
-        } catch (PDOException $e) {
+    } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CICACU | 予約完了画面</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="css/reservation.css">
+<?php include 'doctype_header_user.php' ?>
+<title>CICACU | 予約完了画面</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
+<link rel="stylesheet" href="css/reservation.css">
 </head>
 <body>
     <div class="wrapper">
-        <p class="top-p"><?=h($_SESSION['user']['name']);?>さん、ご機嫌いかがですか？</p>
+        <p class="top-p"><?= h($_SESSION['user']['name']); ?>さん、ご機嫌いかがですか？</p>
         <h1>予約完了です。確認メールを送付しましたのでご確認ください。</h1>
         <div class="reservation-container">
-        <input class="submit-button" type="button" value="トップへ戻る" onclick="location.href='./index.php'">
-    <footer>
-        <p><small>2021 ebacorp.inc</small></p>
+            <input class="submit-button" type="button" value="トップへ戻る" onclick="location.href='./index.php'">
+            <footer>
+                <p><small>2021 ebacorp.inc</small></p>
         </div>
-    </footer>
+        </footer>
     </div>
 </body>
 </html>

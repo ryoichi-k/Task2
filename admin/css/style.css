@@ -91,6 +91,13 @@ body {
     right: 0;
     margin-right: 5px;
 }
+.done-footer {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 5px;
+}
 
 /*-------------------------
     ログイン
@@ -340,6 +347,11 @@ a:hover {
 /*-------------------------
     done
 -------------------------*/
+.room_done-container {
+    margin-top: 30px;
+    margin-left: 45px;
+    margin-right: 45px;
+}
 .done-message {
     color: blue;
     text-align: center;

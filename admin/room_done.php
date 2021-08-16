@@ -21,17 +21,21 @@ if (!empty($_POST['send-edit'])) {
     $isEdited = $room->roomEdit($_POST['name'], $_POST['detail'][0]['id'], $updated_at);
 }
 ?>
-<?php include 'doctype_header.php' ?>
+<?php include 'doctype_header.php'?>
         <main>
-        <div class="getPage"><?php getPage(); ?></div>
+        <div class="room_done-container">
+        <div class="getPage"><?php getPage();?></div>
         <?php if(isset($isEdited)):?>
             <h3 class="done-message">編集完了しました。</h3>
         <?php endif;?>
         <?php if(isset($isSended)):?>
             <h3 class="done-message">登録完了しました。</h3>
         <?php endif;?>
+        </div>
         </main>
-        <?php include 'footer.html' ?>
+        <footer class="done-footer">
+            <p><small>2021 ebacorp.inc</small></p>
+        </footer>
     </div>
 </body>
 </html>

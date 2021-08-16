@@ -4,3 +4,4 @@ define('HOST', 'localhost');
 define('DBNAME', 'r_kano');
 define('DBUSER', 'root');
 define('DBPASS', 'GomJR5nwq_lm');
+const IMAGE_PATH = '../images/';

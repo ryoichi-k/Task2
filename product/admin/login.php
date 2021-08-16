@@ -6,10 +6,10 @@ require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 if (isset($_SESSION['admin'])) {
     unset($_SESSION['admin']);
 }
-if (!empty($_POST['btn'])) {
+if (!empty($_POST['btn-auth'])) {
     if ($_POST['id'] === '' || $_POST['pass'] === '') {
         $error = 'IDかパスワードが入力されていません';
-    } else {
+    }else{
         $userAuth = new UserAuth();
         $error = $userAuth->auth($_POST['id'], $_POST['pass']);
     }
@@ -37,18 +37,18 @@ if (!empty($_POST['btn'])) {
                         <?php endif; ?>
                         <tr>
                             <th>ログインID：</th>
-                            <td><input type="text" name="id" value="<?=!empty($_POST['id']) ? h($_POST['id']) : ''?>" class="form-control" autofocus></td>
+                            <td><input type="text" name="id" value="<?=!empty($_POST['id']) ? h($_POST['id']) : ''?>" id="login-id" class="form-control" autofocus></td>
                         </tr>
                         <tr>
                             <th>パスワード：</th>
-                            <td><input type="password" name="pass" value="" class="form-control" required></td>
+                            <td><input type="password" name="pass" value="" id="login-pass" class="form-control" required></td>
                         </tr>
                     </table>
-                    <input type="submit" name="btn" value="認証" class="login-button">
+                    <input type="submit" name="btn-auth" value="認証" class="login-button">
                 </form>
             </div>
         </main>
-        <footer class="gl-footer">
+        <footer class="login-footer">
             <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>
