@@ -21,14 +21,14 @@ if (!empty($_POST['send-edit'])) {
     $isEdited = $room->roomEdit($_POST['name'], $_POST['detail'][0]['id'], $updated_at);
 }
 ?>
-<?php include 'doctype_header.php'?>
+<?php require_once('header.php')?>
         <main>
         <div class="room_done-container">
-        <div class="getPage"><?php getPage();?></div>
-        <?php if(isset($isEdited)):?>
+        <div class="getPage"><?php getPage() ;?></div>
+        <?php if(isset($isEdited)) :?>
             <h3 class="done-message">編集完了しました。</h3>
         <?php endif;?>
-        <?php if(isset($isSended)):?>
+        <?php if(isset($isSended)) :?>
             <h3 class="done-message">登録完了しました。</h3>
         <?php endif;?>
         </div>

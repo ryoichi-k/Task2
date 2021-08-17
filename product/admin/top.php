@@ -8,7 +8,7 @@ if (empty($_SESSION['admin'])) {
     exit;
 }
 ?>
-<?php include 'doctype_header.php' ?>
+<?php require_once('header.php')?>
         <main>
         </main>
         <footer class="top-footer">

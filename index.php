@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('admin/Model/Model.php');
 require_once('admin/Model/Room.php');
 require_once('admin/util.php');
@@ -132,6 +133,12 @@ $(function() {
                     <li><a href="#reservation">ご予約</a></li>
                     <li><a href="#gallery">ギャラリー</a></li>
                     <li><a href="#access">アクセス</a></li>
+                    <?php if (isset($_SESSION['user'])) : ?>
+                        <li>[<?= h($_SESSION['user']['name']); ?>]さん</li>
+                        <li><a href="logout.php">ログアウト</a></li>
+                    <?php else : ?>
+                        <li><a href="login.php">ログイン</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -252,7 +259,7 @@ $(function() {
                     <div class="roomA-text">
                         <h3><?= h($value['name']) ?></h3>
                         <p>
-                            <?php foreach ($room_details[$value['id']] as $k => $v) : ?>
+                            <?php foreach ($room_details[$value['id']] as $v) : ?>
                                 <?= $v['capacity'] ?>名様<?= $v['remarks'] ?>：￥<?= number_format($v['price']) ?><?= $v['capacity'] > 1 ? '（1名様' . number_format(floor($v['price'] / $v['capacity'])) . '円）' : '' ?><br>
                             <?php endforeach; ?>
                         </p>
@@ -362,5 +369,4 @@ $(function() {
     <!--TOPに戻るボタン-->
 
 </body>
-
 </html>

@@ -1,12 +1,10 @@
 @charset "UTF-8";
-
 /*-------------------------
     初期値
 -------------------------*/
 body {
     background-color: #eee;
 }
-
 /*-------------------------
     グローバル
 -------------------------*/
@@ -17,7 +15,6 @@ body {
     background-color: #fff;
     position: relative;
 }
-
 .error {
     color: red;
     text-align: center;
@@ -32,7 +29,6 @@ body {
 .gl-nav ul {
     padding-left: 0;
 }
-
 .gl-nav li {
     width: 130px;
     display: table-cell;
@@ -40,20 +36,16 @@ body {
     border: 1px solid #fff;
     background-color: black;
 }
-
 .gl-nav li:hover {
     background-color: #000033;
     border-bottom: solid red;
-
 }
-
 .gl-nav ul li a {
     text-decoration: none;
     color: #fff;
     padding: 3px 5px;
     display: block;
 }
-
 .logout-link {
     margin-left: 460px;
     position: absolute;
@@ -61,11 +53,9 @@ body {
     right: 0;
     margin-right: 5px;
 }
-
 .top-p {
     margin-bottom: 0px;
 }
-
 /*-------------------------
     フッター
 -------------------------*/
@@ -74,7 +64,6 @@ body {
     bottom: 0;
     right: 0;
     margin-right: 5px;
-
 }
 .top-footer {
     text-align: right;
@@ -82,7 +71,6 @@ body {
     bottom: 0;
     right: 0;
     margin-right: 5px;
-
 }
 .login-footer {
     text-align: right;
@@ -98,7 +86,6 @@ body {
     right: 0;
     margin-right: 5px;
 }
-
 /*-------------------------
     ログイン
 -------------------------*/
@@ -109,7 +96,6 @@ body {
     background-color: #eee;
     transform: translate(0px, 100px);
 }
-
 .login-table {
     position: absolute;
     top: 60px;
@@ -117,19 +103,16 @@ body {
     left: 70px;
     right: 100px;
 }
-
 #login-id {
     width: 150%;
 }
 #login-pass {
     width: 150%;
 }
-
 .login-h1 {
     text-align: center;
     transform: translate(0px, 100px);
 }
-
 .login-button {
     position: absolute;
     top: 150px;
@@ -139,7 +122,6 @@ body {
     width: 60px;
     height: 30px;
 }
-
 /*-------------------------
     roomリスト
 -------------------------*/
@@ -160,13 +142,11 @@ body {
     border-collapse: collapse;
     text-align: center;
 }
-
 .room_list-table th {
     height: 50px;
     border: 0.5px solid black;
     font-weight: lighter;
 }
-
 .room_list-table td {
     height: 38px;
     border: 0.5px solid black;
@@ -233,13 +213,11 @@ a:hover {
     width: 100%;
     border-collapse: collapse;
 }
-
 .room_edit-table th {
     height: 60px;
     border: 0.5px solid black;
     text-align: center;
 }
-
 .room_edit-table td {
     height: 38px;
     border: 0.5px solid black;

@@ -120,9 +120,9 @@ if (!empty($_POST['send'])) {
         <h1>予約完了です。確認メールを送付しましたのでご確認ください。</h1>
         <div class="reservation-container">
             <input class="submit-button" type="button" value="トップへ戻る" onclick="location.href='./index.php'">
-            <footer>
-                <p><small>2021 ebacorp.inc</small></p>
         </div>
+            <footer class="reservation-footer">
+                <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>
 </body>

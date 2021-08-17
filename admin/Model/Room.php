@@ -9,10 +9,8 @@ class Room extends Model
             $stmt = $this->dbh->query($sql);
             $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rooms;
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
 
@@ -24,10 +22,8 @@ class Room extends Model
             $stmt = $this->dbh->query($sql);
             $room_details = $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_GROUP);
             return $room_details;
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
 
@@ -40,10 +36,8 @@ class Room extends Model
             $stmt = $this->dbh->query($sql);
             $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rooms;
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
 
@@ -71,10 +65,8 @@ class Room extends Model
             $isSended = 1;
             return $isSended;
             unset($value);
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
 
@@ -89,14 +81,14 @@ class Room extends Model
             $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
             $room_id = $room_edit_done['room_id'];
             $sql_room_edit_done = 'UPDATE room
-                                                SET name = ?,
-                                                updated_at = ?
-                                                WHERE id = ? ';
+                                                . SET name = ?,
+                                                . updated_at = ?
+                                                . WHERE id = ? ';
             $stmt = $this->dbh->prepare($sql_room_edit_done);
             $stmt->execute([$name, $updated_at, $room_id]);
             $sql_room_detail_delete_flg_to_one = 'UPDATE room_detail
-                                                                    SET delete_flg = 1
-                                                                    WHERE room_id = ? ';
+                                                                    . SET delete_flg = 1
+                                                                    . WHERE room_id = ? ';
             $stmt = $this->dbh->prepare($sql_room_detail_delete_flg_to_one);
             $stmt->execute([$room_id]);
             foreach ($_POST['detail'] as $value) {
@@ -106,10 +98,8 @@ class Room extends Model
             }
             $isEdited = 1;
             return $isEdited;
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
 
@@ -119,21 +109,36 @@ class Room extends Model
         try {
             $this->connect();
             $sql_room_delete_flg = 'UPDATE room
-                                SET delete_flg = 1
-                                WHERE id = ? ';
+                                . SET delete_flg = 1
+                                . WHERE id = ? ';
             $stmt = $this->dbh->prepare($sql_room_delete_flg);
             $stmt->execute([$id]);
             $sql_room_delete_flg = 'UPDATE room_detail
-                                SET delete_flg = 1
-                                WHERE room_id = ? ';
+                                . SET delete_flg = 1
+                                . WHERE room_id = ? ';
             $stmt = $this->dbh->prepare($sql_room_delete_flg);
             $stmt->execute([$id]);
             header('Location: room_list.php');
             exit;
-        } catch (PDOException $e) {
-            header('Content-Type: text/plain; charset=UTF-8', true, 500);
-            echo '情報の読み込みに失敗しました。しばらくたってから再度アクセスしてください。' . $e->getMessage();
-            exit;
+        } catch (Exception $e) {
+            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        }
+    }
+
+    //ソート機能
+    public function roomSort($sorted_item, $asc_or_desc)
+    {
+        if (($sorted_item == 'name' || $sorted_item == 'updated_at') && $asc_or_desc == 'asc') {
+            $sql = "SELECT * FROM room WHERE delete_flg = 0 ORDER BY" . ' ' . $sorted_item . ' ' . "IS NULL ASC," . $sorted_item . ' ' . "ASC";
+            $stmt = $this->dbh->query($sql);
+            $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rooms;
+        } else {
+            $sql = "SELECT * FROM room WHERE delete_flg = 0 ORDER BY" . ' ' . $sorted_item . ' ' . $asc_or_desc . '';
+            $stmt = $this->dbh->prepare($sql);
+            $stmt->execute();
+            $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rooms;
         }
     }
 }
