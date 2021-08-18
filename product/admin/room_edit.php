@@ -2,13 +2,13 @@
 session_start();
 require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
 require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
 require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
 $name  = '';
 $img   = '';
 $isEdited = false;
 $imgError = '';
-$edit_id = null;
 
 //新規登録データ用配列
 $room = [];
@@ -17,23 +17,14 @@ $merged_array = [];
 
 //編集ボタン押下
 if ($_GET['type'] == 'edit') {
-    $edit_id   = $_GET['id'];
     $isEdited = true;
     try {
-        $model = new Model();
-        $model->connect();
-        $sql_edit = 'SELECT * FROM room WHERE id = ?';
-        $stmt = $model->dbh->prepare($sql_edit);
-        $stmt->execute([$edit_id]);
-        $room = $stmt->fetch(PDO::FETCH_ASSOC);
-        $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ? AND delete_flg = 0';
-        $stmt = $model->dbh->prepare($sql_edit_detail);
-        $stmt->execute([$edit_id]);
-        $room_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $room1 = new Room();
+        $room = $room1->roomSelectId($_GET['id']);
+        $room_details = $room1->room_detailSelectId($_GET['id']);
         $count_room_details = count($room_details);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 
@@ -70,15 +61,15 @@ if (!empty($_POST['up-img-btn'])) {
         $model = new Model();
         $model->connect();
         chmod("../images", 0777);
-        $sql_img = 'UPDATE room
-                        SET img = ?
-                        WHERE id = ?';
+        $sql_img = 'UPDATE room SET img = ? WHERE id = ?';
         $stmt = $model->dbh->prepare($sql_img);
         $stmt->execute([$img, $id]);
         chmod("../images", 0755);
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());
+    } catch (Exception $e) {
+        return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>
@@ -89,6 +80,9 @@ if (!empty($_POST['up-img-btn'])) {
             <input type="hidden" name="token" value="<?=getToken()?>">
             <div class="getPage"><?php getPage() ;?></div>
             <table class="room_edit-table">
+                <?php if (isset($error)):?>
+                    <p class="error"><?=$error?></p>
+                <?php endif; ?>
                 <?php if ($isEdited == true) :?>
                     <tr>
                         <th>ID</th>

@@ -9,7 +9,8 @@ $isEdited = null;
 //新規登録
 if (!empty($_POST['send'])) {
     $room = new Room();
-    $isSended = $room->roomRegister($_POST['name']);
+    $room->roomRegister($_POST['name']);
+    $isSended = 1;
 }
 //編集
 if (!empty($_POST['send-edit'])) {
@@ -18,17 +19,19 @@ if (!empty($_POST['send-edit'])) {
     $today = $date->format('Y-m-d H:i:s');
     $updated_at = $today;
     $room = new Room();
-    $isEdited = $room->roomEdit($_POST['name'], $_POST['detail'][0]['id'], $updated_at);
+    $error = $room->roomEdit($_POST['name'], $_POST['detail'][0]['id'], $updated_at);
+    $isEdited = 1;
 }
 ?>
 <?php require_once('header.php')?>
         <main>
         <div class="room_done-container">
         <div class="getPage"><?php getPage() ;?></div>
-        <?php if(isset($isEdited)) :?>
+        <?php if (isset($error)):?>
+            <h3 class="error"><?=$error?></h3>
+        <?php elseif(isset($isEdited)) :?>
             <h3 class="done-message">編集完了しました。</h3>
-        <?php endif;?>
-        <?php if(isset($isSended)) :?>
+        <?php elseif(isset($isSended)) :?>
             <h3 class="done-message">登録完了しました。</h3>
         <?php endif;?>
         </div>

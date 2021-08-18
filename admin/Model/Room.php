@@ -10,7 +10,33 @@ class Room extends Model
             $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rooms;
         } catch (Exception $e) {
-            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+            throw new Exception();
+        }
+    }
+    public function roomSelectId($id)
+    {
+        try {
+            $this->connect();
+            $sql = 'SELECT * FROM room WHERE id = ?';
+            $stmt = $this->dbh->prepare($sql);
+            $stmt->execute([$id]);
+            $room = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $room;
+        } catch (Exception $e) {
+            throw new Exception();
+        }
+    }
+    public function room_detailSelectId($id)
+    {
+        try {
+            $this->connect();
+            $sql_edit_detail = 'SELECT * FROM room_detail WHERE room_id = ? AND delete_flg = 0';
+            $stmt = $this->dbh->prepare($sql_edit_detail);
+            $stmt->execute([$id]);
+            $room_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $room_details ;
+        } catch (Exception $e) {
+            throw new Exception();
         }
     }
 
@@ -23,7 +49,7 @@ class Room extends Model
             $room_details = $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_GROUP);
             return $room_details;
         } catch (Exception $e) {
-            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+            throw new Exception();
         }
     }
 
@@ -37,7 +63,7 @@ class Room extends Model
             $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rooms;
         } catch (Exception $e) {
-            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+            throw new Exception();
         }
     }
 
@@ -62,8 +88,7 @@ class Room extends Model
                 $stmt = $this->dbh->prepare($sql_room_detail);
                 $stmt->execute([$room_id, $value['capacity'], $value['remarks'], $value['price']]);
             }
-            $isSended = 1;
-            return $isSended;
+            //$isSended = 1;
             unset($value);
         } catch (Exception $e) {
             return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
@@ -80,15 +105,10 @@ class Room extends Model
             $stmt->execute([$id]);
             $room_edit_done = $stmt->fetch(PDO::FETCH_ASSOC);
             $room_id = $room_edit_done['room_id'];
-            $sql_room_edit_done = 'UPDATE room
-                                                . SET name = ?,
-                                                . updated_at = ?
-                                                . WHERE id = ? ';
+            $sql_room_edit_done = 'UPDATE room SET name = ?, updated_at = ? WHERE id = ? ';
             $stmt = $this->dbh->prepare($sql_room_edit_done);
             $stmt->execute([$name, $updated_at, $room_id]);
-            $sql_room_detail_delete_flg_to_one = 'UPDATE room_detail
-                                                                    . SET delete_flg = 1
-                                                                    . WHERE room_id = ? ';
+            $sql_room_detail_delete_flg_to_one = 'UPDATE room_detail SET delete_flg = 1 WHERE room_id = ? ';
             $stmt = $this->dbh->prepare($sql_room_detail_delete_flg_to_one);
             $stmt->execute([$room_id]);
             foreach ($_POST['detail'] as $value) {
@@ -96,13 +116,10 @@ class Room extends Model
                 $stmt = $this->dbh->prepare($sql_room_detail_edit_done);
                 $stmt->execute([$room_id, $value['capacity'], $value['price'], $value['remarks']]);
             }
-            $isEdited = 1;
-            return $isEdited;
         } catch (Exception $e) {
-            return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+            return '編集エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
-
     //客室論理削除
     public function roomDelete($id)
     {
@@ -139,6 +156,20 @@ class Room extends Model
             $stmt->execute();
             $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rooms;
+        }
+    }
+
+    public function room_detailID($id)
+    {
+        try{
+            $this->connect();
+            $sql = 'SELECT * FROM room_detail WHERE id = ?';
+            $stmt = $this->dbh->prepare($sql);
+            $stmt->execute([$id]);
+            $room_detail = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $room_detail;
+        } catch (Exception $e) {
+            throw new Exception();
         }
     }
 }

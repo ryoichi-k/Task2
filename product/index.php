@@ -4,8 +4,19 @@ require_once (dirname(__FILE__).'/ExternalFiles/Model/Room.php');
 require_once (dirname(__FILE__).'/ExternalFiles/util.php');
 
 $room = new Room();
-$rooms = $room->roomSelect();
-$room_details = $room->room_detailSelect();
+
+try {
+    $rooms = $room->roomSelect();
+} catch (Exception $e) {
+    $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    $rooms = [];
+}
+try {
+    $room_details = $room->room_detailSelect();
+} catch (Exception $e) {
+    $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    $room_details = [];
+}
 
 ?>
 <!doctype html>
@@ -27,7 +38,6 @@ $room_details = $room->room_detailSelect();
     <!--[if lt IE 9]>
 <script src="./js/html5shiv.min.js"></script>
 <![endif]-->
-
     <!--[if lt IE 9]>
   <script src="./js/respond.js"></script>
 <![endif]-->
@@ -118,14 +128,17 @@ $(function() {
                     <li><a href="#history">成り立ち</a></li>
                     <li><a href="#name">由来</a></li>
                     <li><a href="#lodging">宿泊</a></li>
-                    <li><a href="#reservation">ご予約</a></li>
+                    <li><a href="reservation_edit.php">ご予約</a></li>
                     <li><a href="#gallery">ギャラリー</a></li>
                     <li><a href="#access">アクセス</a></li>
-                    <?php if (isset($_SESSION['user'])) : ?>
-                        <li>[<?= h($_SESSION['user']['name']); ?>]さん</li>
+                    <?php if (isset($_SESSION['user'])) :?>
+                        <li>[<?=h($_SESSION['user']['name']);?>]さん</li>
                         <li><a href="logout.php">ログアウト</a></li>
                     <?php else : ?>
                         <li><a href="login.php">ログイン</a></li>
+                    <?php endif; ?>
+                    <?php if (isset($error)) :?>
+                        <p class="error"><?=$error?></p>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -139,15 +152,18 @@ $(function() {
                     <li><a href="#history">成り立ち</a></li>
                     <li><a href="#name">由来</a></li>
                     <li><a href="#lodging">宿泊</a></li>
-                    <li><a href="#reservation">ご予約</a></li>
+                    <li><a href="reservation_edit.php">ご予約</a></li>
                     <li><a href="#gallery">ギャラリー</a></li>
                     <li><a href="#access">アクセス</a></li>
-                    <?php if (isset($_SESSION['user'])) : ?>
-                        <li>[<?= h($_SESSION['user']['name']); ?>]さん</li>
+                    <?php if (isset($_SESSION['user'])) :?>
+                        <li>[<?=h($_SESSION['user']['name']);?>]さん</li>
                         <li><a href="logout.php">ログアウト</a></li>
-                    <?php else : ?>
+                    <?php else :?>
                         <li><a href="login.php">ログイン</a></li>
-                    <?php endif; ?>
+                    <?php endif ;?>
+                    <?php if (isset($error)) :?>
+                        <p class="error"><?=$error?></p>
+                    <?php endif ;?>
                 </ul>
             </div>
         </div>
@@ -248,7 +264,7 @@ $(function() {
                         </p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endforeach ;?>
             <div id="lodging-text02">
                 <p>全室和室となっております。<br>
                     １部屋につき最大４名様まで宿泊が可能です。<br>

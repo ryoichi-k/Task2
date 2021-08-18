@@ -1,9 +1,14 @@
 <?php
 session_start();
-require_once('UserModel.php');
-require_once('User_UserAuth.php');
-require_once('admin/util.php');
-require_once('util.inc.php');
+//require_once('UserModel.php');
+//require_once('User_UserAuth.php');
+//require_once('admin/util.php');
+//require_once('util.inc.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/UserModel.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/User_UserAuth.php');
+require_once (dirname(__FILE__).'/ExternalFiles/util.php');
+require_once (dirname(__FILE__).'/ExternalFiles/util.inc.php');
 
 if (empty($_SESSION['user'])) {
     header('Location: login.php');
@@ -109,7 +114,7 @@ if (!empty($_POST['send'])) {
     }
 }
 ?>
-<?php include 'doctype_header_user.php'?>
+<?php require_once (dirname(__FILE__).'/header_user.php');?>
 <title>CICACU | 予約完了画面</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
 <link rel="stylesheet" href="css/reservation.css">

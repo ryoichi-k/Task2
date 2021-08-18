@@ -85,15 +85,5 @@ INSERT INTO m_payment (id, name) VALUES
 
 -- userテーブルINSERT文
 -- ーーーーーーーーーーーーーーーーーーーーーーーーーー
-INSERT INTO `user`(`id`, `login_id`, `login_pass`, `name`, `name_kana`, `birth_year`, `birth_month`, `birth_day`, `gender`, `mail`, `tel1`, `tel2`, `tel3`, `postal_code1`, `postal_code2`, `pref`, `city`, `address`, `other`, `memo`, `status`) VALUES ('1','login','pass','田中テスト','タナカテスト','1990','10','29','1','test@gmail.com','074','0000','0000','112','0101','2','板橋区','10番地','板橋マンション200号室','メモ','1');
--- ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
--- reservationテーブルINSERT文(ダミーデータ)
--- ーーーーーーーーーーーーーーーーーーーーーーーーーー
-INSERT INTO `reservation`(`id`, `room_detail_id`, `user_id`, `name`, `name_kana`, `mail`, `tel1`, `tel2`, `tel3`, `number`, `total_price`, `payment_id`, `status`, `created_at`, `updated_at`, `delete_flg`) VALUES ('1','21','1','田中テスト','タナカテスト','test@gmail.com','074','0000','0000','2','10000','3','1','20210803','20210803','0');
--- ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
--- reservation_detailテーブルINSERT文(ダミーデータ)
--- ーーーーーーーーーーーーーーーーーーーーーーーーーー
-INSERT INTO `reservation_detail`(`id`, `reservation_id`, `date`, `price`) VALUES ('1','1','2021-08-12','2222')
+INSERT INTO `user`(`id`, `login_id`, `login_pass`, `name`, `name_kana`, `birth_year`, `birth_month`, `birth_day`, `gender`, `mail`, `tel1`, `tel2`, `tel3`, `postal_code1`, `postal_code2`, `pref`, `city`, `address`, `other`, `memo`, `status`) VALUES (1,'login','pass','田中テスト','タナカテスト','1990','10','29',1,'test@gmail.com','074','0000','0000','112','0101',2,'板橋区','10番地','板橋マンション200号室','メモ',1);
 -- ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー

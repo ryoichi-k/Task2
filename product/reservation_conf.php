@@ -1,12 +1,20 @@
 <?php
 session_start();
-require_once('UserModel.php');
-require_once('admin/Model/Model.php');
-require_once('admin/Model/Room.php');
-require_once('Reservation.php');
-require_once('User_UserAuth.php');
-require_once('admin/util.php');
-require_once('util.inc.php');
+//require_once('UserModel.php');
+//require_once('admin/Model/Model.php');
+//require_once('admin/Model/Room.php');
+//require_once('Reservation.php');
+//require_once('User_UserAuth.php');
+//require_once('admin/util.php');
+//require_once('util.inc.php');
+
+require_once (dirname(__FILE__).'/ExternalFiles/Model/UserModel.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/User_UserAuth.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/Reservation.php');
+require_once (dirname(__FILE__).'/ExternalFiles/util.php');
+require_once (dirname(__FILE__).'/ExternalFiles/util.inc.php');
 
 // 二重送信防止用トークンの発行
 $token = uniqid('', true);
@@ -80,7 +88,7 @@ if (!empty($_POST['payment'])) {
     }
 }
 ?>
-<?php include 'doctype_header_user.php'?>
+<?php require_once (dirname(__FILE__).'/header_user.php');?>
     <title>CICACU | 予約確認画面</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/reservation.css">

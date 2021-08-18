@@ -1,8 +1,13 @@
 <?php
 session_start();
-require_once ('UserModel.php');
-require_once ('User_UserAuth.php');
-require_once ('admin/util.php');
+//require_once ('UserModel.php');
+//require_once ('User_UserAuth.php');
+//require_once ('admin/util.php');
+
+require_once (dirname(__FILE__).'/ExternalFiles/Model/UserModel.php');
+require_once (dirname(__FILE__).'/ExternalFiles/Model/User_UserAuth.php');
+require_once (dirname(__FILE__).'/ExternalFiles/util.php');
+
 
 if (isset($_SESSION['user'])) {
     unset($_SESSION['user']);
@@ -16,7 +21,7 @@ if (!empty($_POST['btn-auth'])) {
     }
 }
 ?>
-<?php include 'doctype_header_user.php'?>
+<?php require_once (dirname(__FILE__).'/header_user.php');?>
     <title>CICACU | ログイン</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/userstyle.css">
@@ -44,9 +49,4 @@ if (!empty($_POST['btn-auth'])) {
                 </form>
             </div>
         </main>
-        <footer class="gl-footer">
-            <p><small>2021 ebacorp.inc</small></p>
-        </footer>
-    </div>
-</body>
-</html>
+        <?php require_once (dirname(__FILE__).'/admin/footer.php');?>

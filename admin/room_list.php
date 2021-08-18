@@ -11,12 +11,22 @@ if (!empty($_POST['delete'])) {
     $room->roomDelete($_POST['id']);
 }
 
-$rooms = $room->roomSelectList();
+try {
+    $rooms = $room->roomSelectList();
+} catch (Exception $e) {
+    $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    $rooms = [];
+}
+
 $model = new Model();
 $model->connect();
 
 if (!empty($_GET['sort'])) {
-    $rooms = $room->roomSort($_GET['sort'], $_GET['value']);
+    try {
+        $rooms = $room->roomSort($_GET['sort'], $_GET['value']);
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    }
 }
 ?>
 <?php require_once('header.php')?>
@@ -24,6 +34,9 @@ if (!empty($_GET['sort'])) {
     <div class="room_list-container">
         <div class="getPage"><?php getPage() ;?></div>
         <table class="room_list-table" border="1">
+            <?php if (isset($error)):?>
+                <p class="error"><?=$error?></p>
+            <?php endif; ?>
             <tr>
                 <th>
                     <a href="room_list.php?sort=id&value=asc" class="sort" name="sort" value="asc">▲</a><br>
