@@ -6,41 +6,50 @@ require_once (dirname(__FILE__).'/ExternalFiles/util.php');
 $room = new Room();
 
 try {
-    $rooms = $room->roomSelect();
+    $rooms = $room->showRoom();
 } catch (Exception $e) {
     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     $rooms = [];
 }
 try {
-    $room_details = $room->room_detailSelect();
+    $room_details = $room->showRoomDetailForIndex();
 } catch (Exception $e) {
     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     $room_details = [];
 }
 
+
 ?>
 <!doctype html>
 <html lang="ja">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
     <title>CICACU</title>
+
     <meta name="description" content="CICACU(シカク)">
     <meta name="keywords" content="CICACU,cafe饗茶庵,鹿沼,ゲストハウス,民宿">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!--スマホ用に見れるように-->
     <meta name="robots" content="noindex,nofollow,noarchive">
+
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/sp.css">
     <link rel="stylesheet" href="./css/flexslider.css">
     <link rel="stylesheet" href="./css/drawer.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <!--[if lt IE 9]>
 <script src="./js/html5shiv.min.js"></script>
 <![endif]-->
+
     <!--[if lt IE 9]>
   <script src="./js/respond.js"></script>
 <![endif]-->
+
     <!--ドロワーメニュー-->
     <script src="./js/drawer.js"></script>
     <script src="./js/iscroll.js"></script>
@@ -71,6 +80,7 @@ $(function() {
         });
     </script>
     <!--ドロワーメニュー-->
+
     <!--ギャラリー-->
     <script src="./js/jquery.flexslider.js"></script>
     <script>
@@ -82,10 +92,12 @@ $(function() {
         });
     </script>
     <!--ギャラリー-->
+
     <!--google map-->
     <script src="./js/map.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyCussjCXGkGz7sLCUowj36i4IuawxxMe6w"></script>
     <!--google map-->
+
     <!--ページTOPボタン-->
     <script>
         //■page topボタン
@@ -112,6 +124,7 @@ $(function() {
         });
     </script>
 </head>
+
 <body class="drawer drawer--left">
     <!--サイドメニュー-->
     <aside>
@@ -134,12 +147,12 @@ $(function() {
                     <?php if (isset($_SESSION['user'])) :?>
                         <li>[<?=h($_SESSION['user']['name']);?>]さん</li>
                         <li><a href="logout.php">ログアウト</a></li>
-                    <?php else : ?>
+                    <?php else :?>
                         <li><a href="login.php">ログイン</a></li>
-                    <?php endif; ?>
-                    <?php if (isset($error)) :?>
+                    <?php endif ;?>
+                    <?php if (isset($error)):?>
                         <p class="error"><?=$error?></p>
-                    <?php endif; ?>
+                    <?php endif ;?>
                 </ul>
             </div>
         </div>
@@ -168,6 +181,7 @@ $(function() {
             </div>
         </div>
     </aside>
+
     <!--ヘッダー-->
     <header>
         <div id="header-textbox">
@@ -186,6 +200,7 @@ $(function() {
             </div>
         </div>
     </header>
+
     <!--メイン-->
     <main>
         <!--栃木県鹿沼市-->
@@ -204,6 +219,7 @@ $(function() {
                     伝統工芸品が根付く歴史ある宿場町です。</p>
             </div>
         </div>
+
         <!--成り立ち-->
         <div id="history">
             <div id="history-title">
@@ -223,6 +239,7 @@ $(function() {
                     新たな歴史を刻み始めました。</p>
             </div>
         </div>
+
         <!--由来-->
         <div id="name">
             <div id="name-text">
@@ -236,6 +253,7 @@ $(function() {
                     交流する場所として其処にあります。</p>
             </div>
         </div>
+
         <!--宿泊-->
         <div id="lodging">
             <div id="lodging-title">
@@ -274,6 +292,7 @@ $(function() {
                     あらかじめご了承ください。</p>
             </div>
         </div>
+
         <!--ご予約-->
         <div id="reservation">
             <div id="reservation-title">
@@ -286,10 +305,12 @@ $(function() {
                     ２日前、前日のキャンセル：50％<br>
                     当日のキャンセルまたは、不泊の場合：100％　頂戴いたします。</p>
             </div>
+
             <div id="reservation-mail">
                 <a href=""><img src="./img/mail.png"></a>
             </div>
         </div>
+
         <!--ギャラリー-->
         <div id="gallery">
             <div id="gallery-title">
@@ -302,6 +323,7 @@ $(function() {
                     日光東照宮造営の時にここ鹿沼に移り住んだ名工たちが生みだし、<br>
                     その子孫や弟子たちが伝えてきた鹿沼の文化と魂が、この「CICACU」には宿っています。</p>
             </div>
+
             <!--スライドショー-->
             <div class="flexslider">
                 <ul class="slides">
@@ -320,6 +342,7 @@ $(function() {
                 </ul>
             </div>
         </div>
+
         <!--アクセス-->
         <div id="access">
             <div id="access-title">
@@ -331,9 +354,11 @@ $(function() {
                     　　　　JR日光線「鹿沼駅」より徒歩20分<br>
                     【駐車場】「cafe饗茶庵」専用駐車場をご利用ください。</p>
             </div>
+
             <!--google map-->
             <div id="g_map"></div>
             <!--google map-->
+
             <div id="access-text02">
                 <p>その他、お問い合わせはこちらまで<br>
                     &#9742;　080-1411-4095（辻井）　／　
@@ -342,19 +367,23 @@ $(function() {
             </div>
         </div>
     </main>
+
     <!--フッター-->
     <footer>
         <div id="logo">
             <img src="./img/logo.png">
         </div>
+
         <small>
             <p>Copyright &copy; CICACU All rights reserved.</p>
         </small>
     </footer>
+
     <!--TOPに戻るボタン-->
     <div id="pageTop">
         <a href="#">&#9650;<br>TOP</a>
     </div>
     <!--TOPに戻るボタン-->
+
 </body>
 </html>

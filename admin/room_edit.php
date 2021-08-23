@@ -20,8 +20,8 @@ if ($_GET['type'] == 'edit') {
     $isEdited = true;
     try {
         $room1 = new Room();
-        $room = $room1->roomSelectId($_GET['id']);
-        $room_details = $room1->room_detailSelectId($_GET['id']);
+        $room = $room1->showRoomName($_GET['id']);
+        $room_details = $room1->showRoomDetail($_GET['id']);
         $count_room_details = count($room_details);
     } catch (Exception $e) {
         $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
@@ -60,11 +60,11 @@ if (!empty($_POST['up-img-btn'])) {
     try {
         $model = new Model();
         $model->connect();
-        chmod("../images", 0777);
+        chmod('../images', 0777);
         $sql_img = 'UPDATE room SET img = ? WHERE id = ?';
         $stmt = $model->dbh->prepare($sql_img);
         $stmt->execute([$img, $id]);
-        chmod("../images", 0755);
+        chmod('../images', 0755);
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());
@@ -80,9 +80,9 @@ if (!empty($_POST['up-img-btn'])) {
             <input type="hidden" name="token" value="<?=getToken()?>">
             <div class="getPage"><?php getPage() ;?></div>
             <table class="room_edit-table">
-                <?php if (isset($error)):?>
+                <?php if (isset($error)) :?>
                     <p class="error"><?=$error?></p>
-                <?php endif; ?>
+                <?php endif ;?>
                 <?php if ($isEdited == true) :?>
                     <tr>
                         <th>ID</th>
@@ -91,7 +91,7 @@ if (!empty($_POST['up-img-btn'])) {
                 <?php endif ;?>
                 <tr>
                     <th>部屋名</th>
-                    <td colspan="3"><input type="text" id="room_edit-room-name-input" name="name" value="<?= isset($united_array['name']) ? h($united_array['name']) : ''?>"></td>
+                    <td colspan="3"><input type="text" id="room_edit-room-name-input" name="name" value="<?=isset($united_array['name']) ? h($united_array['name']) : ''?>"></td>
                 </tr>
                 <th rowspan="3">宿泊人数と価格</th>
                 <tr>
@@ -104,7 +104,7 @@ if (!empty($_POST['up-img-btn'])) {
     　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
     　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
     </p>
-<?php endfor; ?>
+<?php endfor ;?>
 </td>
 </tr>
 <tr>
@@ -126,8 +126,8 @@ if (!empty($_POST['up-img-btn'])) {
                 <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php?type=new">
             <?php elseif (count($united_array['detail']) == 5) :?>
                 <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php?type=new">
-            <?php endif; ?>
-        <?php endif; ?>
+            <?php endif ;?>
+        <?php endif ;?>
     </td>
 </tr>
 </table>

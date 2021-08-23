@@ -8,52 +8,48 @@ $room = new Room();
 
 //論理削除処理
 if (!empty($_POST['delete'])) {
-    $room->roomDelete($_POST['id']);
+    $room->deleteRoom($_POST['id']);
 }
 
-try {
-    $rooms = $room->roomSelectList();
-} catch (Exception $e) {
-    $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
-    $rooms = [];
-}
-
-$model = new Model();
-$model->connect();
-
+//ソート
 if (!empty($_GET['sort'])) {
     try {
-        $rooms = $room->roomSort($_GET['sort'], $_GET['value']);
+        $rooms = $room->sortRoom();
     } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = 'ソートエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
+$rooms = $room->sortRoom();
+
 ?>
 <?php require_once('header.php')?>
 <main>
     <div class="room_list-container">
         <div class="getPage"><?php getPage() ;?></div>
         <table class="room_list-table" border="1">
-            <?php if (isset($error)):?>
+            <?php if (isset($error)) :?>
                 <p class="error"><?=$error?></p>
-            <?php endif; ?>
+            <?php endif ;?>
+            <?php if ($rooms == false) :?>
+                <p class="first-message">部屋データがありません。新規登録ボタンから部屋を登録してください。</p>
+            <?php endif ;?>
             <tr>
                 <th>
-                    <a href="room_list.php?sort=id&value=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=id&order=asc" class="sort" name="sort" value="asc">▲</a><br>
                         ID<br>
-                    <a href="room_list.php?sort=id&value=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=id&order=desc" class="sort" name="sort" value="desc">▼</a><br>
                 </th>
                 <th>
-                    <a href="room_list.php?sort=name&value=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=name&order=asc" class="sort" name="sort" value="asc">▲</a><br>
                         部屋名<br>
-                    <a href="room_list.php?sort=name&value=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=name&order=desc" class="sort" name="sort" value="desc">▼</a><br>
                 </th>
                 <th>画像</th>
                 <th>登録日時</th>
                 <th>
-                    <a href="room_list.php?sort=updated_at&value=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=updated_at&order=asc" class="sort" name="sort" value="asc">▲</a><br>
                         更新日時<br>
-                    <a href="room_list.php?sort=updated_at&value=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=updated_at&order=desc" class="sort" name="sort" value="desc">▼</a><br>
                 </th>
                 <th>
                     <form action="" method="post">

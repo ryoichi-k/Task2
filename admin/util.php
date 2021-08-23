@@ -8,7 +8,7 @@ function getPage()
     $item_array = array(
         'room' => '客室管理'
     );
-    $oreration_array = array(
+    $operation_array = array(
         'new' => '登録',
         'edit' => '編集',
     );
@@ -18,9 +18,10 @@ function getPage()
         'done' => '完了',
         'edit' => '',
     );
-    $curUrl = $_SERVER['SCRIPT_NAME'];
-    $basename = basename($curUrl, ".php");
+
+    $basename = basename($_SERVER['SCRIPT_NAME'], '.php');
+
     $removed_underbar = explode('_' , $basename);
 
-    echo "<button>" . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $oreration_array[$_GET['type']] : '' ). $page_array[$removed_underbar[1]] . "</button>";
+    echo '<button>' . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $operation_array[$_GET['type']] : '' ) . $page_array[end($removed_underbar)] . '</button>';
 }

@@ -21,7 +21,7 @@ if (empty($_SESSION['admin'])) {
 <body>
     <div class="wrapper">
         <header class="gl-header">
-                <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']);?>]さん、ご機嫌いかがですか？</p><div class="logout-link"><a href="logout.php">ログアウトする</a></div>
+                <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']) ;?>]さん、ご機嫌いかがですか？</p><div class="logout-link"><a href="logout.php">ログアウトする</a></div>
                 <h1>CICACU</h1>
                 <nav class="gl-nav">
                     <ul>

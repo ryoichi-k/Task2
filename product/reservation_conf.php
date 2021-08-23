@@ -1,12 +1,5 @@
 <?php
 session_start();
-//require_once('UserModel.php');
-//require_once('admin/Model/Model.php');
-//require_once('admin/Model/Room.php');
-//require_once('Reservation.php');
-//require_once('User_UserAuth.php');
-//require_once('admin/util.php');
-//require_once('util.inc.php');
 
 require_once (dirname(__FILE__).'/ExternalFiles/Model/UserModel.php');
 require_once (dirname(__FILE__).'/ExternalFiles/Model/Model.php');
@@ -37,17 +30,19 @@ if (!empty($_POST['payment'])) {
     $next_day = $day->modify('+1 days')->format('Y-m-d');
 
     try {
+        //部屋情報詳細を検索→画面表示あり
         try {
             $room2 = new Room();
-            $room_detail = $room2->room_detailID($_POST['room_detail_id']);
+            $room_detail = $room2->findRoomDetailId($_POST['room_detail_id']);
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $room_detail = [];
             $room_detail['capacity'] = '';
         }
+        //既存の予約内容を検索
         try {
             $reservations = new Reservation();
-            $reservation = $reservations->reservationDetailId($_POST['room_detail_id']);
+            $reservation = $reservations->searchReservation($_POST['room_detail_id']);
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $reservation = [];
@@ -58,7 +53,9 @@ if (!empty($_POST['payment'])) {
         exit($e->getMessage());
     }
 
-    if ($reservation == false) {//新規予約
+
+
+    if ($reservation == false) {//DB内にない新規予約
         $error = 'この部屋は予約できます';
         //宿泊人数が客室に登録されている人数を超えていないこと
         if ($_POST['number'] > $room_detail['capacity']) {

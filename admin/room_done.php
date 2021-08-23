@@ -9,17 +9,13 @@ $isEdited = null;
 //新規登録
 if (!empty($_POST['send'])) {
     $room = new Room();
-    $room->roomRegister($_POST['name']);
+    $room->registerRoom($_POST['name'], $_POST['detail']);
     $isSended = 1;
 }
 //編集
 if (!empty($_POST['send-edit'])) {
-    $date = new DateTime();
-    $date->setTimeZone( new DateTimeZone('Asia/Tokyo'));
-    $today = $date->format('Y-m-d H:i:s');
-    $updated_at = $today;
     $room = new Room();
-    $error = $room->roomEdit($_POST['name'], $_POST['detail'][0]['id'], $updated_at);
+    $error = $room->editRoom($_POST['name'], $_POST['detail'][0]['id'], $_POST['detail']);
     $isEdited = 1;
 }
 ?>
@@ -27,13 +23,13 @@ if (!empty($_POST['send-edit'])) {
         <main>
         <div class="room_done-container">
         <div class="getPage"><?php getPage() ;?></div>
-        <?php if (isset($error)):?>
+        <?php if (isset($error)) :?>
             <h3 class="error"><?=$error?></h3>
         <?php elseif(isset($isEdited)) :?>
             <h3 class="done-message">編集完了しました。</h3>
         <?php elseif(isset($isSended)) :?>
             <h3 class="done-message">登録完了しました。</h3>
-        <?php endif;?>
+        <?php endif ;?>
         </div>
         </main>
         <footer class="done-footer">

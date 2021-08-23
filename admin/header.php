@@ -12,7 +12,7 @@
 <body>
     <div class="list-wrapper">
         <header class="gl-header">
-            <p class="top-p">ログイン名[<?= h($_SESSION['admin']['name']); ?>]さん、ご機嫌いかがですか？</p>
+            <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']) ;?>]さん、ご機嫌いかがですか？</p>
             <div class="logout-link"><a href="logout.php">ログアウトする</a></div>
             <h1>CICACU</h1>
             <nav class="gl-nav">

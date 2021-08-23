@@ -7,13 +7,13 @@ require_once('admin/util.php');
 $room = new Room();
 
 try {
-    $rooms = $room->roomSelect();
+    $rooms = $room->showRoom();
 } catch (Exception $e) {
     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     $rooms = [];
 }
 try {
-    $room_details = $room->room_detailSelect();
+    $room_details = $room->showRoomDetailForIndex();
 } catch (Exception $e) {
     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     $room_details = [];

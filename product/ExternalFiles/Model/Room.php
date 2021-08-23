@@ -125,14 +125,10 @@ class Room extends Model
     {
         try {
             $this->connect();
-            $sql_room_delete_flg = 'UPDATE room
-                                . SET delete_flg = 1
-                                . WHERE id = ? ';
+            $sql_room_delete_flg = 'UPDATE room SET delete_flg = 1 WHERE id = ? ';
             $stmt = $this->dbh->prepare($sql_room_delete_flg);
             $stmt->execute([$id]);
-            $sql_room_delete_flg = 'UPDATE room_detail
-                                . SET delete_flg = 1
-                                . WHERE room_id = ? ';
+            $sql_room_delete_flg = 'UPDATE room_detail SET delete_flg = 1 WHERE room_id = ? ';
             $stmt = $this->dbh->prepare($sql_room_delete_flg);
             $stmt->execute([$id]);
             header('Location: room_list.php');

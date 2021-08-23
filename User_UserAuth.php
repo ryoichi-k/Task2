@@ -9,9 +9,6 @@ class User_UserAuth extends UserModel
             $stmt = $this->dbh->prepare($sql);
             $stmt->execute([$id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo '<pre>';
-            print_r($result);
-            echo '</pre>';
             if ($result && password_verify($pass, $result['login_pass'])) {
                 echo 'in';
                 session_regenerate_id();

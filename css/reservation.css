@@ -1,12 +1,10 @@
 @charset "UTF-8";
-
 /*-------------------------
     初期値
 -------------------------*/
 body {
     background-color: #eee;
 }
-
 /*-------------------------
     グローバル
 -------------------------*/
@@ -17,7 +15,6 @@ body {
     background-color: #fff;
     position: relative;
 }
-
 .error {
     color: red;
     text-align: center;

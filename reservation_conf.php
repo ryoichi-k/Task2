@@ -29,29 +29,29 @@ if (!empty($_POST['payment'])) {
     $next_day = $day->modify('+1 days')->format('Y-m-d');
 
     try {
+        //部屋情報詳細を検索→画面表示あり
         try {
             $room2 = new Room();
-            $room_detail = $room2->room_detailID($_POST['room_detail_id']);
+            $room_detail = $room2->findRoomDetailId($_POST['room_detail_id']);
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $room_detail = [];
             $room_detail['capacity'] = '';
         }
+        //既存の予約内容を検索
         try {
             $reservations = new Reservation();
-            $reservation = $reservations->reservationDetailId($_POST['room_detail_id']);
+            $reservation = $reservations->searchReservation($_POST['room_detail_id']);
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $reservation = [];
             $reservation['status'] = '';
         }
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 
-    if ($reservation == false) {//新規予約
-        $error = 'この部屋は予約できます';
+    if ($reservation == false) {//DB内にない新規予約
         //宿泊人数が客室に登録されている人数を超えていないこと
         if ($_POST['number'] > $room_detail['capacity']) {
             $error = '客室の宿泊可能人数を超えています。別のお部屋をお選びください。';
@@ -70,13 +70,13 @@ if (!empty($_POST['payment'])) {
     try {
         $model = new Model();
         $model->connect();
+
         $sql_room_name = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room_detail.id = ?';
         $stmt = $model->dbh->prepare($sql_room_name);
         $stmt->execute([$_POST['room_detail_id']]);
         $room_detail = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>
@@ -93,7 +93,7 @@ if (!empty($_POST['payment'])) {
         <div class="reservation-container">
             <?php if (isset($error)) :?>
                 <h3 class="error"><?=$error?></h3>
-            <?php endif;?>
+            <?php endif ;?>
             <table class="reservation-table">
                 <form action="" method="post">
                     <tr>

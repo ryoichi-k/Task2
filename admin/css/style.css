@@ -187,9 +187,6 @@ a:hover {
     margin: 1px;
     padding: 1px;
 }
-/* .flex-room_list_div {
-    width: 50px;
-} */
 .new-btn {
     width: 100px;
 }
@@ -198,6 +195,10 @@ a:hover {
 }
 .delete-btn {
     width: 60px;
+}
+.first-message {
+    color: green;
+    text-align: center;
 }
 /*-------------------------
     roomedit

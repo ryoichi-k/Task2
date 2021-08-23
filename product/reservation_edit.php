@@ -1,8 +1,5 @@
 <?php
 session_start();
-// require_once('UserModel.php');
-// require_once('User_UserAuth.php');
-// require_once('admin/util.php');
 require_once (dirname(__FILE__).'/ExternalFiles/Model/Model.php');
 require_once (dirname(__FILE__).'/ExternalFiles/Model/UserModel.php');
 require_once (dirname(__FILE__).'/ExternalFiles/Model/User_UserAuth.php');

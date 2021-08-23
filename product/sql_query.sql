@@ -87,3 +87,15 @@ INSERT INTO m_payment (id, name) VALUES
 -- ーーーーーーーーーーーーーーーーーーーーーーーーーー
 INSERT INTO `user`(`id`, `login_id`, `login_pass`, `name`, `name_kana`, `birth_year`, `birth_month`, `birth_day`, `gender`, `mail`, `tel1`, `tel2`, `tel3`, `postal_code1`, `postal_code2`, `pref`, `city`, `address`, `other`, `memo`, `status`) VALUES (1,'login','pass','田中テスト','タナカテスト','1990','10','29',1,'test@gmail.com','074','0000','0000','112','0101',2,'板橋区','10番地','板橋マンション200号室','メモ',1);
 -- ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+INSERT INTO `user`(`id`, `login_id`, `login_pass`, `name`, `name_kana`, `birth_year`, `birth_month`, `birth_day`, `gender`, `mail`, `tel1`, `tel2`, `tel3`, `postal_code1`, `postal_code2`, `pref`, `city`, `address`, `other`, `memo`, `status`) VALUES (2,'login','$2y$10$O2LyZXeYpF.khdVQ2JToL.uPReMDL/gQeFQg.tnmq1yFm4UGNF4bW','田中テスト','タナカテスト','1990','10','29',1,'test@gmail.com','074','0000','0000','112','0101',2,'板橋区','10番地','板橋マンション200号室','メモ',1);
+
+UPDATE `user` SET `login_pass`='$2y$10$O2LyZXeYpF.khdVQ2JToL.uPReMDL/gQeFQg.tnmq1yFm4UGNF4bW' WHERE 'id' = 1;
+
+
+
+
+
+update user set login_id = 'log' where id = 1;
+
+update user set login_pass = '$2y$10$O2LyZXeYpF.khdVQ2JToL.uPReMDL/gQeFQg.tnmq1yFm4UGNF4bW' where id = 1;

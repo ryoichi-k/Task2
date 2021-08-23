@@ -11,6 +11,7 @@ if (empty($_SESSION['user'])) {
 try {
     $model = new UserModel();
     $model->connect();
+
     $sql_room = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room.delete_flg = 0 AND room_detail.delete_flg = 0';
     $stmt = $model->dbh->query($sql_room);
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,9 +19,8 @@ try {
     $sql_payment = 'SELECT * FROM m_payment';
     $stmt = $model->dbh->query($sql_payment);
     $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    header('Content-Type: text/plain; charset=UTF-8', true, 500);
-    exit($e->getMessage());
+} catch (Exception $e) {
+    $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
 }
 ?>
 <?php include 'doctype_header_user.php'?>
@@ -35,6 +35,9 @@ try {
         <h1>予約画面</h1>
         <div class="reservation-container">
             <table class="reservation-table">
+            <?php if (isset($error)) :?>
+                <p class="error"><?=$error?></p>
+            <?php endif ;?>
                 <form action="reservation_conf.php" method="post">
                     <tr>
                         <th>

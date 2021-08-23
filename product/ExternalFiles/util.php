@@ -19,8 +19,8 @@ function getPage()
         'edit' => '',
     );
     $curUrl = $_SERVER['SCRIPT_NAME'];
-    $basename = basename($curUrl, ".php");
+    $basename = basename($curUrl, '.php');
     $removed_underbar = explode('_' , $basename);
 
-    echo "<button>" . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $oreration_array[$_GET['type']] : '' ). $page_array[$removed_underbar[1]] . "</button>";
+    echo '<button>' . $item_array[$removed_underbar[0]] . (isset($_GET['type']) ? $oreration_array[$_GET['type']] : '' ). $page_array[$removed_underbar[1]] . '</button>';
 }
