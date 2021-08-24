@@ -23,7 +23,6 @@ $rooms = $room->sortRoom();
 
 //部屋名検索機能
 if (isset($_POST["search"])) {
-    //入力チェック
     if (empty($_POST['search_name'])) {
         $error = '検索項目が未入力です。';
     }
@@ -34,16 +33,19 @@ if (isset($_POST["search"])) {
     }
 }
 
-
 ?>
 <?php require_once('header.php')?>
 <main>
     <div class="room_list-container">
-        <div class="getPage"><?php getPage() ;?></div>
-        <form action="" method="post">
-            <input type="text" name="search_name">
-            <input type="submit" name="search" value="検索">
-        </form>
+        <div class="getPage_search">
+            <div class="getPage"><?php getPage() ;?></div>
+            <p class="search">
+                <form action="" method="post">
+                    <input type="text" name="search_name">
+                    <input type="submit" name="search" value="検索">
+                </form>
+            </p>
+        </div>
         <table class="room_list-table" border="1">
             <?php if (isset($error)) :?>
                 <p class="error"><?=$error?></p>

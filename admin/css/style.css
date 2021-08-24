@@ -200,6 +200,18 @@ a:hover {
     color: green;
     text-align: center;
 }
+.getPage_search {
+    display: flex;
+
+}
+.getPage p {
+    margin-left: 100px;
+}
+.search {
+    text-align: right;
+    margin-bottom: 15px;
+    margin-left: 515px;
+}
 /*-------------------------
     roomedit
 -------------------------*/
