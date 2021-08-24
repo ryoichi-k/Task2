@@ -92,3 +92,15 @@
     //            $stmt = $this->dbh->query($sql);
     //            return $stmt->fetchAll(PDO::FETCH_ASSOC);
     //    }
+
+
+     // try {
+    //     $model = new Model();
+    //     $model->connect();
+    //     $stmt = $model->dbh->prepare('SELECT * FROM room WHERE name LIKE :search_name AND delete_flg = 0');
+    //     $stmt->bindValue(':search_name', '%' . addcslashes($_POST['search_name'], '\_%') . '%');
+    //     $stmt->execute();
+    //     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // } catch (Exception $e) {
+    //     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    // }

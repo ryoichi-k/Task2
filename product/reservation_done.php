@@ -39,11 +39,7 @@ if (!empty($_POST['send'])) {
         $payment = $stmt->fetch(PDO::FETCH_ASSOC);
 
         //reservationテーブルに予約内容と、ユーザー情報を同時にinsert
-        $sql = 'INSERT INTO reservation
-                                    (room_detail_id, user_id, name,
-                                    name_kana, mail, tel1, tel2, tel3,
-                                    number, total_price, payment_id)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO reservation (room_detail_id, user_id, name, name_kana, mail, tel1, tel2, tel3, number, total_price, payment_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = $model->dbh->prepare($sql);
         $stmt->execute([$_POST['reservation_room_detail_id'], $user['id'], $user['name'], $user['name_kana'], $user['mail'], $user['tel1'], $user['tel2'], $user['tel3'], $_POST['reservation_number'], $_POST['reservation_total_price'], $payment['id']]);
 
@@ -54,9 +50,7 @@ if (!empty($_POST['send'])) {
         $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
         //insert reservation_detail
-        $sql = 'INSERT INTO reservation_detail
-                                    (reservation_id, date, price)
-                                    VALUES (?, ?, ?)';
+        $sql = 'INSERT INTO reservation_detail (reservation_id, date, price) VALUES (?, ?, ?)';
         $stmt = $model->dbh->prepare($sql);
         $stmt->execute([$reservation['id'], $_POST['reservation_date'], $_POST['reservation_total_price']]);
 
@@ -99,9 +93,8 @@ if (!empty($_POST['send'])) {
 
         mb_send_mail($to, $subject, $body, $header, $pfrom);
 
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>
@@ -113,8 +106,12 @@ if (!empty($_POST['send'])) {
 <body>
     <div class="wrapper">
         <p class="top-p"><?=h($_SESSION['user']['name']);?>さん、ご機嫌いかがですか？</p>
-        <h1>予約完了です。確認メールを送付しましたのでご確認ください。</h1>
         <div class="reservation-container">
+            <?php if (isset($error)) :?>
+                <h3 class="error"><?=$error?></h3>
+            <?php else :?>
+                <h1>予約完了です。確認メールを送付しましたのでご確認ください。</h1>
+            <?php endif ;?>
             <input class="submit-button" type="button" value="トップへ戻る" onclick="location.href='./index.php'">
         </div>
             <footer class="reservation-footer">

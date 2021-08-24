@@ -28,11 +28,20 @@ if (!empty($_POST['payment'])) {
     $day = new DateTime($_POST['date']);
     $next_day = $day->modify('+1 days')->format('Y-m-d');
 
+    echo 'post<pre>';
+    print_r($_POST);
+    echo '</pre>';
+
     try {
         //部屋情報詳細を検索→画面表示あり
         try {
             $room2 = new Room();
             $room_detail = $room2->findRoomDetailId($_POST['room_detail_id']);
+
+            echo 'detail<pre>';
+            print_r($room_detail);
+            echo '</pre>';
+
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $room_detail = [];
@@ -42,6 +51,9 @@ if (!empty($_POST['payment'])) {
         try {
             $reservations = new Reservation();
             $reservation = $reservations->searchReservation($_POST['room_detail_id']);
+            echo 're<pre>';
+            print_r($reservation);
+            echo '</pre>';
         } catch (Exception $e) {
             $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
             $reservation = [];
@@ -50,6 +62,32 @@ if (!empty($_POST['payment'])) {
     } catch (Exception $e) {
         $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
+
+    try {
+        $model = new Model();
+        $model->connect();
+
+        $sql = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room_detail.id = ?';
+        $stmt = $model->dbh->prepare($sql);
+        $stmt->execute([$_POST['room_detail_id']]);
+        $room_detail = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        echo 'detail2<pre>';
+        print_r($room_detail);
+        echo '</pre>';
+
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    }
+
+    $model = new UserModel();
+    $model->connect();
+    $sql = 'SELECT date, reservation_detail.* FROM reservation_detail';
+    $stmt = $model->dbh->query($sql);
+    $reservation_date = $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_GROUP);
+    echo 'date<pre>';
+    print_r($reservation_date);
+    echo '</pre>';
 
     if ($reservation == false) {//DB内にない新規予約
         //宿泊人数が客室に登録されている人数を超えていないこと
@@ -60,23 +98,11 @@ if (!empty($_POST['payment'])) {
         if ($next_day > $three_month_lator) {
             $error = '3ヶ月以降のご予約はできません。';
         }
-    } else {//予約済の場合
+    } else {//予約がDBに一つでも存在している場合
         //予約しようとしている客室が予約済みでないこと
         if (isset($reservation['status']) && $reservation['status'] == 1) {
             $error = '満室です。別の部屋を選んでください。';
         }
-    }
-
-    try {
-        $model = new Model();
-        $model->connect();
-
-        $sql_room_name = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room_detail.id = ?';
-        $stmt = $model->dbh->prepare($sql_room_name);
-        $stmt->execute([$_POST['room_detail_id']]);
-        $room_detail = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>

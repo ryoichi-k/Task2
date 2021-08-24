@@ -16,16 +16,34 @@ if (!empty($_GET['sort'])) {
     try {
         $rooms = $room->sortRoom();
     } catch (Exception $e) {
-        $error = 'ソートエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 $rooms = $room->sortRoom();
+
+//部屋名検索機能
+if (isset($_POST["search"])) {
+    //入力チェック
+    if (empty($_POST['search_name'])) {
+        $error = '検索項目が未入力です。';
+    }
+    try {
+        $rooms = $room->searchRoom($_POST['search_name']);
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+    }
+}
+
 
 ?>
 <?php require_once('header.php')?>
 <main>
     <div class="room_list-container">
         <div class="getPage"><?php getPage() ;?></div>
+        <form action="" method="post">
+            <input type="text" name="search_name">
+            <input type="submit" name="search" value="検索">
+        </form>
         <table class="room_list-table" border="1">
             <?php if (isset($error)) :?>
                 <p class="error"><?=$error?></p>

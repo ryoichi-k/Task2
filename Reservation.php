@@ -7,8 +7,8 @@ class Reservation extends UserModel
         try{
             $this->connect();
 
-            $sql_select_reservation = 'SELECT * FROM reservation WHERE room_detail_id = ?';
-            $stmt = $this->dbh->prepare($sql_select_reservation);
+            $sql = 'SELECT * FROM reservation WHERE room_detail_id = ?';
+            $stmt = $this->dbh->prepare($sql);
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {

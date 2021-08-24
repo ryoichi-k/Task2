@@ -70,6 +70,20 @@ class Room extends Model
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //部屋検索
+    public function searchRoom($search_name)
+    {
+        try {
+            $this->connect();
+            $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name LIKE :search_name AND delete_flg = 0');
+            $stmt->bindValue(':search_name', '%' . addcslashes($search_name, '\_%') . '%');
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception();
+        }
+    }
+
     //客室新規登録
     public function registerRoom($name, $detail)
     {

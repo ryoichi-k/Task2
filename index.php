@@ -169,15 +169,15 @@ $(function() {
                     <li><a href="reservation_edit.php">ご予約</a></li>
                     <li><a href="#gallery">ギャラリー</a></li>
                     <li><a href="#access">アクセス</a></li>
-                    <?php if (isset($_SESSION['user'])) : ?>
-                        <li>[<?= h($_SESSION['user']['name']); ?>]さん</li>
+                    <?php if (isset($_SESSION['user'])) :?>
+                        <li>[<?=h($_SESSION['user']['name']);?>]さん</li>
                         <li><a href="logout.php">ログアウト</a></li>
-                    <?php else : ?>
+                    <?php else :?>
                         <li><a href="login.php">ログイン</a></li>
-                    <?php endif; ?>
+                    <?php endif ;?>
                     <?php if (isset($error)):?>
                         <p class="error"><?=$error?></p>
-                    <?php endif; ?>
+                    <?php endif ;?>
                 </ul>
             </div>
         </div>
@@ -267,23 +267,23 @@ $(function() {
                     ご到着の時間をご連絡ください。<br>
                     深夜の外出、入室は近隣の方々のご迷惑にならないようお願いします。</p>
             </div>
-            <?php foreach ($rooms as $value) : ?>
+            <?php foreach ($rooms as $value) :?>
                 <div class="roomA">
-                    <?php if ($value['img']) : ?>
-                        <img src="./images/<?= h($value['img']) ?>" width="563.750" height="369.812">
-                    <?php else : ?>
+                    <?php if ($value['img']) :?>
+                        <img src="./images/<?=h($value['img'])?>" width="563.750" height="369.812">
+                    <?php else :?>
                         <img src="./images/noimage.png" width="563.750" height="369.812" alt="">
-                    <?php endif; ?>
+                    <?php endif ;?>
                     <div class="roomA-text">
-                        <h3><?= h($value['name']) ?></h3>
+                        <h3><?=h($value['name'])?></h3>
                         <p>
-                            <?php foreach ($room_details[$value['id']] as $v) : ?>
-                                <?= $v['capacity'] ?>名様<?= $v['remarks'] ?>：￥<?= number_format($v['price']) ?><?= $v['capacity'] > 1 ? '（1名様' . number_format(floor($v['price'] / $v['capacity'])) . '円）' : '' ?><br>
-                            <?php endforeach; ?>
+                            <?php foreach ($room_details[$value['id']] as $v) :?>
+                                <?=$v['capacity']?>名様<?=$v['remarks']?>：￥<?=number_format($v['price'])?><?=$v['capacity'] > 1 ? '（1名様' . number_format(floor($v['price'] / $v['capacity'])) . '円）' : '' ?><br>
+                            <?php endforeach ;?>
                         </p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endforeach ;?>
             <div id="lodging-text02">
                 <p>全室和室となっております。<br>
                     １部屋につき最大４名様まで宿泊が可能です。<br>

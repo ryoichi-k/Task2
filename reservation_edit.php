@@ -12,12 +12,16 @@ try {
     $model = new UserModel();
     $model->connect();
 
-    $sql_room = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room.delete_flg = 0 AND room_detail.delete_flg = 0';
-    $stmt = $model->dbh->query($sql_room);
+    $sql = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room.delete_flg = 0 AND room_detail.delete_flg = 0';
+    $stmt = $model->dbh->query($sql);
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_payment = 'SELECT * FROM m_payment';
-    $stmt = $model->dbh->query($sql_payment);
+    echo 'rooms<pre>';
+    print_r($rooms);
+    echo '</pre>';
+
+    $sql = 'SELECT * FROM m_payment';
+    $stmt = $model->dbh->query($sql);
     $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';

@@ -49,14 +49,12 @@ if (!empty($_POST['payment'])) {
             $reservation['status'] = '';
         }
     } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 
 
 
     if ($reservation == false) {//DB内にない新規予約
-        $error = 'この部屋は予約できます';
         //宿泊人数が客室に登録されている人数を超えていないこと
         if ($_POST['number'] > $room_detail['capacity']) {
             $error = '客室の宿泊可能人数を超えています。別のお部屋をお選びください。';
@@ -75,13 +73,13 @@ if (!empty($_POST['payment'])) {
     try {
         $model = new Model();
         $model->connect();
+        
         $sql_room_name = 'SELECT * FROM room INNER JOIN room_detail ON room.id = room_detail.room_id WHERE room_detail.id = ?';
         $stmt = $model->dbh->prepare($sql_room_name);
         $stmt->execute([$_POST['room_detail_id']]);
         $room_detail = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        header('Content-Type: text/plain; charset=UTF-8', true, 500);
-        exit($e->getMessage());
+    } catch (Exception $e) {
+        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>

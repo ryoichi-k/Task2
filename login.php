@@ -30,7 +30,7 @@ if (!empty($_POST['btn-auth'])) {
                     <table class="login-table">
                         <?php if (isset($error)) :?>
                             <p class="error"><?=$error?></p>
-                        <?php endif; ?>
+                        <?php endif ;?>
                         <tr>
                             <th>ログインID：</th>
                             <td><input type="text" name="id" value="<?=!empty($_POST['id']) ? h($_POST['id']) : ''?>" id="login-id" class="form-control" autofocus></td>

@@ -10,7 +10,6 @@ class User_UserAuth extends UserModel
             $stmt->execute([$id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result && password_verify($pass, $result['login_pass'])) {
-                echo 'in';
                 session_regenerate_id();
                 $_SESSION['user']['authenticated'] = 1;
                 $_SESSION['user']['id'] = $result['id'];
@@ -18,7 +17,6 @@ class User_UserAuth extends UserModel
                 header('Location: reservation_edit.php');
                 exit;
             }
-            echo 'out';
             return 'あなたのIDかパスワードが間違っています';
         } catch (Exception $e) {
             return 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
