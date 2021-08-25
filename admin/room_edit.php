@@ -24,7 +24,7 @@ if ($_GET['type'] == 'edit') {
         $room_details = $room1->showRoomDetail($_GET['id']);
         $count_room_details = count($room_details);
     } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = '予期せぬエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 

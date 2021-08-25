@@ -11,25 +11,23 @@ if (!empty($_POST['delete'])) {
     $room->deleteRoom($_POST['id']);
 }
 
-//ソート
-if (!empty($_GET['sort'])) {
+//初期表示とソート
     try {
         $rooms = $room->sortRoom();
     } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
-}
-$rooms = $room->sortRoom();
+
 
 //部屋名検索機能
-if (isset($_POST["search"])) {
+if (isset($_POST['search'])) {
     if (empty($_POST['search_name'])) {
         $error = '検索項目が未入力です。';
     }
     try {
         $rooms = $room->searchRoom($_POST['search_name']);
     } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 
@@ -46,13 +44,13 @@ if (isset($_POST["search"])) {
                 </form>
             </p>
         </div>
+        <?php if (isset($error)) :?>
+            <p class="error"><?=$error?></p>
+        <?php endif ;?>
+        <?php if ($rooms == false) :?>
+            <p class="first-message">部屋データがありません。新規登録ボタンから部屋を登録してください。</p>
+        <?php endif ;?>
         <table class="room_list-table" border="1">
-            <?php if (isset($error)) :?>
-                <p class="error"><?=$error?></p>
-            <?php endif ;?>
-            <?php if ($rooms == false) :?>
-                <p class="first-message">部屋データがありません。新規登録ボタンから部屋を登録してください。</p>
-            <?php endif ;?>
             <tr>
                 <th>
                     <a href="room_list.php?sort=id&order=asc" class="sort" name="sort" value="asc">▲</a><br>
@@ -93,8 +91,8 @@ if (isset($_POST["search"])) {
                             <div class="flex-room_list_div">
                                 <form action="room_edit.php?id=<?=$room['id']?>&type=edit" method="post">
                                     <input type="submit" value="編集" class="edit-btn" onclick="location.href='./room_edit.php?id=<?=$room['id']?>&type=edit'">
+                                </form>
                             </div>
-                            </form>
                             <div class="flex-room_list_div">
                                 <form action="" method="post">
                                     <input type="hidden" name="id" value="<?=$room['id']?>">
