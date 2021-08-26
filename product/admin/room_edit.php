@@ -67,7 +67,7 @@ if (!empty($_POST['up-img-btn'])) {
         $sql_img = 'UPDATE room SET img = ? WHERE id = ?';
         $stmt = $model->dbh->prepare($sql_img);
         $stmt->execute([$img, $id]);
-        
+
         chmod('../images', 0755);
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
@@ -83,10 +83,10 @@ if (!empty($_POST['up-img-btn'])) {
         <form action="" method="post">
             <input type="hidden" name="token" value="<?=getToken()?>">
             <div class="getPage"><?php getPage() ;?></div>
+            <?php if (isset($error)) :?>
+                <p class="error"><?=$error?></p>
+            <?php endif ;?>
             <table class="room_edit-table">
-                <?php if (isset($error)) :?>
-                    <p class="error"><?=$error?></p>
-                <?php endif ;?>
                 <?php if ($isEdited == true) :?>
                     <tr>
                         <th>ID</th>

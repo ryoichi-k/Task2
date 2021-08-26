@@ -1,5 +1,9 @@
 <?php
 session_start();
+// require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 require_once('util.inc.php');
 require_once('Model/Model.php');
 require_once ('Model/Room.php');
@@ -79,10 +83,10 @@ if (!empty($_POST['up-img-btn'])) {
         <form action="" method="post">
             <input type="hidden" name="token" value="<?=getToken()?>">
             <div class="getPage"><?php getPage() ;?></div>
+            <?php if (isset($error)) :?>
+                <p class="error"><?=$error?></p>
+            <?php endif ;?>
             <table class="room_edit-table">
-                <?php if (isset($error)) :?>
-                    <p class="error"><?=$error?></p>
-                <?php endif ;?>
                 <?php if ($isEdited == true) :?>
                     <tr>
                         <th>ID</th>

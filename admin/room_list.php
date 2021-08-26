@@ -1,5 +1,8 @@
 <?php
 session_start();
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 require_once('Model/Model.php');
 require_once('Model/Room.php');
 require_once('util.php');
@@ -18,7 +21,6 @@ if (!empty($_POST['delete'])) {
         $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 
-
 //部屋名検索機能
 if (isset($_POST['search'])) {
     if (empty($_POST['search_name'])) {
@@ -27,7 +29,7 @@ if (isset($_POST['search'])) {
     try {
         $rooms = $room->searchRoom($_POST['search_name']);
     } catch (Exception $e) {
-        $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = '検索エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 

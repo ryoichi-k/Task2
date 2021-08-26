@@ -108,12 +108,9 @@ class Room extends Model
                 $stmt->bindValue(':room_id', $room['id']);
 
                 //空のカラムがあった場合はnullにする
-                $stmt->bindValue(':capacity', $value['capacity'], (!empty($value['capacity']) ? PDO::PARAM_INT : PDO::PARAM_NULL));
-                $stmt->bindValue(':remarks', $value['remarks'], (!empty($value['remarks']) ? PDO::PARAM_STR : PDO::PARAM_NULL));
-                $stmt->bindValue(':price', $value['price'], (!empty($value['price']) ? PDO::PARAM_INT : PDO::PARAM_NULL));
-                // $stmt->bindValue(':capacity', $value['capacity'], (empty($value['capacity']) ? PDO::PARAM_NULL : PDO::PARAM_INT));
-                // $stmt->bindValue(':remarks', $value['remarks'], (empty($value['remarks']) ? PDO::PARAM_NULL : PDO::PARAM_STR));
-                // $stmt->bindValue(':price', $value['price'], (empty($value['price']) ? PDO::PARAM_NULL : PDO::PARAM_INT));
+                $stmt->bindValue(':capacity', $value['capacity'], (empty($value['capacity']) ? PDO::PARAM_NULL : PDO::PARAM_INT));
+                $stmt->bindValue(':remarks', $value['remarks'], (empty($value['remarks']) ? PDO::PARAM_NULL : PDO::PARAM_STR));
+                $stmt->bindValue(':price', $value['price'], (empty($value['price']) ? PDO::PARAM_NULL : PDO::PARAM_INT));
                 $stmt->execute();
             }
         } catch (Exception $e) {
