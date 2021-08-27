@@ -104,10 +104,10 @@ if (!empty($_POST['up-img-btn'])) {
                             <input type="hidden" name="detail[<?=$i?>][id]" value="<?=isset($united_array['detail'][$i]['id']) ? h($united_array['detail'][$i]['id']) : ''?>">
                             <p class="p-box">
                                 　人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['capacity']) : ''?>">人
-    </div>
-    　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
-    　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
-    </p>
+                                </div>
+                                　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
+                                　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
+                            </p>
 <?php endfor ;?>
 </td>
 </tr>

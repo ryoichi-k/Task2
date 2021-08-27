@@ -15,13 +15,13 @@ if (!empty($_POST['delete'])) {
 }
 
 //初期表示とソート
-    try {
-        $rooms = $room->sortRoom();
-    } catch (Exception $e) {
-        $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
-    }
+try {
+    $rooms = $room->sortRoom();
+} catch (Exception $e) {
+    $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+}
 
-//部屋名検索機能
+//部屋名検索機能→GETに変更する
 if (isset($_POST['search'])) {
     if (empty($_POST['search_name'])) {
         $error = '検索項目が未入力です。';
