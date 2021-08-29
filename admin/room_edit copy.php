@@ -11,6 +11,7 @@ require_once('util.php');
 
 $name  = '';
 $img   = '';
+$isEdited = false;
 $imgError = '';
 
 //新規登録データ用配列
@@ -20,6 +21,7 @@ $merged_array = [];
 
 //編集ボタン押下
 if ($_GET['type'] == 'edit') {
+    $isEdited = true;
     try {
         $room1 = new Room();
         $room = $room1->showRoomName($_GET['id']);
@@ -85,7 +87,7 @@ if (!empty($_POST['up-img-btn'])) {
                 <p class="error"><?=$error?></p>
             <?php endif ;?>
             <table class="room_edit-table">
-                <?php if ($_GET['type'] == 'edit') :?>
+                <?php if ($isEdited == true) :?>
                     <tr>
                         <th>ID</th>
                         <td colspan="3">　<?=isset($united_array['id']) ? h($united_array['id']) : ''?></td>
@@ -111,7 +113,7 @@ if (!empty($_POST['up-img-btn'])) {
 </tr>
 <tr>
     <td colspan="3">
-        <?php if ($_GET['type'] == 'edit') :?>
+        <?php if ($isEdited == true) :?>
             <?php if ($united_array['detail'] == false || count($united_array['detail']) == 1) :?>
                 <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
             <?php elseif (count($united_array['detail']) > 1 && count($united_array['detail']) <= 4) :?>
@@ -137,7 +139,7 @@ if (!empty($_POST['up-img-btn'])) {
     <input type="submit" name="add-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php<?=isset($united_array['id']) ? '?id=' . $united_array['id'] . '&type=edit' : '?type=new'?>">
 </p>
 </form>
-<?php if ($_GET['type'] == 'edit') :?>
+<?php if ($isEdited == true) :?>
     <form action="" method="post" enctype="multipart/form-data">
         <table class="room_edit-img-table" border="1">
             <tr>

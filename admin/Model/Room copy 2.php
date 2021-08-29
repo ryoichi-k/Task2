@@ -62,7 +62,7 @@ class Room extends Model
         if (!empty($_GET['sort'])) {
             $sorted_item = $_GET['sort'];
             $asc_or_desc = $_GET['order'];
-            $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY ' . $sorted_item . (($sorted_item == 'name' || $sorted_item == 'updated_at') && $asc_or_desc == 'asc' ? ' IS NULL ASC,' . $sorted_item . ' ASC' : ' ' . $asc_or_desc);
+            $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY ' . $_GET['sort'] . (($_GET['sort'] == 'name' || $_GET['sort'] == 'updated_at') && $_GET['order'] == 'asc' ? ' IS NULL ASC,' . $_GET['sort'] . ' ASC' : ' ' . $_GET['order']);
         } else {
             $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY created_at DESC';
         }

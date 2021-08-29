@@ -16,7 +16,7 @@ if (!empty($_POST['delete'])) {
 
 //初期表示とソート
 try {
-    $rooms = $room->sortRoom();
+    $rooms = $room->getAllRoom();
 } catch (Exception $e) {
     $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
 }
@@ -49,7 +49,7 @@ if (isset($_POST['search'])) {
         <?php if (isset($error)) :?>
             <p class="error"><?=$error?></p>
         <?php endif ;?>
-        <?php if ($rooms == false) :?>
+        <?php if (empty($rooms)) :?>
             <p class="first-message">部屋データがありません。新規登録ボタンから部屋を登録してください。</p>
         <?php endif ;?>
         <table class="room_list-table" border="1">

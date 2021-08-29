@@ -104,3 +104,16 @@
     // } catch (Exception $e) {
     //     $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     // }
+
+
+
+
+
+    // //一覧表示とソート機能
+    // public function sortRoom()
+    // {
+    //     $this->connect();
+    //     $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY '  . ((!empty($_GET['sort']) ? $_GET['sort'] . (($_GET['sort'] == 'name' || $_GET['sort'] == 'updated_at') && $_GET['order'] == 'asc' ? ' IS NULL ASC,' . $_GET['sort'] . ' ASC' : ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order']) : 'created_at DESC'));
+    //     $stmt = $this->dbh->query($sql);
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }

@@ -58,10 +58,20 @@ class Room extends Model
     }
 
     //一覧表示とソート機能
-    public function sortRoom()
+    public function getAllRoom()
     {
         $this->connect();
-        $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY '  . ((!empty($_GET['sort']) ? $_GET['sort'] . (($_GET['sort'] == 'name' || $_GET['sort'] == 'updated_at') && $_GET['order'] == 'asc' ? ' IS NULL ASC,' . $_GET['sort'] . ' ASC' : ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order']) : 'created_at DESC'));
+
+        if (!empty($_GET['sort'])) {
+            if (($_GET['sort'] == 'name' || $_GET['sort'] == 'updated_at') && $_GET['order'] == 'asc') {
+                $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ASC';
+            } else {
+                $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order'];
+            }
+        } else {
+            $sort = 'created_at DESC';
+        }
+        $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY '  . $sort;
         $stmt = $this->dbh->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
