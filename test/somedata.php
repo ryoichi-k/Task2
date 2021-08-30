@@ -117,3 +117,26 @@
     //     $stmt = $this->dbh->query($sql);
     //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     // }
+
+
+
+
+    <?php if ($_GET['type'] == 'edit') :?>
+        <?php if ($united_array['detail'] == false || count($united_array['detail']) == 1) :?>
+            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
+        <?php elseif (count($united_array['detail']) > 1 && count($united_array['detail']) <= 4) :?>
+            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
+            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
+        <?php elseif (count($united_array['detail']) == 5) :?>
+            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : ''?><?=isset($room['id']) ? '&type=edit' : ''?>">
+        <?php endif ;?>
+    <?php else : ?>
+        <?php if ($united_array['detail'] == false || count($united_array['detail']) == 1) :?>
+            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php?type=new">
+        <?php elseif (count($united_array['detail']) > 1 && count($united_array['detail']) <= 4) :?>
+            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php?type=new">
+            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php?type=new">
+        <?php elseif (count($united_array['detail']) == 5) :?>
+            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php?type=new">
+        <?php endif ;?>
+    <?php endif ;?>
