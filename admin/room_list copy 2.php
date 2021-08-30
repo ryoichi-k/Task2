@@ -23,11 +23,11 @@ try {
 
 //部屋名検索機能
 if (isset($_GET['search'])) {
-    if (empty($_GET['search_name'])) {
+    if (empty($_POST['search_name'])) {
         $error = '検索項目が未入力です。';
     }
     try {
-        $rooms = $room->searchRoom($_GET['search_name']);
+        $rooms = $room->searchRoom($_POST['search_name']);
     } catch (Exception $e) {
         $error = '検索エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
@@ -40,13 +40,10 @@ if (isset($_GET['search'])) {
         <div class="getPage_search">
             <div class="getPage"><?php getPage() ;?></div>
             <p class="search">
-                <form action="" method = "get">
-                    <input type="text" name="search_name" value="<?=!empty($_GET['search_name']) ? $_GET['search_name'] : ''?>">
-                    <select name="search">
-                        <option value = "1"<?=empty($_GET['search']) || $_GET['search'] == 1 ? ' selected' : ''?>>部分一致</option>
-                        <option value = "2"<?=!empty($_GET['search']) && $_GET['search'] == 2 ? ' selected' : ''?>>完全一致</option>
-                    </select>
-                    <input type="submit"name="submit"value="検索"/>
+                <form action="" method="post">
+                    <input type="text" name="search_name">
+                    <input type="submit" name="search" value="部分一致" formaction="room_list.php?search=1">
+                    <input type="submit" name="search" value="全体一致" formaction="room_list.php?search=2">
                 </form>
             </p>
         </div>
