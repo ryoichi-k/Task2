@@ -4,19 +4,16 @@ require_once ('Model/Model.php');
 require_once ('Model/Room.php');
 require_once ('util.php');
 require_once ('util.inc.php');
-$isSended = null;
-$isEdited = null;
+
 //新規登録
 if (!empty($_POST['send'])) {
     $room = new Room();
     $room->registerRoom($_POST['name'], $_POST['detail']);
-    $isSended = 1;
 }
 //編集
 if (!empty($_POST['send-edit'])) {
     $room = new Room();
     $error = $room->editRoom($_POST['name'], $_POST['detail'][0]['id'], $_POST['detail']);
-    $isEdited = 1;
 }
 ?>
 <?php require_once('header.php')?>
@@ -25,9 +22,9 @@ if (!empty($_POST['send-edit'])) {
         <div class="getPage"><?php getPage() ;?></div>
         <?php if (isset($error)) :?>
             <h3 class="error"><?=$error?></h3>
-        <?php elseif(isset($isEdited)) :?>
+        <?php elseif($_GET['type'] == 'edit') :?>
             <h3 class="done-message">編集完了しました。</h3>
-        <?php elseif(isset($isSended)) :?>
+        <?php elseif($_GET['type'] == 'new') :?>
             <h3 class="done-message">登録完了しました。</h3>
         <?php endif ;?>
         </div>

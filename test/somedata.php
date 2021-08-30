@@ -140,3 +140,14 @@
             <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php?type=new">
         <?php endif ;?>
     <?php endif ;?>
+
+
+
+
+    <?php if (empty($united_array['detail']) || count($united_array['detail']) < 5) :?>
+                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                        <?php endif ;?>
+                        <?php if (empty($united_array['detail']) || count($united_array['detail']) > 1) :?>
+                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                        <?php endif ;?>
+                    </td>

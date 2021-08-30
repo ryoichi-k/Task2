@@ -9,7 +9,6 @@ require_once('Model/Model.php');
 require_once ('Model/Room.php');
 require_once('util.php');
 
-$name  = '';
 $img   = '';
 $imgError = '';
 
@@ -25,14 +24,12 @@ if ($_GET['type'] == 'edit') {
         $room = $room1->showRoomName($_GET['id']);
         $room_details = $room1->showRoomDetail($_GET['id']);
         $count_room_details = count($room_details);
+        $add_key_room_details = ['detail' => $room_details];
+        $merged_array = array_merge($room, $add_key_room_details);
     } catch (Exception $e) {
         $error = '予期せぬエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
-
-$add_key_room_details = ['detail' => $room_details];
-
-$merged_array = array_merge($room, $add_key_room_details);
 
 $united_array = array_merge($merged_array, $_POST);
 
@@ -44,7 +41,7 @@ if (isset($_POST['delete-box'])) {
     array_pop($united_array['detail']);
 }
 
-$count = ($united_array['detail']) ? count($united_array['detail']) : 1;
+$count = (!empty($united_array['detail'])) ? count($united_array['detail']) : 1;
 
 //imgアップロード
 if (!empty($_POST['up-img-btn'])) {
@@ -101,52 +98,52 @@ if (!empty($_POST['up-img-btn'])) {
                         <?php for ($i = 0; $i < $count; $i++) :?>
                             <input type="hidden" name="detail[<?=$i?>][id]" value="<?=isset($united_array['detail'][$i]['id']) ? h($united_array['detail'][$i]['id']) : ''?>">
                             <p class="p-box">
-                                　人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['capacity']) : ''?>">人
+                                　人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=!empty($united_array['detail']) ? h($united_array['detail'][$i]['capacity']) : ''?>">人
                                 </div>
-                                　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
-                                　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=$united_array['detail'] ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
+                                　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=!empty($united_array['detail']) ? h($united_array['detail'][$i]['remarks']) : ''?>"></div>
+                                　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=!empty($united_array['detail']) ? h($united_array['detail'][$i]['price']) : ''?>">円（税込）</div>
                             </p>
-<?php endfor ;?>
-</td>
-</tr>
-<tr>
-    <td colspan="3">
-        <?php if ($united_array['detail'] == false || count($united_array['detail']) < 5) :?>
-            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
-        <?php endif ;?>
-        <?php if (count($united_array['detail']) > 1) :?>
-            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
-        <?php endif ;?>
-    </td>
-</tr>
-</table>
-<p>
-    <input type="submit" name="add-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php<?=isset($united_array['id']) ? '?id=' . $united_array['id'] . '&type=edit' : '?type=new'?>">
-</p>
-</form>
-<?php if ($_GET['type'] == 'edit') :?>
-    <form action="" method="post" enctype="multipart/form-data">
-        <table class="room_edit-img-table" border="1">
-            <tr>
-                <th>サムネイル</th>
-                <td>
-                    <input type="file" name="upfile">
-                </td>
-            </tr>
-            <tr>
-                <th>トップページサムネイル</th>
-                <td>
-                    <?php if ($room['img']) :?>
-                        <img src="<?=IMAGE_PATH . h($room['img'])?>">
-                        <p><?=h($room['img'])?></p>
-                    <?php endif ;?>
-                </td>
-            </tr>
-        </table>
-        <p class="upload-message">半角英数字のファイルのみアップロード可能です。</p>
+                        <?php endfor ;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <?php if (empty($count) || $count < 5) :?>
+                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                        <?php endif ;?>
+                        <?php if ($count > 1) :?>
+                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                        <?php endif ;?>
+                    </td>
+                </tr>
+                </table>
+                    <p>
+                        <input type="submit" name="add-room-detail" value="確認画面へ" class="to-conf-btn" formaction="room_conf.php<?=isset($united_array['id']) ? '?id=' . $united_array['id'] . '&type=edit' : '?type=new'?>">
+                    </p>
+        </form>
+    <?php if ($_GET['type'] == 'edit') :?>
+        <form action="" method="post" enctype="multipart/form-data">
+            <table class="room_edit-img-table" border="1">
+                <tr>
+                    <th>サムネイル</th>
+                    <td>
+                        <input type="file" name="upfile">
+                    </td>
+                </tr>
+                <tr>
+                    <th>トップページサムネイル</th>
+                    <td>
+                        <?php if ($room['img']) :?>
+                            <img src="<?=IMAGE_PATH . h($room['img'])?>">
+                            <p><?=h($room['img'])?></p>
+                        <?php endif ;?>
+                    </td>
+                </tr>
+            </table>
+            <p class="upload-message">半角英数字のファイルのみアップロード可能です。</p>
         <input class="up-img-btn" type="submit" name="up-img-btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
-    </form>
-<?php endif; ?>
-</div>
+        </form>
+    <?php endif; ?>
+    </div>
 </main>
 <?php require_once('footer.php')?>
