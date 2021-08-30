@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once ('Model/Model.php');
-require_once ('Model/Room.php');
-require_once ('util.php');
-require_once ('util.inc.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
 //新規登録
 if (!empty($_POST['send'])) {
