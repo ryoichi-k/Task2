@@ -1,16 +1,17 @@
 <?php
 session_start();
-require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
-require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
-require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
-// require_once('util.inc.php');
-// require_once('Model/Model.php');
-// require_once ('Model/Room.php');
-// require_once('util.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
+
+$img   = '';//不要
+$imgError = '';//不要
 
 //新規登録データ用配列
 $room = [];
+$room_details = [];
+$merged_array = [];
 
 //編集ボタン押下
 if ($_GET['type'] == 'edit') {
@@ -18,16 +19,18 @@ if ($_GET['type'] == 'edit') {
         $room1 = new Room();
         $room = $room1->showRoomName($_GET['id']);
         $room_details = $room1->showRoomDetail($_GET['id']);
-        $room['detail'] = $room_details;
+        $count_room_details = count($room_details);//この変数不要
+        $add_key_room_details = ['detail' => $room_details];
+        $merged_array = array_merge($room, $add_key_room_details);
     } catch (Exception $e) {
         $error = '予期せぬエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 
-$united_array = $_POST + $room;
+$united_array = array_merge($merged_array, $_POST);
 
 if (isset($_POST['add-box'])) {
-    array_push($united_array['detail'], array('capacity' => null, 'remarks' => null, 'price' => null));
+    array_push($united_array['detail'], array('capacity' => null, 'remarks' => '', 'price' => null));
 }
 
 if (isset($_POST['delete-box'])) {
@@ -43,6 +46,8 @@ if (!empty($_POST['up-img-btn'])) {
         if (!move_uploaded_file($_FILES['upfile']['tmp_name'], IMAGE_PATH . $img)) {
             $imgError = 'アップロードに失敗しました';
         }
+    } elseif ($_FILES['upfile']['error'] == UPLOAD_ERR_NO_FILE) {
+        //no message
     } else {
         $imgError = 'アップロードに失敗しました';
     }
@@ -50,11 +55,11 @@ if (!empty($_POST['up-img-btn'])) {
     try {
         $model = new Model();
         $model->connect();
-        system('sudo chmod 0775 ../images');
+        chmod('../images', 0777);
         $sql_img = 'UPDATE room SET img = ? WHERE id = ?';
         $stmt = $model->dbh->prepare($sql_img);
         $stmt->execute([$img, $id]);
-        system('sudo chmod 0755 ../images');
+        chmod('../images', 0755);
     } catch (PDOException $e) {
         header('Content-Type: text/plain; charset=UTF-8', true, 500);
         exit($e->getMessage());

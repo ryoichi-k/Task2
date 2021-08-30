@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once('Model/Model.php');
-require_once('Model/Room.php');
-require_once('util.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
+// require_once('Model/Model.php');
+// require_once('Model/Room.php');
+// require_once('util.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
 $room = new Room();
 
@@ -46,14 +46,14 @@ if (isset($_GET['search'])) {
                         <option value = "1"<?=empty($_GET['search']) || $_GET['search'] == 1 ? ' selected' : ''?>>部分一致</option>
                         <option value = "2"<?=!empty($_GET['search']) && $_GET['search'] == 2 ? ' selected' : ''?>>完全一致</option>
                     </select>
-                    <input type="submit"name="submit"value="検索"/>
+                    <input type="submit"name="submit"value="検索">
                 </form>
             </p>
         </div>
         <?php if (isset($error)) :?>
             <p class="error"><?=$error?></p>
         <?php endif ;?>
-        <?php if (empty($error) && empty($rooms)) :?>
+        <?php if (empty($error) && empty($rooms) && !empty($_GET['search'])) :?>
             <p class="first-message">一致する部屋は見つかりませんでした。</p>
         <?php endif ;?>
         <?php if (empty($rooms) && empty($_GET['search'])) :?>
@@ -62,21 +62,21 @@ if (isset($_GET['search'])) {
         <table class="room_list-table" border="1">
             <tr>
                 <th>
-                    <a href="room_list.php?sort=id&order=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=id&order=ASC" class="sort" name="sort" value="ASC">▲</a><br>
                         ID<br>
-                    <a href="room_list.php?sort=id&order=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=id&order=DESC" class="sort" name="sort" value="DESC">▼</a><br>
                 </th>
                 <th>
-                    <a href="room_list.php?sort=name&order=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=name&order=ASC" class="sort" name="sort" value="ASC">▲</a><br>
                         部屋名<br>
-                    <a href="room_list.php?sort=name&order=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=name&order=DESC" class="sort" name="sort" value="DESC">▼</a><br>
                 </th>
                 <th>画像</th>
                 <th>登録日時</th>
                 <th>
-                    <a href="room_list.php?sort=updated_at&order=asc" class="sort" name="sort" value="asc">▲</a><br>
+                    <a href="room_list.php?sort=updated_at&order=ASC" class="sort" name="sort" value="ASC">▲</a><br>
                         更新日時<br>
-                    <a href="room_list.php?sort=updated_at&order=desc" class="sort" name="sort" value="desc">▼</a><br>
+                    <a href="room_list.php?sort=updated_at&order=DESC" class="sort" name="sort" value="DESC">▼</a><br>
                 </th>
                 <th>
                     <form action="" method="post">

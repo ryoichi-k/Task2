@@ -63,15 +63,9 @@ class Room extends Model
         $this->connect();
 
         if (!empty($_GET['sort'])) {
-
-            if (($_GET['sort'] == 'name' || $_GET['sort'] == 'updated_at') && $_GET['order'] == 'asc') {
-                $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ASC';
-            } else {
                 $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order'];
-            }
-
         } else {
-            $sort = 'created_at DESC';
+            $sort = 'id DESC';
         }
         $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY '  . $sort;
         $stmt = $this->dbh->query($sql);
