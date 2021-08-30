@@ -69,7 +69,7 @@ class Room extends Model
             } else {
                 $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order'];
             }
-            
+
         } else {
             $sort = 'created_at DESC';
         }
@@ -78,13 +78,19 @@ class Room extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //部屋検索（部分検索）
+    //部屋検索（部分検索と全体一致検索）
     public function searchRoom($search_name)
     {
         try {
             $this->connect();
-            $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name LIKE :search_name AND delete_flg = 0');
-            $stmt->bindValue(':search_name', '%' . addcslashes($search_name, '\_%') . '%');
+            if ($_GET['search'] == 1) {
+                $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name LIKE :search_name AND delete_flg = 0');
+                $stmt->bindValue(':search_name', '%' . addcslashes($search_name, '\_%') . '%');
+            }
+            if ($_GET['search'] == 2) {
+                $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name = :search_name AND delete_flg = 0');
+                $stmt->bindValue(':search_name', $search_name);
+            }
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {

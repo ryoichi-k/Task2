@@ -1,11 +1,8 @@
 <?php
 session_start();
-require_once('Model/Model.php');
-require_once('Model/Room.php');
-require_once('util.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
 $room = new Room();
 
@@ -21,8 +18,8 @@ try {
     $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
 }
 
-//部屋名検索機能
-if (isset($_GET['search'])) {
+//部屋名検索機能→GETに変更する
+if (isset($_POST['search'])) {
     if (empty($_POST['search_name'])) {
         $error = '検索項目が未入力です。';
     }
@@ -42,18 +39,14 @@ if (isset($_GET['search'])) {
             <p class="search">
                 <form action="" method="post">
                     <input type="text" name="search_name">
-                    <input type="submit" name="search" value="部分一致" formaction="room_list.php?search=1">
-                    <input type="submit" name="search" value="全体一致" formaction="room_list.php?search=2">
+                    <input type="submit" name="search" value="検索">
                 </form>
             </p>
         </div>
         <?php if (isset($error)) :?>
             <p class="error"><?=$error?></p>
         <?php endif ;?>
-        <?php if (empty($error) && empty($rooms)) :?>
-            <p class="first-message">一致する部屋は見つかりませんでした。</p>
-        <?php endif ;?>
-        <?php if (empty($rooms) && empty($_GET['search'])) :?>
+        <?php if (empty($rooms)) :?>
             <p class="first-message">部屋データがありません。新規登録ボタンから部屋を登録してください。</p>
         <?php endif ;?>
         <table class="room_list-table" border="1">
