@@ -1,30 +1,26 @@
 <?php
 session_start();
-// require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
-require_once('util.inc.php');
-require_once('Model/Model.php');
-require_once ('Model/Room.php');
-require_once('util.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.inc.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
 
 //新規登録データ用配列
-$room = [];
+$room_list = [];
 
 //編集ボタン押下
 if ($_GET['type'] == 'edit') {
     try {
-        $room1 = new Room();
-        $room = $room1->showRoomName($_GET['id']);
-        $room_details = $room1->showRoomDetail($_GET['id']);
-        $room['detail'] = $room_details;
+        $room = new Room();
+        $room_list = $room->showRoomName($_GET['id']);
+        $room_details = $room->showRoomDetail($_GET['id']);
+        $room_list['detail'] = $room_details;
     } catch (Exception $e) {
         $error = '予期せぬエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 
-$united_array = $_POST + $room;
+$united_array = $_POST + $room_list;
 
 if (isset($_POST['add-box'])) {
     array_push($united_array['detail'], array('capacity' => null, 'remarks' => null, 'price' => null));
@@ -100,10 +96,10 @@ if (!empty($_POST['up-img-btn'])) {
                 <tr>
                     <td colspan="3">
                         <?php if (empty($count) || $count < 5) :?>
-                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
                         <?php endif ;?>
                         <?php if ($count > 1) :?>
-                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room['id']) ? '&type=edit' : ''?>">
+                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($united_array['id']) ?  '?id=' . $united_array['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
                         <?php endif ;?>
                     </td>
                 </tr>
@@ -124,9 +120,9 @@ if (!empty($_POST['up-img-btn'])) {
                 <tr>
                     <th>トップページサムネイル</th>
                     <td>
-                        <?php if ($room['img']) :?>
-                            <img src="<?=IMAGE_PATH . h($room['img'])?>">
-                            <p><?=h($room['img'])?></p>
+                        <?php if ($room_list['img']) :?>
+                            <img src="<?=IMAGE_PATH . h($room_list['img'])?>">
+                            <p><?=h($room_list['img'])?></p>
                         <?php endif ;?>
                     </td>
                 </tr>
