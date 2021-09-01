@@ -1,6 +1,6 @@
 <?php
-require_once (dirname(__FILE__).'/../const.php');
-require_once (dirname(__FILE__).'/UserAuth.php');
+require_once (dirname(__FILE__) . '/../const.php');
+require_once (dirname(__FILE__) . '/UserAuth.php');
 
 class Model
 {

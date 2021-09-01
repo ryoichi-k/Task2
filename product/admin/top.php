@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
+require_once (dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__) . '/../ExternalFiles/util.php');
 
 if (empty($_SESSION['admin'])) {
     header('Location: login.php');

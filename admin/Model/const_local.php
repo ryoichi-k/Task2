@@ -5,4 +5,4 @@ define('DBNAME', 'r_kano');
 define('DBUSER', 'ebaeba');
 define('DBPASS', 'eba4649');
 
-const IMAGE_PATH = '../images/';
+const IMAGE_PATH = '../images/room/';

@@ -1,17 +1,14 @@
 <?php
 session_start();
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Model.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/Model/Room.php');
-// require_once (dirname(__FILE__).'/../ExternalFiles/util.php');
-require_once('Model/Model.php');
-require_once('Model/Room.php');
-require_once('util.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Room.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
 
 $room = new Room();
 
 //論理削除処理
 if (!empty($_POST['delete'])) {
-    $room->deleteRoom($_POST['id']);
+    $error = $room->deleteRoom($_POST['id']);
 }
 
 //初期表示とソート

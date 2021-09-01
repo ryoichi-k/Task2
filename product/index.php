@@ -1,7 +1,7 @@
 <?php
-require_once (dirname(__FILE__).'/ExternalFiles/Model/Model.php');
-require_once (dirname(__FILE__).'/ExternalFiles/Model/Room.php');
-require_once (dirname(__FILE__).'/ExternalFiles/util.php');
+require_once (dirname(__FILE__) . '/ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__) . '/ExternalFiles/Model/Room.php');
+require_once (dirname(__FILE__) . '/ExternalFiles/util.php');
 
 $room = new Room();
 

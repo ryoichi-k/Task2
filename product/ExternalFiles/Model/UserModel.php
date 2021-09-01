@@ -1,6 +1,6 @@
 <?php
 //require_once ('const_local.php');
-require_once (dirname(__FILE__).'/../const.php');
+require_once (dirname(__FILE__) . '/../const.php');
 class UserModel
 {
     public $dbh;
