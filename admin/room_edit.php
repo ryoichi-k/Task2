@@ -12,8 +12,15 @@ $room_list = [];
 if ($_GET['type'] == 'edit') {
     try {
         $room = new Room();
-        $room_list = $room->showRoomName($_GET['id']);
-        $room_list['detail'] = $room->showRoomDetail($_GET['id']);
+
+        //画像アップロード
+        if (!empty($_POST['up_img_btn'])) {
+            $error = $room->uploadImage($_GET['id']);
+        }
+
+        $room_list = $room->getRoomName($_GET['id']);
+        $room_list['detail'] = $room->getRoomDetail($_GET['id']);
+
     } catch (Exception $e) {
         $error = 'システムエラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
@@ -21,26 +28,21 @@ if ($_GET['type'] == 'edit') {
 
 $room_list = $_POST + $room_list;
 
-if (isset($_POST['add-box'])) {
+if (isset($_POST['add_box'])) {
     array_push($room_list['detail'], array('capacity' => null, 'remarks' => null, 'price' => null));
 }
 
-if (isset($_POST['delete-box'])) {
+if (isset($_POST['delete_box'])) {
     array_pop($room_list['detail']);
 }
 
 $count = !empty($room_list['detail']) ? count($room_list['detail']) : 1;
 
-//imgアップロード
-if (!empty($_POST['up_img_btn'])) {
-    $room = new Room();
-    $error = $room->uploadImage($_GET['id']);
-}
 ?>
 <?php require_once('header.php')?>
 <main>
     <div class="room_edit-container">
-        <form action="room_conf.php<?=isset($room_list['id']) ? '?id=' . $room_list['id'] . '&type=edit' : '?type=new'?>" method="post">
+        <form action="room_conf.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>" method="post">
             <div class="getPage"><?php getPage() ;?></div>
             <?php if (isset($error)) :?>
                 <p class="error"><?=$error?></p>
@@ -73,19 +75,20 @@ if (!empty($_POST['up_img_btn'])) {
                 <tr>
                     <td colspan="3">
                         <?php if (empty($count) || $count < 5) :?>
-                            <input type="submit" name="add-box" value="BOX追加" formaction="room_edit.php<?=isset($room_list['id']) ?  '?id=' . $room_list['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
+                            <input type="submit" name="add_box" value="BOX追加" formaction="room_edit.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>">
                         <?php endif ;?>
                         <?php if ($count > 1) :?>
-                            <input type="submit" name="delete-box" value="BOX削除" formaction="room_edit.php<?=isset($room_list['id']) ?  '?id=' . $room_list['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
+                            <input type="submit" name="delete_box" value="BOX削除" formaction="room_edit.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>">
                         <?php endif ;?>
                     </td>
                 </tr>
-                </table>
-                    <p>
-                        <input type="submit" name="add-room-detail" value="確認画面へ" class="to-conf-btn">
-                    </p>
+            </table>
+                <p>
+                    <input type="submit" name="add_room_detail" value="確認画面へ" class="to-conf-btn">
+                </p>
         </form>
     <?php if ($_GET['type'] == 'edit') :?>
+        <hr>
         <form action="" method="post" enctype="multipart/form-data">
             <table class="room_edit-img-table" border="1">
                 <tr>
@@ -97,17 +100,17 @@ if (!empty($_POST['up_img_btn'])) {
                 <tr>
                     <th>トップページサムネイル</th>
                     <td>
-                        <?php if ($room_list['img']) :?>
-                            <img src="<?=IMAGE_PATH . h($room_list['img'])?>">
-                            <p><?=h($room_list['img'])?></p>
-                        <?php endif ;?>
+                    <?php if ($room_list['img']) :?>
+                        <img src="<?=IMAGE_PATH . h($room_list['img'])?>">
+                        <p><?=h($room_list['img'])?></p>
+                    <?php endif ;?>
                     </td>
                 </tr>
             </table>
             <p class="upload-message">半角英数字のファイルのみアップロード可能です。</p>
-        <input class="up-img-btn" type="submit" name="up_img_btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
+            <input class="up-img-btn" type="submit" name="up_img_btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
         </form>
-    <?php endif; ?>
+    <?php endif ;?>
     </div>
 </main>
 <?php require_once('footer.php')?>

@@ -34,11 +34,6 @@ if (empty($_SESSION['admin'])) {
                     </ul>
                 </nav>
         </header>
-        <main>
+        <main class="top-main">
         </main>
-        <footer class="top-footer">
-            <p><small>2021 ebacorp.inc</small></p>
-        </footer>
-    </div>
-</body>
-</html>
+<?php require_once('footer.php')?>

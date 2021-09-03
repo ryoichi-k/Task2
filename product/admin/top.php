@@ -9,11 +9,9 @@ if (empty($_SESSION['admin'])) {
 }
 ?>
 <?php require_once('header.php')?>
-        <main>
+        <main class="top-main">
         </main>
-        <footer class="top-footer">
-            <p><small>2021 ebacorp.inc</small></p>
-        </footer>
+<?php require_once('footer.php')?>
     </div>
 </body>
 </html>

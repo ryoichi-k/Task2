@@ -2,7 +2,7 @@
 class Room extends Model
 {
     //index.phpにて部屋情報表示
-    public function showRoom()
+    public function getRoom()
     {
         try {
             $this->connect();
@@ -15,7 +15,7 @@ class Room extends Model
     }
 
     //room_edit.phpにて部屋情報詳細を表示。灰色のボックス内に表示の情報を取得
-    public function showRoomName($id)
+    public function getRoomName($id)
     {
         try {
             $this->connect();
@@ -30,7 +30,7 @@ class Room extends Model
     }
 
     //部屋情報詳細表示
-    public function showRoomDetail($id)
+    public function getRoomDetail($id)
     {
         try {
             $this->connect();
@@ -45,7 +45,7 @@ class Room extends Model
     }
 
     //index.phpにて部屋詳細情報表示
-    public function showRoomDetailForIndex()
+    public function getRoomDetailForIndex()
     {
         try {
             $this->connect();
@@ -213,9 +213,7 @@ class Room extends Model
     //部屋画像をアップロード
     public function uploadImage($id)
     {
-        $date_time = new DateTime();
-        $date_time->setTimeZone( new DateTimeZone('Asia/Tokyo'));
-        $date = $date_time->format('YmdHis');
+
 
         try {
             if ($_FILES['upfile']['error'] != UPLOAD_ERR_OK) {
@@ -225,10 +223,16 @@ class Room extends Model
 
             $this->dbh->beginTransaction();
 
+            $date_time = new DateTime();
+            $date_time->setTimeZone( new DateTimeZone('Asia/Tokyo'));
+            $date = $date_time->format('YmdHis');
+
             $img = mb_convert_encoding($date . $_FILES['upfile']['name'], 'cp932', 'utf8');
-            $sql = 'UPDATE room SET img = ? WHERE id = ?';
+
+            $date = $date_time->format('Y-m-d H:i:s');
+            $sql = 'UPDATE room SET img = ?,updated_at = ? WHERE id = ?';
             $stmt = $this->dbh->prepare($sql);
-            $stmt->execute([$img, $id]);
+            $stmt->execute([$img, $date, $id]);
             system('sudo chmod 0777 ../images/room');
 
             if (!move_uploaded_file($_FILES['upfile']['tmp_name'], IMAGE_PATH . $img)) {

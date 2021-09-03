@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once('util.inc.php');
-require_once('Model/Model.php');
-require_once('util.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
 
 ?>
 <?php require_once('header.php')?>
@@ -10,6 +10,12 @@ require_once('util.php');
     <div class="room_conf-container">
         <div class="getPage"><?php getPage() ;?></div>
         <table class="room_edit-table">
+        <?php if ($_GET['type'] == 'edit') :?>
+            <tr>
+                <th>ID</th>
+                <td colspan="3"><?=h($_GET['id'])?></td>
+            </tr>
+        <?php endif ;?>
             <tr>
                 <th>客室名<span>（必須）</span></th>
                 <td><?=h($_POST['name'])?></td>
@@ -27,15 +33,17 @@ require_once('util.php');
                 </td>
             </tr>
         </table>
-        <form action="room_done.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] : ''?>&type=<?=$_GET['type']?>" method="post">
+        <form action="room_done.php?type=<?=h($_GET['type'])?><?=isset($_GET['id']) ? '&id=' . h($_GET['id']) : ''?>" method="post">
             <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
             <?php for ($i = 0; $i < count($_POST['detail']); $i++) :?>
                 <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
                 <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
                 <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
             <?php endfor ;?>
-            <p><input type="submit" value="修正" formaction="room_edit.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] . '&' : ''?>type=<?=$_GET['type']?>" name="cancel-edit" class="conf-cancel-btn">
-                <input class="conf-submit" name="send-<?=$_GET['type']?>" type="submit" value="<?=isset($_GET['id']) ? '編集' : '登録'?>完了"></p>
+                <p>
+                    <input type="submit" value="修正" formaction="room_edit.php?type=<?=h($_GET['type'])?><?=isset($_GET['id']) ? '&id=' . h($_GET['id']) : ''?>" class="conf-cancel-btn">
+                    <input class="conf-submit" name="send_<?=h($_GET['type'])?>" type="submit" value="<?=OPERATION_ARRAY[$_GET['type']]?>完了">
+                </p>
         </form>
     </div>
 </main>

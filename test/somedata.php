@@ -152,6 +152,25 @@
                         <?php endif ;?>
 
 
+                        <form action="room_done.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] . '&' : ''?>type=<?=$_GET['type']?>" method="post">
+            <input type="hidden" name="name" value="<?=h($_POST['name'])?>">
+            <?php for ($i = 0; $i < count($_POST['detail']); $i++) :?>
+                <input type="hidden" name="detail[<?=$i?>][capacity]" value="<?=h($_POST['detail'][$i]['capacity'])?>">
+                <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
+                <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
+            <?php endfor ;?>
+                <p>
+                    <input type="submit" value="修正" formaction="room_edit.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] . '&' : ''?>type=<?=$_GET['type']?>" class="conf-cancel-btn">
+                    <input class="conf-submit" name="send_<?=$_GET['type']?>" type="submit" value="<?=OPERATION_ARRAY[$_GET['type']]?>完了">
+                </p>
+        </form>
+
+
+        <?php if (empty($count) || $count < 5) :?>
+                            <input type="submit" name="add_box" value="BOX追加" formaction="room_edit.php<?=isset($room_list['id']) ?  '?id=' . $room_list['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
+                        <?php endif ;?>
+                        <?php if ($count > 1) :?>
+                            <input type="submit" name="delete_box" value="BOX削除" formaction="room_edit.php<?=isset($room_list['id']) ?  '?id=' . $room_list['id'] : '?type=new'?><?=isset($room_list['id']) ? '&type=edit' : ''?>">
 
 
 
@@ -170,9 +189,17 @@ require_once('Model/Model.php');
 require_once ('Model/Room.php');
 require_once('util.php');
 
+//roomconf
+require_once('util.inc.php');
+require_once('Model/Model.php');
+require_once('util.php');
 
 //roomdone
 require_once ('Model/Model.php');
 require_once ('Model/Room.php');
 require_once ('util.php');
 require_once ('util.inc.php');
+
+//login
+require_once ('Model/Model.php');
+require_once ('util.php');

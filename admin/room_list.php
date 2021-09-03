@@ -38,7 +38,7 @@ if (isset($_GET['search'])) {
             <div class="getPage"><?php getPage() ;?></div>
             <p class="search">
                 <form action="" method = "get">
-                    <input type="text" name="search_name" value="<?=!empty($_GET['search_name']) ? $_GET['search_name'] : ''?>">
+                    <input type="text" name="search_name" value="<?=!empty($_GET['search_name']) ? h($_GET['search_name']) : ''?>">
                     <select name="search">
                         <option value = "1"<?=empty($_GET['search']) || $_GET['search'] == 1 ? ' selected' : ''?>>部分一致</option>
                         <option value = "2"<?=!empty($_GET['search']) && $_GET['search'] == 2 ? ' selected' : ''?>>完全一致</option>
@@ -95,8 +95,8 @@ if (isset($_GET['search'])) {
                     <td>
                         <div class="flex-room_list">
                             <div class="flex-room_list_div">
-                                <form action="room_edit.php?id=<?=$room['id']?>&type=edit" method="post">
-                                    <input type="submit" value="編集" class="edit-btn" onclick="location.href='./room_edit.php?id=<?=$room['id']?>&type=edit'">
+                                <form action="room_edit.php?type=edit&id=<?=$room['id']?>" method="post">
+                                    <input type="submit" value="編集" class="edit-btn" onclick="location.href='./room_edit.php?type=edit&id=<?=$room['id']?>'">
                                 </form>
                             </div>
                             <div class="flex-room_list_div">

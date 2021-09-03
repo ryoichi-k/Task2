@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once ('Model/Model.php');
-require_once ('util.php');
+require_once (dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once (dirname(__FILE__) . '/../ExternalFiles/util.php');
 
 if (isset($_SESSION['admin'])) {
     unset($_SESSION['admin']);
@@ -27,7 +27,7 @@ if (!empty($_POST['btn-auth'])) {
 </head>
 <body>
     <div class="wrapper">
-        <main>
+        <main class="login-main">
             <h1 class="login-h1">CICACU管理ログイン画面</h1>
             <div class="login-container">
                 <form action="" method="post">
@@ -48,9 +48,4 @@ if (!empty($_POST['btn-auth'])) {
                 </form>
             </div>
         </main>
-        <footer class="login-footer">
-            <p><small>2021 ebacorp.inc</small></p>
-        </footer>
-    </div>
-</body>
-</html>
+<?php require_once('footer.php')?>

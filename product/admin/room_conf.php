@@ -34,8 +34,8 @@ require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
                 <input type="hidden" name="detail[<?=$i?>][price]" value="<?=h($_POST['detail'][$i]['price'])?>">
                 <input type="hidden" name="detail[<?=$i?>][remarks]" value="<?=h($_POST['detail'][$i]['remarks'])?>">
             <?php endfor ;?>
-            <p><input type="submit" value="修正" formaction="room_edit.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] . '&' : ''?>type=<?=$_GET['type']?>" name="cancel-edit" class="conf-cancel-btn">
-                <input class="conf-submit" name="send-<?=$_GET['type']?>" type="submit" value="<?=isset($_GET['id']) ? '編集' : '登録'?>完了"></p>
+            <p><input type="submit" value="修正" formaction="room_edit.php?<?=isset($_GET['id']) ? 'id=' . $_GET['id'] . '&' : ''?>type=<?=$_GET['type']?>" name="cancel_edit" class="conf-cancel-btn">
+                <input class="conf-submit" name="send_<?=$_GET['type']?>" type="submit" value="<?=isset($_GET['id']) ? '編集' : '登録'?>完了"></p>
         </form>
     </div>
 </main>
