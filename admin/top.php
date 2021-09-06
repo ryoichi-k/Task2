@@ -21,18 +21,18 @@ if (empty($_SESSION['admin'])) {
 <body>
     <div class="wrapper">
         <header class="gl-header">
-                <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']) ;?>]さん、ご機嫌いかがですか？</p><div class="logout-link"><a href="logout.php">ログアウトする</a></div>
-                <h1>CICACU</h1>
-                <nav class="gl-nav">
-                    <ul>
-                        <li><a href="top.php"> top</a></li>
-                        <li><a href="room_list.php"> 客室管理</a></li>
-                        <li><a href="#"> ○○管理</a></li>
-                        <li><a href="#"> ○○管理</a></li>
-                        <li><a href="#"> ○○管理</a></li>
-                        <li><a href="#"> ○○管理</a></li>
-                    </ul>
-                </nav>
+            <p class="top-p">ログイン名[<?=h($_SESSION['admin']['name']) ;?>]さん、ご機嫌いかがですか？</p><div class="logout-link"><a href="logout.php">ログアウトする</a></div>
+            <h1>CICACU</h1>
+            <nav class="gl-nav">
+                <ul>
+                    <li><a href="top.php"> top</a></li>
+                    <li><a href="room_list.php"> 客室管理</a></li>
+                    <li><a href="#"> ○○管理</a></li>
+                    <li><a href="#"> ○○管理</a></li>
+                    <li><a href="#"> ○○管理</a></li>
+                    <li><a href="#"> ○○管理</a></li>
+                </ul>
+            </nav>
         </header>
         <main class="top-main">
         </main>

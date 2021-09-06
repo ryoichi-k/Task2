@@ -93,7 +93,7 @@ if (!empty($_POST['send'])) {
         mb_send_mail($to, $subject, $body, $header, $pfrom);
 
     } catch (Exception $e) {
-        $error = 'エラーが発生しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
+        $error = 'エラーが発生しました。※予約が完了できませんでした。<br>CICACU予約担当辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
     }
 }
 ?>
@@ -112,8 +112,8 @@ if (!empty($_POST['send'])) {
         <div class="reservation-container">
             <input class="submit-button" type="button" value="トップへ戻る" onclick="location.href='./index.php'">
         </div>
-            <footer class="reservation-footer">
-                <p><small>2021 ebacorp.inc</small></p>
+        <footer class="reservation-footer">
+            <p><small>2021 ebacorp.inc</small></p>
         </footer>
     </div>
 </body>

@@ -213,8 +213,6 @@ class Room extends Model
     //部屋画像をアップロード
     public function uploadImage($id)
     {
-
-
         try {
             if ($_FILES['upfile']['error'] != UPLOAD_ERR_OK) {
                 throw new Exception();
@@ -251,6 +249,7 @@ class Room extends Model
             return 'アップロードに失敗しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
+    
     //reservation_conf.phpにて使用。部屋情報を検索
     public function findRoomDetailId($id)
     {

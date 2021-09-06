@@ -1,9 +1,13 @@
 <?php
 session_start();
-require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
-require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
-require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Room.php');
-require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
+// require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
+// require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+// require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Room.php');
+// require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
+require_once('util.inc.php');
+require_once('Model/Model.php');
+require_once ('Model/Room.php');
+require_once('util.php');
 
 //新規登録データ用配列
 $room_list = [];
@@ -42,7 +46,7 @@ $count = !empty($room_list['detail']) ? count($room_list['detail']) : 1;
 <?php require_once('header.php')?>
 <main>
     <div class="room_edit-container">
-        <form action="room_conf.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>" method="post">
+        <form action="room_conf.php?type=<?=h($_GET['type'])?><?=isset($_GET['id']) ? '&id=' . h($_GET['id']) : ''?>" method="post">
             <div class="getPage"><?php getPage() ;?></div>
             <?php if (isset($error)) :?>
                 <p class="error"><?=$error?></p>
@@ -65,52 +69,49 @@ $count = !empty($room_list['detail']) ? count($room_list['detail']) : 1;
                             <input type="hidden" name="detail[<?=$i?>][id]" value="<?=isset($room_list['detail'][$i]['id']) ? h($room_list['detail'][$i]['id']) : ''?>">
                             <p class="p-box">
                                 　人数：<input class="room_edit-input-capacity" type="text" name="detail[<?=$i?>][capacity]" value="<?=!empty($room_list['detail']) ? h($room_list['detail'][$i]['capacity']) : ''?>">人
-                                </div>
-                                　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=!empty($room_list['detail']) ? h($room_list['detail'][$i]['remarks']) : ''?>"></div>
-                                　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=!empty($room_list['detail']) ? h($room_list['detail'][$i]['price']) : ''?>">円（税込）</div>
+                                　追記：<input class="room_edit-input-remarks" type="text" name="detail[<?=$i?>][remarks]" value="<?=!empty($room_list['detail']) ? h($room_list['detail'][$i]['remarks']) : ''?>">
+                                　価格：<input class="room_edit-input-price" type="text" name="detail[<?=$i?>][price]" value="<?=!empty($room_list['detail']) ? h($room_list['detail'][$i]['price']) : ''?>">円（税込）
                             </p>
                         <?php endfor ;?>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <?php if (empty($count) || $count < 5) :?>
-                            <input type="submit" name="add_box" value="BOX追加" formaction="room_edit.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>">
+                        <?php if ($count < 5) :?>
+                            <input type="submit" name="add_box" value="BOX追加" formaction="room_edit.php?type=<?=h($_GET['type'])?><?=isset($_GET['id']) ? '&id=' . h($_GET['id']) : ''?>">
                         <?php endif ;?>
                         <?php if ($count > 1) :?>
-                            <input type="submit" name="delete_box" value="BOX削除" formaction="room_edit.php?type=<?=isset($room_list['id']) ? 'edit&id=' . $room_list['id'] : 'new'?>">
+                            <input type="submit" name="delete_box" value="BOX削除" formaction="room_edit.php?type=<?=h($_GET['type'])?><?=isset($_GET['id']) ? '&id=' . h($_GET['id']) : ''?>">
                         <?php endif ;?>
                     </td>
                 </tr>
             </table>
-                <p>
-                    <input type="submit" name="add_room_detail" value="確認画面へ" class="to-conf-btn">
-                </p>
+            <p>
+                <input type="submit" value="確認画面へ" class="to-conf-btn">
+            </p>
         </form>
-    <?php if ($_GET['type'] == 'edit') :?>
-        <hr>
-        <form action="" method="post" enctype="multipart/form-data">
-            <table class="room_edit-img-table" border="1">
-                <tr>
-                    <th>サムネイル</th>
-                    <td>
-                        <input type="file" name="upfile">
-                    </td>
-                </tr>
-                <tr>
-                    <th>トップページサムネイル</th>
-                    <td>
-                    <?php if ($room_list['img']) :?>
-                        <img src="<?=IMAGE_PATH . h($room_list['img'])?>">
-                        <p><?=h($room_list['img'])?></p>
-                    <?php endif ;?>
-                    </td>
-                </tr>
-            </table>
-            <p class="upload-message">半角英数字のファイルのみアップロード可能です。</p>
-            <input class="up-img-btn" type="submit" name="up_img_btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
-        </form>
-    <?php endif ;?>
+        <?php if ($_GET['type'] == 'edit') :?>
+            <hr>
+            <form action="" method="post" enctype="multipart/form-data">
+                <table class="room_edit-img-table" border="1">
+                    <tr>
+                        <th>サムネイル</th>
+                        <td><input type="file" name="upfile"></td>
+                    </tr>
+                    <tr>
+                        <th>トップページサムネイル</th>
+                        <td>
+                        <?php if ($room_list['img']) :?>
+                            <img src="<?=IMAGE_PATH . h($room_list['img'])?>">
+                            <p><?=h($room_list['img'])?></p>
+                        <?php endif ;?>
+                        </td>
+                    </tr>
+                </table>
+                <p class="upload-message">半角英数字のファイルのみアップロード可能です。</p>
+                <input class="up-img-btn" type="submit" name="up_img_btn" value="アップロード" onclick="return confirm('本当に画像をアップロードしますか？')">
+            </form>
+        <?php endif ;?>
     </div>
 </main>
 <?php require_once('footer.php')?>
