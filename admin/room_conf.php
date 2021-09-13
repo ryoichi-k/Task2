@@ -1,11 +1,9 @@
 <?php
 session_start();
-// require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
-// require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
-// require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
-require_once('util.inc.php');
-require_once('Model/Model.php');
-require_once('util.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
+
 ?>
 <?php require_once('header.php')?>
 <main>

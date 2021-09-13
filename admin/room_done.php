@@ -1,13 +1,9 @@
 <?php
 session_start();
-// require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
-// require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
-// require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Room.php');
-// require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
-require_once ('Model/Model.php');
-require_once ('Model/Room.php');
-require_once ('util.php');
-require_once ('util.inc.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.inc.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Model.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/Model/Room.php');
+require_once(dirname(__FILE__) . '/../ExternalFiles/util.php');
 
 $room = new Room();
 
@@ -23,7 +19,7 @@ if ($_GET['type'] == 'new') {
         <div class="getPage"><?php getPage() ;?></div>
         <?php if (isset($error)) :?>
             <h3 class="error"><?=$error?></h3>
-        <?php elseif(empty($error)) :?>
+        <?php else :?>
             <h3 class="done-message"><?=OPERATION_ARRAY[$_GET['type']]?>完了しました。</h3>
         <?php endif ;?>
     </div>

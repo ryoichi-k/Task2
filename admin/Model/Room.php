@@ -57,40 +57,44 @@ class Room extends Model
         }
     }
 
-    //一覧表示とソート機能
-    public function getAllRoom()
+    //一覧表示とソート機能と検索機能
+    public function getAllRoom($search_name)
     {
         try {
             $this->connect();
 
-            if (!empty($_GET['sort']) && !empty($_GET['order'])) {//指摘あり
+            $search = '';
+
+            if (empty($_GET['search_name'])) {
+                $search = '';
+            } elseif ($_GET['search'] == 1) {
+                $search = 'AND name LIKE :search_name';
+            } elseif($_GET['search'] == 2) {
+                $search = 'AND name = :search_name';
+            }
+
+            if (!empty($_GET['sort']) && !empty($_GET['order'])) {
                 $sort = $_GET['sort'] . ' IS NULL ASC,' . $_GET['sort'] . ' ' . $_GET['order'];
             } else {
                 $sort = 'id DESC';
             }
-            $sql = 'SELECT * FROM room WHERE delete_flg = 0 ORDER BY '  . $sort;
-            $stmt = $this->dbh->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            throw new Exception();
-        }
-    }
 
-    //部屋検索（部分検索と全体一致検索）
-    public function searchRoom($search_name)
-    {
-        try {
-            $this->connect();
-            if ($_GET['search'] == 1) {
-                $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name LIKE :search_name AND delete_flg = 0');
-                $stmt->bindValue(':search_name', '%' . addcslashes($search_name, '\_%') . '%');
+            $sql = 'SELECT * FROM room WHERE delete_flg = 0 ' . $search . ' ORDER BY ' . $sort;
+            $stmt = $this->dbh->prepare($sql);
+
+            if (isset($_GET['search'])) {
+                if ($_GET['search'] == 1) {
+                    $stmt->bindValue(':search_name', '%' . addcslashes($search_name, '\_%') . '%');
+                }
+                if ($_GET['search'] == 2) {
+                    $stmt->bindValue(':search_name', $search_name);
+                }
             }
-            if ($_GET['search'] == 2) {
-                $stmt = $this->dbh->prepare('SELECT * FROM room WHERE name = :search_name AND delete_flg = 0');
-                $stmt->bindValue(':search_name', $search_name);
-            }
+
             $stmt->execute();
+            
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (Exception $e) {
             throw new Exception();
         }
@@ -249,7 +253,7 @@ class Room extends Model
             return 'アップロードに失敗しました。<br>CICACU辻井迄ご連絡ください。080-1411-4095(辻井) info@cicacu.jp';
         }
     }
-    
+
     //reservation_conf.phpにて使用。部屋情報を検索
     public function findRoomDetailId($id)
     {
